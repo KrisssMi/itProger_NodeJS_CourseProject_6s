@@ -4,15 +4,9 @@ const cors = require("cors");
 
 const DbClient = require("./Db/DbClient");
 const authRouter = require("./Routes/authRouter");
-const categoryRouter= require("./Routes/categoryRouter");
+const categoryRouter = require("./Routes/categoryRouter");
 const courseRouter = require("./Routes/courseRouter");
 
-//const cors = require('cors');
-
-// const authRouter = require("./modules/auth/authRouter");
-
-// const errorHandlerMiddleware = require("./middlewares/errorHandlerMiddleware");
-// const corsMiddleware = require("./middlewares/corsMiddleware");
 const app = express();
 app.use(cors());
 app.options("*", cors());
@@ -32,15 +26,8 @@ app.use((req, res, next) => {
 
   next();
 });
-// app.use(corsMiddleware);
-// app.use(express.json());
-// app.use(express.static('media', {index: 'index.html'}));
-// app.use("/auth", authRouter);
-// app.use(errorHandlerMiddleware);
 
-/*TODO add validation*/
-/*TODO socket server*/
-/*TODO sort by average rating users*/
+// app.use(express.static('media', {index: 'index.html'}));
 
 const bootstrap = () => {
   try {

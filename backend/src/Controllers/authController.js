@@ -81,6 +81,42 @@ class authController {
       res.status(400).json({ message: "Get users error" });
     }
   }
+
+  async isAdmin(req, res) {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const { id } = await jwt.verify(token, process.env.SECRET);
+      const user = await DbClient.user.findUnique({
+        where: {
+          id: id,
+        },
+      });
+      if (user.role === "ADMIN") {
+        return res.json({ isAdmin: true });
+      } else {
+        return res.json({ isAdmin: false });
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: "Get user error" });
+    }
+  }
+
+  async currentUser(req, res) {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const { id } = await jwt.verify(token, process.env.SECRET);
+      const user = await DbClient.user.findUnique({
+        where: {
+          id: id,
+        },
+      });
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: "Get user error" });
+    }
+  }
 }
 
 module.exports = new authController();

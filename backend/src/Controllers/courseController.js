@@ -4,19 +4,32 @@ const DbClient = new PrismaClient();
 class courseController {
   async addCourse(req, res) {
     try {
-      const { name, categoryId } = req.body;
-      const course = await DbClient.course.create({
-        data: {
-          name,
-          description,
-
-          categoryId: Number(categoryId),
+      // Поиск категории по имени
+      const category = await DbClient.category.findUnique({
+        where: {
+          name: req.body.category,
         },
       });
-      return res.json(course);
+      // Создание курса и привязка к категории
+      const createdCourse = await DbClient.course.create({
+        data: {
+          name: req.body.name,
+          description: req.body.description,
+          Category: {
+            connect: {
+              // Привязка к категории
+              id: category.id, // Поиск категории по id
+            },
+          },
+        },
+      });
+      console.log(
+        `Created course with name: ${createdCourse.name} and description: ${createdCourse.description}`
+      );
+      res.send(createdCourse);
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: "Course creation error" });
+      res.status(400).send({ message: "Course creation error" });
     }
   }
 
@@ -38,6 +51,10 @@ class courseController {
           id: Number(id),
         },
       });
+      if (!course) {
+        return res.status(404).send("Course with this id not found.");
+      }
+
       return res.send(course);
     } catch (e) {
       console.log(e);
@@ -63,20 +80,34 @@ class courseController {
   async updateCourse(req, res) {
     try {
       const { id } = req.params;
-      const { name, categoryId } = req.body;
+      const { name, description } = req.body;
+      const category = await DbClient.category.findUnique({
+        where: {
+          name: req.body.category,
+        },
+      });
+
       const course = await DbClient.course.update({
         where: {
           id: Number(id),
         },
         data: {
-          name,
-          categoryId: Number(categoryId),
+          name: name,
+          description: description,
+          Category: {
+            connect: {
+              id: category.id,
+            },
+          },
         },
       });
+      if (!course) {
+        return res.status(404).send("Course with this id not found.");
+      }
       return res.send(course);
     } catch (e) {
       console.log(e);
-      res.status(400).send({ message: "Course update error" });
+      res.status(400).send({ message: "Course error" });
     }
   }
 }
