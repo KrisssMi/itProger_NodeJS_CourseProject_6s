@@ -2,19 +2,22 @@ require("dotenv").config({ path: ".env" });
 const express = require("express");
 const cors = require("cors");
 
-const DbClient = require("./Db/DbClient");
 const authRouter = require("./Routes/authRouter");
 const categoryRouter = require("./Routes/categoryRouter");
 const courseRouter = require("./Routes/courseRouter");
+const lectureRouter = require("./Routes/lectureRouter");
+const videoRouter=require("./Routes/videoRouter");
 
 const app = express();
 app.use(cors());
 app.options("*", cors());
 app.use(express.json());
-// router.use(authRouter);
 app.use("/auth", authRouter);
 app.use(categoryRouter);
 app.use(courseRouter);
+app.use(lectureRouter);
+app.use(videoRouter);
+
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:9000");

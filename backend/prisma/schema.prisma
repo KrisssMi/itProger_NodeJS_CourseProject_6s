@@ -36,7 +36,7 @@ model Enrollment {
 model Lecture {
   id        Int         @id @default(autoincrement())
   name      String      @db.VarChar(100)
-  videoLink String?     @db.VarChar(200)
+  videoLink String?     @db.VarChar(400)
   content   String?     @db.VarChar(200)
   course_id Int?
   Course    Course?     @relation(fields: [course_id], references: [id], onDelete: Cascade)
