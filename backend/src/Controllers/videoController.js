@@ -18,16 +18,30 @@ const upload = multer({
   },
 });
 
-const uploadVideo = (req, res) => {
-  upload.single("video")(req, res, (err) => {
-    if (err) {
-      res.status(500).json({ error: "Failed to upload video" });
-      console.error(err);
-    } else {
-      console.log(req.file);
-      res.status(200).json({ message: "Video uploaded successfully" });
-    }
-  });
+const uploadVideo = async (req, res) => {
+  try {
+    const filePath = await new Promise((resolve, reject) => {
+      upload.single("video")(req, res, (err) => {
+        if (err) {
+          reject(null);
+        } else {
+          if (req.file == undefined) {
+            resolve(null);
+          } else {
+            resolve(req.file.path);
+          }
+        }
+      });
+    });
+
+    console.log("File uploaded successfully:", filePath);
+    // Handle the uploaded file path here
+    return filePath;
+  } catch (err) {
+    console.error("File upload failed:", err);
+    // Handle the upload error here
+    return null;
+  }
 };
 
 module.exports = {

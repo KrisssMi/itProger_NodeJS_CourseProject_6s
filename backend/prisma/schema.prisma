@@ -15,7 +15,7 @@ model Category {
 
 model Course {
   id          Int          @id @default(autoincrement())
-  name        String       @db.VarChar(50)
+  name        String       @unique @db.VarChar(50)
   description String?      @db.VarChar(200)
   category    Int?
   Category    Category?    @relation(fields: [category], references: [id], onDelete: Cascade)
