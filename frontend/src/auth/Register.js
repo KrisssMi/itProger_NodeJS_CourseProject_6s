@@ -35,16 +35,16 @@ class Register extends Component {
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2,
-      role: this.props.match.params.role, 
+      role: this.props.match.params.role,
     };
 
     console.log(newUser);
 
     axios
-      .post("http://localhost:9000/auth/registration", newUser) 
+      .post("http://localhost:9000/auth/registration", newUser)
       .then((res) => console.log(res.data))
       .catch((err) => this.setState({ errors: err.response.data }));
-    this.props.history.push("/login/" + this.props.match.params.role);  // переход на страницу логина
+    this.props.history.push("/login/" + this.props.match.params.role); // переход на страницу логина
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,7 +58,7 @@ class Register extends Component {
 
     return (
       <div>
-        <NavBar/>
+        <NavBar />
         <div className="auth-wrapper">
           <div className="auth-content container">
             <div className="card">
@@ -87,9 +87,7 @@ class Register extends Component {
                           onChange={this.onChange}
                         />
                         {errors.name && (
-                          <div className="invalid-feedback">
-                            {errors.name}
-                          </div>
+                          <div className="invalid-feedback">{errors.name}</div>
                         )}
                       </div>
                       <div className="input-group mb-2">
@@ -192,7 +190,6 @@ Register.propTypes = {
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 };
-
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

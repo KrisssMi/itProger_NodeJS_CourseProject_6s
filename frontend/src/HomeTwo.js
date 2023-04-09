@@ -8,7 +8,6 @@ class HomeTwo extends Component {
       <div>
         {/* Navigation bar */}
         <NavBar />
-
         {/* Hero slider */}
         <HeroSliderTwo />
       </div>

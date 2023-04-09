@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import "./index.scss";
 import store from "./store";
 import { Provider } from "react-redux";
 import setAuthToken from "./utils/setAuthToken";

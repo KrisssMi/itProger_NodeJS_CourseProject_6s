@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const DbClient = new PrismaClient();
 
 class enrollmentController {
-  async getEnrollmentByStudent() {
+  async getEnrollmentByStudent(req, res) {
     try {
       const enrollments = await DbClient.enrollment.findMany({
         where: {
@@ -18,25 +18,17 @@ class enrollmentController {
     }
   }
 
-  async getAllEnrollments() {
+  async getAllEnrollments(req, res) {
     try {
-      const enrollments = await DbClient.enrollment.findMany({
-        include: {
-          User: true,
-          Course: {
-            select: {
-              courseName: true,
-            },
-          },
-        },
-      });
-      res.json(enrollments);
-    } catch (err) {
-      next(err);
+      const enrollments = await DbClient.enrollment.findMany();
+      return res.send(enrollments);
+    } catch (e) {
+      console.log(e);
+      res.status(400).send({ message: "Enrollments error" });
     }
   }
 
-  async checkEnrollment() {
+  async checkEnrollment(req, res) {
     try {
       const enrollment = await DbClient.enrollment.findUnique({
         where: {
@@ -46,7 +38,7 @@ class enrollmentController {
         include: {
           Course: {
             select: {
-              courseName: true,
+              name: true,
             },
           },
         },
@@ -57,7 +49,7 @@ class enrollmentController {
     }
   }
 
-  async addEnrollment() {
+  async addEnrollment(req, res) {
     if (!req.body) {
       return res.status(400).send("request body is missing");
     }
@@ -84,7 +76,7 @@ class enrollmentController {
     }
   }
 
-  async addEnrollmentByStudent() {
+  async addEnrollmentByStudent(req, res) {
     try {
       const enroll = await DbClient.enrollment.create({
         data: {
@@ -109,7 +101,7 @@ class enrollmentController {
     }
   }
 
-  async deleteEnrollment() {
+  async deleteEnrollment(req, res) {
     try {
       const deletedEnrollment = await DbClient.enrollment.delete({
         where: {

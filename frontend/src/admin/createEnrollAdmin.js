@@ -4,36 +4,30 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 const ShowUser = props => (
-    <option selected='selected' key={props.todo.email} value={props.todo.email}>{props.todo.email}</option>
-    
-            
+    <option selected='selected' key={props.todo.email} value={props.todo.email}>{props.todo.email}</option>    
   );
   
   const ShowCourse = props => (
-    <option key={props.todo.courseName} value={props.todo.courseName}>{props.todo.courseName}</option>
-    
-            
+    <option key={props.todo.courseName} value={props.todo.courseName}>{props.todo.courseName}</option>     
   );
 export default class CreateEnroll extends Component {
     constructor(props) {
         super(props);
 
         /** Setting the initial state of the component by assigned an object to this.state **/
-        this.state = {
-            
+        this.state = {    
             User:[],
             Course:[]
         };
 
         /** Ensure to bind our methods to this by adding them here **/
-        
         this.onChangeCourse=this.onChangeCourse.bind(this);
         this.onChangeStudent=this.onChangeStudent.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
-                   axios.get('http://localhost:5000/courses/')
+                   axios.get('http://localhost:9000/courses/')
             .then(response => {
                 this.setState({ Course: response.data });
             })
@@ -41,7 +35,7 @@ export default class CreateEnroll extends Component {
                 console.log(error);
             })
 
-            axios.get('http://localhost:5000/users/')
+            axios.get('http://localhost:9000/auth/users/')
             .then(response => {
                 this.setState({ User: response.data });
             })
@@ -95,7 +89,7 @@ export default class CreateEnroll extends Component {
             todo_completed: this.state.todo_completed
         };
 
-        axios.post('http://localhost:5000/enroll/add/', newTodo)
+        axios.post('http://localhost:9000/enrollment/add/', newTodo)
         .then((result) => {
             this.props.history.push("/EnrollmentList/")
           });

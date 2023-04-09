@@ -4,7 +4,7 @@ const enrollmentController = require("../Controllers/enrollmentController");
 const {check} = require("express-validator");
 const roleMiddleware = require("../Middleware/roleMiddleware");
 
-router.get('/enrollmentbystudent', roleMiddleware(["ADMIN"]), enrollmentController.getEnrollmentByStudent);
+router.get('/enrollmentbystudent/:id', roleMiddleware(["ADMIN"]), enrollmentController.getEnrollmentByStudent);
 router.get('/enrollments', roleMiddleware(["ADMIN"]), enrollmentController.getAllEnrollments);
 router.get('/checkenrollment', roleMiddleware(["ADMIN"]), enrollmentController.checkEnrollment);
 router.post('/enrollment/add', roleMiddleware(["ADMIN"]), enrollmentController.addEnrollment);

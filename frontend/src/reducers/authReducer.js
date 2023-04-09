@@ -13,7 +13,7 @@ export default function (state = initialState, action) {    //action - это о
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        users: action.payload, // action.payload - это данные которые мы получили из токена
+        users: action.payload,                              // action.payload - это данные которые мы получили из токена
       };
     default:
       return state;

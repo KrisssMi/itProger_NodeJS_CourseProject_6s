@@ -70,7 +70,6 @@ class Login extends Component {
                       <h3>itProger</h3>
                     </div>
                     <h4 className="mb-3 f-w-400">Login into your account</h4>
-
                     <form noValidate onSubmit={this.onSubmit}>
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">

@@ -32,9 +32,6 @@ export default class EnrollList extends Component {
             .catch(function (error){
                 console.log(error);
             })
-
-
-
     }
     delete(id){
         console.log(id);
@@ -44,11 +41,6 @@ export default class EnrollList extends Component {
 
             toast.success('Deleted successfully')
             // this.props.history.push("/showenroll/")
-
-
-
-
-
         })
         .catch(err => { // then print response status
           toast.error('Course not deleted')

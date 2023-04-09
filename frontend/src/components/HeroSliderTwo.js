@@ -11,7 +11,7 @@ class HeroSliderOne extends Component {
       effect: "fade",
       navigation: {
         nextEl: ".ht-swiper-button-next",
-        prevEl: ".ht-swiper-button-prev"
+        prevEl: ".ht-swiper-button-prev",
       },
       renderPrevButton: () => (
         <div className="ht-swiper-button-prev ht-swiper-button-nav d-none d-xl-block">
@@ -24,32 +24,27 @@ class HeroSliderOne extends Component {
         </div>
       ),
       autoplay: {
-        delay: 5000
-      }
+        delay: 5000,
+      },
     };
 
     let data = [
       {
-        bgImg: "02.jpg",
-        sliderTitle: "Learn code with us ❤️",
-        sliderSubtitle:
-          "НАДО ЧТО-ТО НАПИСАТЬ",
-        btnLink: "services"
+        bgImg: "backgraund.png",
+        sliderTitle:
+          'Welcome. This is the educational platform "itProger", where IT courses are available',
+        btnLink: "services",
       },
       {
-        bgImg: "04.png",
-        sliderTitle: "Learn code with us ❤️",
-        sliderSubtitle:
-          "НАДО ЧТО-ТО НАПИСАТЬ",
-        btnLink: "services"
+        bgImg: "backgraund_2.png",
+        sliderTitle: "Improve your skills and reach the top",
+        btnLink: "services",
       },
       {
-        bgImg: "03.jpg",
-        sliderTitle: "Learn code with us ❤️",
-        sliderSubtitle:
-          "НАДО ЧТО-ТО НАПИСАТЬ",
-        btnLink: "services"
-      }
+        bgImg: "backgraund_3.png",
+        sliderTitle: "Become the best!",
+        btnLink: "services",
+      },
     ];
 
     let DataList = data.map((val, i) => {
@@ -65,7 +60,6 @@ class HeroSliderOne extends Component {
                   <div className="col-lg-12">
                     <div className="hero-slider__content m-auto text-center">
                       <h2 className="hero-slider__title">{val.sliderTitle}</h2>
-                      <p className="hero-slider__text">{val.sliderSubtitle}</p>
                       <a
                         className="hero-slider__btn hero-slider__btn--style2"
                         href={`${process.env.PUBLIC_URL}/${val.btnLink}`}
@@ -75,6 +69,7 @@ class HeroSliderOne extends Component {
                       </a>
                     </div>
                   </div>
+                  {/* <div style={{ backgroundImage: `url(assets/img/backgraund.png)` }}/> */}
                 </div>
               </div>
             </div>
