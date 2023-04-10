@@ -111,7 +111,7 @@ export default class UserList extends Component {
           <input type="hidden" />
           <h1
             style={{
-              marginLeft: "-200px",
+              marginLeft: "600px",
               color: "#a5c41a",
             }}
           >

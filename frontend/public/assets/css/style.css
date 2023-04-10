@@ -3272,16 +3272,15 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 
 .btn-outline-info {
-  color: #00ACC1;
-  background-color: transparent;
-  background-image: none;
-  border-color: #00ACC1;
+  color: #ffffff;
+  border-color: #003a5e;
+  background-color: #0c72a2;
 }
 
 .btn-outline-info:hover {
   color: #fff;
-  background-color: #00ACC1;
-  border-color: #00ACC1;
+  border-color: #003a5e;
+  background-color: #0c72a2;
 }
 
 .btn-outline-info.disabled,

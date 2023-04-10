@@ -22,19 +22,20 @@ export default class ShowCategory extends Component {
   componentDidMount() {
     //to get data from mongo link
     axios
-      .get("http://localhost:5000/categories/")
-      .then(response => {
-        this.setState({ todos: response.data });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    .get("http://localhost:9000/categories/")
+    .then(response => {
+      console.log(response.data);
+      this.setState({ todos: response.data ? response.data : [] });
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
   }
 
   delete(id) {
     console.log(id);
     axios
-      .delete("http://localhost:5000/category?id=" + id)
+      .delete("http://localhost:9000/category?id=" + id)
       .then(result => {
         // this.forceUpdate()
         // this.props.history.push("/showcategory/")
@@ -61,7 +62,7 @@ export default class ShowCategory extends Component {
     const Todo = props => (
       <div style={divStyle}>
         <tr>
-          <td>{props.todo.categoryName}</td>
+          <td>{props.todo.name}</td>
 
           <td>
             <a
@@ -80,7 +81,7 @@ export default class ShowCategory extends Component {
     );
     //used in filtering the content coming from database mongo
     let filteredusers = this.state.todos.filter(category => {
-      return category.categoryName.indexOf(this.state.search) !== -1;
+      return category.name.indexOf(this.state.search) !== -1;
     });
     return (
       <div>

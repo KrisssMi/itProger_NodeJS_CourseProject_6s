@@ -10,19 +10,18 @@ export default class CreateCategory extends Component {
 
     /** Setting the initial state of the component by assigned an object to this.state **/
     this.state = {
-      categoryName: "",
+      name: "",
     };
 
     /** Ensure to bind our methods to this by adding them here **/
     this.onChangeCategoryName = this.onChangeCategoryName.bind(this);
-
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChangeCategoryName(e) {
     this.setState({
       no: 1,
-      categoryName: e.target.value,
+      name: e.target.value,
     });
   }
 
@@ -31,11 +30,11 @@ export default class CreateCategory extends Component {
     e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
 
     console.log(`Form submitted:`);
-    console.log(`Todo category: ${this.state.categoryName}`);
+    console.log(`Todo category: ${this.state.name}`);
 
     const newTodo = {
       no: this.state.no,
-      categoryName: this.state.categoryName,
+      name: this.state.name,
 
       // todo_completed: this.state.todo_completed
     };
@@ -46,7 +45,7 @@ export default class CreateCategory extends Component {
 
     // Reset the Values.
     this.setState({
-      categoryName: "",
+      name: "",
       todo_completed: false,
     });
   }
@@ -69,7 +68,7 @@ export default class CreateCategory extends Component {
                     className="form-control"
                     name="coursename"
                     placeholder="Enter Category name"
-                    value={this.state.categoryName}
+                    value={this.state.name}
                     onChange={this.onChangeCategoryName}
                   />
                 </div>
@@ -80,7 +79,7 @@ export default class CreateCategory extends Component {
                   value="Add Category"
                   className="btn btn-lg btn-info btn-block"
                 >
-                  Add Course
+                  Add Category
                 </button>
               </form>
             </div>

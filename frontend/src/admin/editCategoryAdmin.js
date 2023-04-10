@@ -13,7 +13,7 @@ export default class CatEdit extends Component {
   // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
-      .get("http://localhost:5000/category?id=" + this.props.match.params.id)
+      .get("http://localhost:9000/category?id=" + this.props.match.params.id)
       .then(response => {
         this.setState({ todos: response.data });
       })
@@ -41,12 +41,12 @@ export default class CatEdit extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { no, categoryName } = this.state.todos;
+    const { no, name } = this.state.todos;
     console.log(this.state.todos);
     axios
-      .put("http://localhost:5000/category?id=" + this.props.match.params.id, {
+      .put("http://localhost:9000/category?id=" + this.props.match.params.id, {
         no,
-        categoryName
+        name
       })
       .then(result => {
         this.props.history.push("/ShowCategoryList/");
@@ -54,7 +54,6 @@ export default class CatEdit extends Component {
   };
 
   render() {
-    // const menuClass = `dropdown-menu${this.state.isOpen ? " show" : ""}`;
     var message = "You selected " + this.state.todos.role;
     return (
       <div>
@@ -75,21 +74,18 @@ export default class CatEdit extends Component {
                   EDIT Category
                 </h1>
                 <br />
-
                 <div>
                   <label>Category Name: </label>
                   <br />
-
                   <input
                     type="text"
                     class="form-control"
                     name="categoryName"
-                    value={this.state.todos.categoryName}
+                    value={this.state.todos.name}
                     onChange={this.onChange}
-                    placeholder="categoryName"
+                    placeholder="Category name"
                   />
                 </div>
-
                 <br />
                 <button
                   type="submit"
