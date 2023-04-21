@@ -61,35 +61,33 @@ model User {
   Enrollment Enrollment[]
   Statistic  Statistic[]
   // Пример связи один-к-одному
-  Profile   Profile
+  Profile   Profile?
 }
 
 model Profile {
   id Int            @id @default(autoincrement())
-  userId Int        // Можно заменить на `user: User @relation(fields: [userId], references: [id])`
+  userId Int        @unique
   handle String
   company String?
-  website String?
   location String?
   skills String[]
   bio String?
   githubusername String?
   education Education[]
   date DateTime    @default(now())
+  user User        @relation(fields: [userId], references: [id])
 }
 
 model Education {
   id Int            @id @default(autoincrement())
+  profileId Int
   school String
   degree String
   fieldofstudy String
   from DateTime
   to DateTime?
-  current Boolean   @default(false)
-  description String?
   // Связь многие-к-одному
   profile Profile   @relation(fields: [profileId], references: [id])
-  profileId Int
 }
 
 enum Roles {
