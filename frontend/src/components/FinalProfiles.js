@@ -7,7 +7,6 @@ class Services extends Component {
       <div>
         {/* Navigation bar */}
         <NavBar />
-
         {/* breadcrumb */}
         {/*====================  breadcrumb area ====================*/}
         <div className="breadcrumb-area breadcrumb-bg">
@@ -15,7 +14,7 @@ class Services extends Component {
             <div className="row">
               <div className="col">
                 <div className="page-banner text-center">
-                  <h1>Instructor Profiles</h1>
+                  <h1>Admin Profiles</h1>
                   <ul className="page-breadcrumb">
                     <li>
                       <a href="/">Home</a>
@@ -39,7 +38,6 @@ class Services extends Component {
           </div>
           {/*Service section end*/}
         </div>
-
         {/*====================  End of service page content  ====================*/}
       </div>
     );

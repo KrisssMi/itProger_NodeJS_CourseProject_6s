@@ -7,20 +7,19 @@ export default class ShowCategory extends Component {
   constructor(props) {
     super(props);
 
-    /** Setting the initial state of the component by assigned an object to this.state **/
+    /** Установка начального состояния компонента путем присвоения этому объекту this.state **/
     this.state = {
       todos: [],
       search: ""
     };
   }
 
-  //for searching event in page
+  // для поиска события на странице
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
   componentDidMount() {
-    //to get data from mongo link
     axios
     .get("http://localhost:9000/categories/")
     .then(response => {
@@ -42,7 +41,7 @@ export default class ShowCategory extends Component {
         toast.success("Deleted successfully");
       })
       .catch(err => {
-        // then print response status
+        // затем выведите статус ответа
         toast.error("Category not deleted");
       });
     setTimeout(
@@ -58,7 +57,7 @@ export default class ShowCategory extends Component {
     const divStyle = {
       display: "contents"
     };
-    // var message='You selected '+this.state.whoIsChecked.allowDestroyAll
+    //var message='You selected '+this.state.whoIsChecked.allowDestroyAll
     const Todo = props => (
       <div style={divStyle}>
         <tr>
@@ -66,20 +65,20 @@ export default class ShowCategory extends Component {
 
           <td>
             <a
-              href={"/ShowCategoryList/edit/" + props.todo._id}
+              href={"/ShowCategoryList/edit/" + props.todo.id}
               class="btn btn-primary btn-info"
               role="button"
               aria-pressed="true"
             >
               Edit
             </a>
-            {/* <button onClick={this.delete.bind(this, props.todo._id)} class="btn btn-danger">Delete</button> */}
+            <button onClick={this.delete.bind(this, props.todo.id)} class="btn btn-danger">Delete</button>
             {/* <p>{message}</p> */}
           </td>
         </tr>
       </div>
     );
-    //used in filtering the content coming from database mongo
+    // используется при фильтрации содержимого, поступающего из базы данных
     let filteredusers = this.state.todos.filter(category => {
       return category.name.indexOf(this.state.search) !== -1;
     });

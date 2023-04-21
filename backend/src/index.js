@@ -6,7 +6,8 @@ const authRouter = require("./Routes/authRouter");
 const categoryRouter = require("./Routes/categoryRouter");
 const courseRouter = require("./Routes/courseRouter");
 const lectureRouter = require("./Routes/lectureRouter");
-const videoRouter=require("./Routes/videoRouter");
+const videoRouter = require("./Routes/videoRouter");
+const enrollment = require("./Routes/enrollmentRouter");
 
 const app = express();
 app.use(cors());
@@ -17,7 +18,7 @@ app.use(categoryRouter);
 app.use(courseRouter);
 app.use(lectureRouter);
 app.use(videoRouter);
-
+app.use(enrollment);
 
 // app.use((req, res, next) => {
 //   res.setHeader("Access-Control-Allow-Origin", "http://localhost:9000");
@@ -32,7 +33,10 @@ app.use(videoRouter);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 

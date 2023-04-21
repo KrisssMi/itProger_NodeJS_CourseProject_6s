@@ -7,7 +7,6 @@ class Services extends Component {
       <div>
         {/* Navigation bar */}
         <NavBar />
-
         {/* breadcrumb */}
         {/*====================  breadcrumb area ====================*/}
         <div className="breadcrumb-area breadcrumb-bg">

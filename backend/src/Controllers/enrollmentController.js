@@ -21,10 +21,10 @@ class enrollmentController {
   async getAllEnrollments(req, res) {
     try {
       const enrollments = await DbClient.enrollment.findMany();
-      return res.send(enrollments);
+      return res.json(enrollments);
     } catch (e) {
       console.log(e);
-      res.status(400).send({ message: "Enrollments error" });
+      res.status(400).json({ message: "Enrollments error" });
     }
   }
 
@@ -60,13 +60,13 @@ class enrollmentController {
       });
 
       const course = await DbClient.course.findUnique({
-        where: { courseName: req.body.course },
+        where: { name: req.body.course },
       });
 
       const enrollment = await DbClient.enrollment.create({
         data: {
-          user: { connect: { id: user.id } },
-          course: { connect: { id: course.id } },
+          user_id: user.id,
+          course_id: course.id,
         },
       });
 

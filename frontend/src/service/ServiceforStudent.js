@@ -30,9 +30,9 @@ class Services extends Component{
 
                     <div className="service-grid-item__content">
                         <h3 className="title">
-                        <a href={`${process.env.PUBLIC_URL}/`+`blog-details-left-sidebar/`+`${val.course._id}`}>{val.course.courseName}</a>
+                        <a href={`${process.env.PUBLIC_URL}/`+`blog-details-left-sidebar/`+`${val.course.id}`}>{val.course.name}</a>
                         </h3>
-                        <p className="subtitle">{val.course.courseDescription}</p>
+                        <p className="subtitle">{val.course.description}</p>
                         {/*  <a href={`${process.env.PUBLIC_URL}/${val.pageLink}`} className="see-more-link">SEE MORE</a> */}
                     </div>
                     </div>

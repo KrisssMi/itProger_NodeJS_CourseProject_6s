@@ -14,15 +14,15 @@ export default class CatEdit extends Component {
   componentDidMount() {
     axios
       .get("http://localhost:9000/category?id=" + this.props.match.params.id)
-      .then(response => {
+      .then((response) => {
         this.setState({ todos: response.data });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
 
-  onChange = e => {
+  onChange = (e) => {
     const state = this.state.todos;
     state[e.target.name] = e.target.value;
     this.setState({ todos: state });
@@ -30,15 +30,15 @@ export default class CatEdit extends Component {
 
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
-  handleChange(e) {
-    var whoIsChecked = { ...this.state.whoIsChecked };
-    whoIsChecked.allowDestroyAll = e.target.value;
-    this.setState({ whoIsChecked }, () => {
-      console.log(this.state);
-    });
-  }
+  // handleChange(e) {
+  //   var whoIsChecked = { ...this.state.whoIsChecked };
+  //   whoIsChecked.allowDestroyAll = e.target.value;
+  //   this.setState({ whoIsChecked }, () => {
+  //     console.log(this.state);
+  //   });
+  // }
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const { no, name } = this.state.todos;
@@ -46,9 +46,9 @@ export default class CatEdit extends Component {
     axios
       .put("http://localhost:9000/category?id=" + this.props.match.params.id, {
         no,
-        name
+        name,
       })
-      .then(result => {
+      .then((result) => {
         this.props.history.push("/ShowCategoryList/");
       });
   };
@@ -62,17 +62,12 @@ export default class CatEdit extends Component {
           <div className="row">
             <div className="col-md-6 mt-5 mx-auto">
               <form onSubmit={this.onSubmit}>
-                {/* <Link to="/" className="btn btn-light">
+                <Link to="/ShowCategoryList" className="btn btn-light">
                   Go Back
-                </Link> */}
+                </Link>
                 <br />
                 <br />
-                <h1
-                  className="h3 mb-3 font-weight-bold"
-                  // style={{ textDecoration: "underline" }}
-                >
-                  EDIT Category
-                </h1>
+                <h1 className="h3 mb-3 font-weight-bold">EDIT Category</h1>
                 <br />
                 <div>
                   <label>Category Name: </label>
@@ -80,17 +75,14 @@ export default class CatEdit extends Component {
                   <input
                     type="text"
                     class="form-control"
-                    name="categoryName"
+                    name="name"
                     value={this.state.todos.name}
                     onChange={this.onChange}
                     placeholder="Category name"
                   />
                 </div>
                 <br />
-                <button
-                  type="submit"
-                  className="btn btn-lg btn-info btn-block"
-                >
+                <button type="submit" className="btn btn-lg btn-info btn-block">
                   Update
                 </button>
               </form>

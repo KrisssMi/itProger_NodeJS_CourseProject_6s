@@ -21,10 +21,12 @@
 
     [class*="col-"] {
       height: auto;
+      text-align: left;
       
       * {
         height: auto;
         font-family: 'Nunito';
+        text-align: left;
       }
     }
   }

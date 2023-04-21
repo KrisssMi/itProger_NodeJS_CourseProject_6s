@@ -45,7 +45,7 @@ class courseController {
 
   async getCourseById(req, res) {
     try {
-      const { id } = req.params;
+      const { id } = req.query;
       const course = await DbClient.course.findUnique({
         where: {
           id: Number(id),
@@ -77,33 +77,93 @@ class courseController {
     }
   }
 
-  async updateCourse(req, res) {
+  async deleteCoursesByCategory(req, res) {
     try {
-      const { id } = req.params;
-      const { name, description } = req.body;
-      const category = await DbClient.category.findUnique({
+      const { id } = req.query;
+      const courses = await DbClient.course.findMany({
         where: {
-          name: req.body.category,
+          category: Number(id),
         },
       });
 
+      if (!courses || courses.length === 0) {
+        return res.status(404).send("No courses found for this category.");
+      }
+
+      // Удаление всех найденных курсов
+      await DbClient.course.deleteMany({
+        where: {
+          category: Number(id),
+        },
+      });
+      return res.send({
+        message: `Courses for category with id ${id} successfully deleted.`,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(400).send({ message: "Error deleting courses by category" });
+    }
+  }
+
+  // async updateCourse(req, res) {
+  //   try {
+  //     const { id } = req.params;
+  //     const { name, description } = req.body;
+  //     const category = await DbClient.category.findUnique({
+  //       where: {
+  //         name: req.body.category.toString(),
+  //       },
+  //     });
+
+  //     const course = await DbClient.course.update({
+  //       where: {
+  //         id: parseInt(req.params),
+  //       },
+  //       data: {
+  //         name: name,
+  //         description: description,
+  //         // Category: {
+  //         //   connect: {
+  //         //     id: category.id,
+  //         //   },
+  //         // },
+  //       },
+  //     });
+  //     if (!course) {
+  //       return res.status(404).send("Course with this id not found.");
+  //     }
+  //     return res.send(course);
+  //   } catch (e) {
+  //     console.log(e);
+  //     res.status(400).send({ message: "Course error" });
+  //   }
+  // }
+
+  async updateCourse(req, res) {
+    try {
+      const { id } = req.params;
+      const { name, description, category } = req.body; // Update to include category in req.body
+
       const course = await DbClient.course.update({
         where: {
-          id: Number(id),
+          id: parseInt(id), // Parse id as integer
         },
         data: {
           name: name,
           description: description,
           Category: {
+            // Update to include category field in data
             connect: {
-              id: category.id,
+              id: category, // Update to use req.body.category directly
             },
           },
         },
       });
+
       if (!course) {
         return res.status(404).send("Course with this id not found.");
       }
+
       return res.send(course);
     } catch (e) {
       console.log(e);

@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 
 class FeatureIcon extends Component{
     render(){
-
-        let data = [
-            {featureIcon: "feature-1.png", featureTitle: "Top Rated", featureDescription: "Lorem ipsum dolor sit amet, consec tetur adipisicing elit. Officia odio eum corporis consequatur."},
-            {featureIcon: "feature-2.png", featureTitle: "Best Quality", featureDescription: "Lorem ipsum dolor sit amet, consec tetur adipisicing elit. Officia odio eum corporis consequatur."},
-            {featureIcon: "feature-3.png", featureTitle: "Low Cost", featureDescription: "Lorem ipsum dolor sit amet, consec tetur adipisicing elit. Officia odio eum corporis consequatur."}
-        ];
-
         let Datalist = data.map((val, i)=>{
             return(
                 <div className="col-lg-4 col-md-6 col-12 section-space--bottom--30" key={i}>

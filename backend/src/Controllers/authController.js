@@ -117,6 +117,58 @@ class authController {
       res.status(400).json({ message: "Get user error" });
     }
   }
+
+  async getUserById(req, res) {
+    try {
+      const id = parseInt(req.query.id);
+      if (!Number.isInteger(id)) {
+        return res.status(400).json({ message: "Invalid user ID" });
+      }
+      const user = await DbClient.user.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: "User error" });
+    }
+  }
+
+    async updateUser(req, res) {
+    try {
+      const id = parseInt(req.query.id);
+      if (!Number.isInteger(id)) {
+        return res.status(400).json({ message: "Invalid user ID" });
+      }
+      const user = await DbClient.user.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      const { name, email, password, role } = req.body;
+      const userNew = await DbClient.user.update({
+        where: {
+          id: Number(id),
+        },
+        data: {
+          ...req.body,
+        },
+      });
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      res.status(400).json({ message: "User error" });
+    }
+  }
+
 }
 
 module.exports = new authController();

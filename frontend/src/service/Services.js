@@ -35,7 +35,7 @@ class Services extends Component {
                     href={
                       `${process.env.PUBLIC_URL}/` +
                       `blog-details-left-sidebar/` +
-                      `${val._id}`
+                      `${val.id}`
                     }
                   >
                     {val.name}

@@ -8,22 +8,22 @@ import jwt_decode from "jwt-decode";
 
 import Login from "./auth/Login";
 import Register from "./auth/Register";
-import UserList from "./admin/showallusers";
-import EditUser from "./admin/edituser";
+import UserList from "./admin/ShowAllUsers";
+import EditUser from "./admin/EditUser";
 import ShowCategoryList from "./admin/ShowCategoryAdmin";
-import ShowCourseList from "./admin/showCourseAdmin";
+import ShowCourseList from "./admin/ShowCourseAdmin";
 import EditCourseList from "./admin/editCourseAdmin";
-import CreateCategoryAdmin from "./admin/createCategoryAdmin";
-import EditCategoryList from "./admin/editCategoryAdmin";
-import EnrollmentList from "./admin/showEnrollAdmin";
+import CreateCategoryAdmin from "./admin/CreateCategoryAdmin";
+import EditCategoryList from "./admin/EditCategoryAdmin";
+import EnrollmentList from "./admin/ShowEnrollmentAdmin";
 import Dashboard from "./admin/Dashboard";
-import CreateEnrollAdmin from "./admin/createEnrollAdmin";
+import CreateEnrollAdmin from "./admin/CreateEnrollmentAdmin";
 import HomeTwo from "./HomeTwo";
 import Services from "./service/Services";
 import ServicesForInstructor from "./service/ServicesByInstructor";
 import Servicesforstudent from "./service/ServiceforStudent";
-//import AddCourse from "./blog/AddCourse";
-//import AddLecture from "./blog/Addlecture";
+import AddCourse from "./blog/AddCourse";
+import AddLecture from "./blog/AddLecture";
 //import BlogDetailsLeftSidebar from "./blog/BlogDetailsLeftSidebar";
 import PageNotFound from "./pages/404";
 import NoMAtch from "./pages/404";
@@ -99,11 +99,11 @@ class Root extends Component {
               path={`${process.env.PUBLIC_URL}/services`}
               component={Services}
             />
-            {/* <PrivateRoute
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/addcourse/:id`}
               component={AddCourse}
-            /> */}
+            />
             {/* <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/blog-details-left-sidebar/:id`}
@@ -169,11 +169,11 @@ class Root extends Component {
               path={`${process.env.PUBLIC_URL}/CreateCategoryAdmin`}
               component={CreateCategoryAdmin}
             />
-            {/* <Route
+            <Route
               exact
               path={`${process.env.PUBLIC_URL}/add-lecture/:id`}
               component={AddLecture}
-            /> */}
+            />
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/404`}

@@ -73,6 +73,7 @@
   }
   a, button, img, input, span {
       transition: all 0.1s ease 0s;
+      font-family: 'Nunito';
   }
   *:focus {
       outline: none !important;
@@ -105,7 +106,7 @@
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' height='10px' width='15px'%3E%3Ctext x='0' y='10' fill='black'%3E%E2%96%BE%3C/text%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: 95% 50%;
-
+    font-family: 'Nunito';
   }
 
 

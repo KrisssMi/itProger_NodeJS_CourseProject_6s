@@ -37,6 +37,8 @@ h4,
 h5 {
   color: #111;
   font-weight: 600;
+  font-family: 'Nunito';
+  text-align: center;
 }
 
 h1 {

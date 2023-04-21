@@ -60,6 +60,36 @@ model User {
   role       Roles        @default(USER)
   Enrollment Enrollment[]
   Statistic  Statistic[]
+  // Пример связи один-к-одному
+  Profile   Profile
+}
+
+model Profile {
+  id Int            @id @default(autoincrement())
+  userId Int        // Можно заменить на `user: User @relation(fields: [userId], references: [id])`
+  handle String
+  company String?
+  website String?
+  location String?
+  skills String[]
+  bio String?
+  githubusername String?
+  education Education[]
+  date DateTime    @default(now())
+}
+
+model Education {
+  id Int            @id @default(autoincrement())
+  school String
+  degree String
+  fieldofstudy String
+  from DateTime
+  to DateTime?
+  current Boolean   @default(false)
+  description String?
+  // Связь многие-к-одному
+  profile Profile   @relation(fields: [profileId], references: [id])
+  profileId Int
 }
 
 enum Roles {

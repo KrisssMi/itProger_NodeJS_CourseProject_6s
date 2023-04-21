@@ -4,6 +4,22 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faCode,
+  faUser,
+  faBlog,
+  faUsers,
+  faList,
+  faFileCode,
+  faComputer,
+  faSignOutAlt,
+  faSignIn,
+  faList12,
+} from "@fortawesome/free-solid-svg-icons";
+import "../components/NavBarStyle.css";
+
 class NavBar extends Component {
   onLogoutClick(e) {
     // метод для выхода из аккаунта
@@ -65,34 +81,228 @@ class NavBar extends Component {
                             </a>
                             <ul id="main-nav-ul">
                               <li>
-                                <a href={`${process.env.PUBLIC_URL}/dashboard`}>
-                                  DASHBOARD
+                                <Link
+                                  to={`${process.env.PUBLIC_URL}/dashboard`}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faHome} size="2x" />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      STATISTIC
+                                    </span>
+                                  </div>
+                                </Link>
+                              </li>
+                              <li className="has-children has-children--multilevel-submenu">
+                                <a>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faCode} size="2x" />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      COURSES
+                                    </span>
+                                  </div>
+                                </a>
+                                <ul className="submenu">
+                                  <li>
+                                    <a
+                                      href={
+                                        `${process.env.PUBLIC_URL}/services/` +
+                                        users.id
+                                      }
+                                    >
+                                      MY COURSES
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      href={
+                                        `${process.env.PUBLIC_URL}/addcourse/` +
+                                        users.id
+                                      }
+                                    >
+                                      ADD COURSES
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      href={
+                                        `${process.env.PUBLIC_URL}/add-lecture/` +
+                                        users.id
+                                      }
+                                    >
+                                      ADD LECTURE
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      href={`${process.env.PUBLIC_URL}/services`}
+                                    >
+                                      ALL COURSES
+                                    </a>
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <Link
+                                  to={`${process.env.PUBLIC_URL}/finaldashboard`}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faUser} size="2x" />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      PROFILE
+                                    </span>
+                                  </div>
+                                </Link>{" "}
+                              </li>
+                              <li>
+                                <a
+                                  href={`${process.env.PUBLIC_URL}/finalprofiles`}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faBlog} size="2x" />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      ALL PROFILES
+                                    </span>
+                                  </div>
                                 </a>
                               </li>
                               <li>
                                 <a href={`${process.env.PUBLIC_URL}/allusers`}>
-                                  USERS
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faUsers} size="2x" />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      USERS
+                                    </span>
+                                  </div>
                                 </a>
                               </li>
                               <li>
                                 <a
                                   href={`${process.env.PUBLIC_URL}/ShowCourseList`}
                                 >
-                                  COURSES
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faList} size="2x" />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      COURSES
+                                    </span>
+                                  </div>
                                 </a>
                               </li>
                               <li>
                                 <a
                                   href={`${process.env.PUBLIC_URL}/ShowCategoryList`}
                                 >
-                                  CATEGORIES
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faFileCode}
+                                      size="2x"
+                                    />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      CATEGORIES
+                                    </span>
+                                  </div>
                                 </a>
                               </li>
                               <li>
                                 <a
                                   href={`${process.env.PUBLIC_URL}/EnrollmentList`}
                                 >
-                                  ENROLLED USERS
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faComputer}
+                                      size="2x"
+                                    />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      ENROLLED USERS
+                                    </span>
+                                  </div>
                                 </a>
                               </li>
                               <li>
@@ -102,7 +312,27 @@ class NavBar extends Component {
                                   className="nav-link"
                                 >
                                   {" "}
-                                  LOGOUT
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faSignOutAlt}
+                                      size="2x"
+                                    />
+                                    <span
+                                      style={{
+                                        fontSize: "9px",
+                                        marginTop: "5px",
+                                      }}
+                                    >
+                                      {" "}
+                                      LOGOUT
+                                    </span>
+                                  </div>
                                 </a>
                               </li>
                             </ul>
@@ -123,7 +353,25 @@ class NavBar extends Component {
       var authLinks = (
         <React.Fragment>
           <li className="has-children has-children--multilevel-submenu">
-            <a>COURSES</a>
+            <a>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faList} size="2x" />
+                <span
+                  style={{
+                    fontSize: "9px",
+                    marginTop: "5px",
+                  }}
+                >
+                  COURSES
+                </span>
+              </div>
+            </a>
             <ul className="submenu">
               <li>
                 <a
@@ -145,8 +393,23 @@ class NavBar extends Component {
               onClick={this.onLogoutClick.bind(this)}
               className="nav-link"
             >
-              {" "}
-              LOGOUT
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} size="2x" />
+                <span
+                  style={{
+                    fontSize: "9px",
+                    marginTop: "5px",
+                  }}
+                >
+                  LOGOUT{" "}
+                </span>
+              </div>
             </a>
           </li>
         </React.Fragment>
@@ -208,7 +471,23 @@ class NavBar extends Component {
         <React.Fragment>
           <li>
             <Link className="nav-link" to="/login/student">
-              LOGIN
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faSignIn} size="2x" />
+                <span
+                  style={{
+                    fontSize: "9px",
+                    marginTop: "5px",
+                  }}
+                >
+                  LOGIN
+                </span>
+              </div>
             </Link>
           </li>
           <li>
@@ -244,7 +523,23 @@ class NavBar extends Component {
                           <ul id="main-nav-ul">
                             <li>
                               <a href={`${process.env.PUBLIC_URL}/home-two`}>
-                                HOME
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <FontAwesomeIcon icon={faHome} size="2x" />
+                                  <span
+                                    style={{
+                                      fontSize: "9px",
+                                      marginTop: "5px",
+                                    }}
+                                  >
+                                    HOME
+                                  </span>
+                                </div>
                               </a>
                             </li>
                             {isAuthenticated ? authLinks : guestLinks}{" "}

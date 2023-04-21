@@ -10,8 +10,10 @@ router.post('/registration', [
     check('password', "Password must be longer than 3 and shorter than 12").isLength({min: 3, max: 12})
 ], authController.registration);
 router.post('/login', authController.login);
-router.get("/users", roleMiddleware(["ADMIN"]), authController.getUsers);
+router.get("/users", authController.getUsers);
 router.get("/is-admin", authController.isAdmin);
 router.get("/currentUser", authController.currentUser);
+router.get("/user", authController.getUserById);
+router.put("/user", authController.updateUser);
 
 module.exports = router;
