@@ -7,7 +7,7 @@ const roleMiddleware = require("../Middleware/roleMiddleware");
 router.post("/course/add", courseController.addCourse);
 router.get("/courses", courseController.getAllCourses);
 router.get("/course/", courseController.getCourseById);
-router.delete("/course/:id", courseController.deleteCourse);
+router.delete("/course/", courseController.deleteCourse);
 router.delete("/course/deleteByCategory/:id", courseController.deleteCoursesByCategory);
 router.put("/course/", courseController.updateCourse);
 

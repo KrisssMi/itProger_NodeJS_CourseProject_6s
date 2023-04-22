@@ -1,100 +1,58 @@
 const { PrismaClient } = require("@prisma/client");
 const DbClient = new PrismaClient();
 const path = require("path");
-const multer = require("multer");
 const { uploadVideo } = require("./videoController.js");
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./src/static");
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${Date.now()}${ext}`);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 100, // 50MB
-  },
-});
-
-// const uploadVideo = async (req, res) => {
-//   try {
-//     const filePath = await new Promise((resolve, reject) => {
-//       upload.single("video")(req, res, (err) => {
-//         if (err) {
-//           reject(null);
-//         } else {
-//           if (req.file == undefined) {
-//             resolve(null);
-//           } else {
-//             resolve(req.file.path);
-//           }
-//         }
-//       });
-//     });
-
-//     console.log("File uploaded successfully:", filePath);
-//     // Handle the uploaded file path here
-//     return filePath;
-//   } catch (err) {
-//     console.error("File upload failed:", err);
-//     // Handle the upload error here
-//     return null;
-//   }
-// };
 
 class lectureController {
   async addLecture(req, res) {
     try {
-      const { name, content, course_id } = req.body;
-
-      // //Проверка существования курса
-      // const existingCourse = await DbClient.course.findUnique({
-      //   where: { id: course_id },
-      // });
-
-      // if (!existingCourse) {
-      //   // Если курс не найден, возвращаем ошибку
-      //   return res.status(404).json({ error: "Course not found" });
-      // }
-
-      // Загрузка видео
-      const filePath = await new Promise((resolve, reject) => {
-        upload.single("video")(req, res, (err) => {
-          if (err) {
-            reject(null);
-          } else {
-            if (req.file == undefined) {
-              resolve(null);
-            } else {
-              resolve(req.file.path);
-            }
-          }
-        });
-      });
-      console.log(data);
-
-      // Создание лекции с информацией о видео
-      const lecture = await DbClient.lecture.create({
-        data: {
-          name,
-          content,
-          Course: { connect: { id: course_id } }, // Связь с курсом
-          videoLink: filePath ? filePath : null,
+      console.log("data:::");
+      console.log(req.body.video);
+      const videoLink = await uploadVideo(req, res);
+      const course = await DbClient.course.findFirst({
+        where: {
+          name: req.body.course,
         },
       });
 
-      console.log("Lecture created successfully:", lecture);
+      if (!course) {
+        res.status(400).json("This course doesn't exist");
+        return;
+      }
 
-      // Возвращаем созданную лекцию в ответе
-      res.json(lecture);
-    } catch (err) {
-      console.error("Failed to create lecture:", err);
-      res.status(500).json({ error: "Failed to create lecture" });
+      if (
+        await DbClient.lecture.findFirst({
+          where: {
+            name: req.body.name,
+            Course: {
+              id: course.id,
+            },
+          },
+        })
+      ) {
+        res
+          .status(400)
+          .json("Lecture with this name already exists in this course");
+        return;
+      }
+
+      const upload = await DbClient.lecture.create({
+        data: {
+          name: req.body.name,
+          content: req.body.content,
+          videoLink,
+          Course: {
+            connect: {
+              id: course.id,
+            },
+          },
+        },
+      });
+
+      res.status(201).json({ upload });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json("Server error");
     }
   }
 }

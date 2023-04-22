@@ -30,19 +30,18 @@ export default class CatEdit extends Component {
 
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
-  // handleChange(e) {
-  //   var whoIsChecked = { ...this.state.whoIsChecked };
-  //   whoIsChecked.allowDestroyAll = e.target.value;
-  //   this.setState({ whoIsChecked }, () => {
-  //     console.log(this.state);
-  //   });
-  // }
-
   onSubmit = (e) => {
     e.preventDefault();
 
     const { no, name } = this.state.todos;
     console.log(this.state.todos);
+
+    // Проверка, чтобы поле "name" не было пустым
+    if (!name) {
+      alert("Category name cannot be empty");
+      return;
+    }
+
     axios
       .put("http://localhost:9000/category?id=" + this.props.match.params.id, {
         no,

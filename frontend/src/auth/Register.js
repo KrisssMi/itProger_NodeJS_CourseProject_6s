@@ -42,9 +42,15 @@ class Register extends Component {
 
     axios
       .post("http://localhost:9000/auth/registration", newUser)
-      .then((res) => console.log(res.data))
-      .catch((err) => this.setState({ errors: err.response.data }));
-    this.props.history.push("/login/" + this.props.match.params.role); // переход на страницу логина
+      .then((res) => {
+        console.log(res.data);
+        this.props.history.push("/login/" + this.props.match.params.role);
+      })
+      .catch((err) => {
+        if (err.response && err.response.data) {
+          this.setState({ errors: err.response.data });
+        }
+      });
   }
 
   componentWillReceiveProps(nextProps) {

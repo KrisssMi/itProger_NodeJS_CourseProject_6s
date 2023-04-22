@@ -63,17 +63,13 @@ export default class UserList extends Component {
     const divStyle = {
       display: "contents",
     };
-    // var message='You selected '+this.state.todos._id
     const Todo = (props) => (
       <div style={divStyle}>
         <tr>
           <td>{props.todo.name}</td>
           <td>{props.todo.description}</td>
-          {/* <td>{props.todo.instructor.email}</td> */}
-          <td>{props.todo.category}</td>
+          <td>{props.todo.Category.name}</td>
           <td>
-            {/* <Link to={"users/edit/"+props.todo._id}>Edit</Link> */}
-            {/* <button className="button muted-button" class="btn btn-success"><Link to={"users/edit/"+props.todo._id}>Edit</Link></button> */}
             <a
               href={"/ShowCourseList/edit/" + props.todo.id}
               class="btn btn-primary btn-info"
@@ -82,8 +78,12 @@ export default class UserList extends Component {
             >
               Edit
             </a>
-            {/* <button onClick={this.delete.bind(this, props.todo._id)} class="btn btn-danger">Delete</button> */}
-            {/* <p>{message}</p> */}
+            <button
+              onClick={this.delete.bind(this, props.todo.id)}
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
           </td>
         </tr>
       </div>
@@ -93,7 +93,8 @@ export default class UserList extends Component {
       return (
         course.name.indexOf(this.state.search) !== -1 ||
         course.description.indexOf(this.state.search) !== -1 ||
-        (course.category && course.category.indexOf(this.state.search) !== -1)
+        (course.Category.name &&
+          course.Category.name.indexOf(this.state.search) !== -1)
         // course.instructor.email.indexOf(this.state.search) !== -1
       );
     });
@@ -128,7 +129,7 @@ export default class UserList extends Component {
           />
         </div>
 
-{/* <div>
+        {/* <div>
         <DataTable
           value={this.state.todos}
           paginator
@@ -169,7 +170,6 @@ export default class UserList extends Component {
               <tr>
                 <th>Course Name</th>
                 <th>Course Description</th>
-                {/* <th>Instructor</th> */}
                 <th>Category</th>
 
                 <th>Action</th>

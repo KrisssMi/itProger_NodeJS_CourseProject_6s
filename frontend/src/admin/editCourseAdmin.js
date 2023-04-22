@@ -59,8 +59,14 @@ export default class EditCourse extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { name, description, category } =
-      this.state.todos;
+    const { name, description, category } = this.state.todos;
+
+    // Проверка, чтобы поле "name" не было пустым
+    if (!name) {
+      alert("Course Title cannot be empty");
+      return;
+    }
+
     console.log(this.state.todos);
     axios
       .put("http://localhost:9000/course?id=" + this.state.todos.id, {
@@ -83,7 +89,14 @@ export default class EditCourse extends Component {
               <h3 class="panel-title">Edit Course</h3>
             </div>
             <div class="panel-body">
-              {/* <a href={"/showcourses/"} class="btn btn-primary btn active" role="button" aria-pressed="true">Back</a> */}
+              <a
+                href={"/ShowCourseList/"}
+                class="btn btn-primary btn active"
+                role="button"
+                aria-pressed="true"
+              >
+                Back
+              </a>
               <form onSubmit={this.onSubmit}>
                 <div class="form-group">
                   <label for="name">Course Title:</label>
@@ -101,7 +114,7 @@ export default class EditCourse extends Component {
                   <textarea
                     type="text"
                     class="form-control"
-                    name="courseDescription"
+                    name="description"
                     value={this.state.todos.description}
                     onChange={this.onChange}
                     placeholder="Description"
@@ -112,8 +125,8 @@ export default class EditCourse extends Component {
                   Update
                 </button>{" "}
                 &nbsp;
-                {/* <button onClick={this.delete.bind(this, this.state.todos._id)} class="btn btn-danger">Delete</button> */}
-                {/* <p>{message}</p> */}
+                {/* <button onClick={this.delete.bind(this, this.state.todos.id)} class="btn btn-danger">Delete</button>
+                <p>{message}</p> */}
               </form>
             </div>
           </div>

@@ -164,29 +164,6 @@ class NavBar extends Component {
                                 </ul>
                               </li>
                               <li>
-                                <Link
-                                  to={`${process.env.PUBLIC_URL}/finaldashboard`}
-                                >
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                    }}
-                                  >
-                                    <FontAwesomeIcon icon={faUser} size="2x" />
-                                    <span
-                                      style={{
-                                        fontSize: "9px",
-                                        marginTop: "5px",
-                                      }}
-                                    >
-                                      PROFILE
-                                    </span>
-                                  </div>
-                                </Link>{" "}
-                              </li>
-                              <li>
                                 <a
                                   href={`${process.env.PUBLIC_URL}/finalprofiles`}
                                 >
@@ -386,6 +363,27 @@ class NavBar extends Component {
                 <a href={`${process.env.PUBLIC_URL}/services`}>ALL COURSES</a>
               </li>
             </ul>
+          </li>
+          <li>
+            <Link to={`${process.env.PUBLIC_URL}/finaldashboard`}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faUser} size="2x" />
+                <span
+                  style={{
+                    fontSize: "9px",
+                    marginTop: "5px",
+                  }}
+                >
+                  PROFILE
+                </span>
+              </div>
+            </Link>{" "}
           </li>
           <li>
             <a

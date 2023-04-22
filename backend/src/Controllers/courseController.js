@@ -33,9 +33,36 @@ class courseController {
     }
   }
 
+  // async getAllCourses(req, res) {
+  //   try {
+  //     const courses = await DbClient.course.findMany({
+  //       include: {
+  //         Category: true, // Используем include для заполнения объектов category
+  //       },
+  //     });
+  //     return res.send(courses);
+  //   } catch (e) {
+  //     console.log(e);
+  //     res.status(400).send({ message: "Courses error" });
+  //   }
+  // }
+
   async getAllCourses(req, res) {
     try {
-      const courses = await DbClient.course.findMany();
+      const courses = await DbClient.course.findMany({
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          // Добавляем поле "category" и внутри него выбираем поле "name"
+          Category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
       return res.send(courses);
     } catch (e) {
       console.log(e);
@@ -64,16 +91,16 @@ class courseController {
 
   async deleteCourse(req, res) {
     try {
-      const { id } = req.params;
+      const { id } = req.query;
       const course = await DbClient.course.delete({
         where: {
           id: Number(id),
         },
       });
-      return res.send(course);
+      return res.json(course);
     } catch (e) {
       console.log(e);
-      res.status(400).send({ message: "Course deletion error" });
+      res.status(400).json({ message: "Course deletion error" });
     }
   }
 
@@ -141,7 +168,7 @@ class courseController {
 
   async updateCourse(req, res) {
     try {
-      const { id } = req.params;
+      const { id } = req.query;
       const { name, description, category } = req.body; // Update to include category in req.body
 
       const course = await DbClient.course.update({

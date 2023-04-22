@@ -16,7 +16,6 @@ export default class Upload extends Component {
     super(props);
     this.state = {
       selectedFile: null,
-      // youtubelink : '',
       loaded: 0,
       Courses: [],
       course: "",
@@ -24,17 +23,12 @@ export default class Upload extends Component {
     };
     this.onChangeCourse = this.onChangeCourse.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
-    //this.onChangeYouTubeLink = this.onChangeYouTubeLink.bind(this);
   }
 
   componentDidMount() {
     axios
-      .get(
-        "http://localhost:9000/coursebyinstructor?id=" +
-          this.props.match.params.id
-      )
+      .get("http://localhost:9000/courses/")
       .then((response) => {
-        console.log(this.props.match.params.id);
         this.setState({ Courses: response.data });
       })
       .catch(function (error) {
@@ -44,7 +38,6 @@ export default class Upload extends Component {
 
   CourseList() {
     return this.state.Courses.map(function (currentTodo, i) {
-      //  console.log(currentTodo.categoryName)
       return <ShowCourse todo={currentTodo} key={i} />;
     });
   }
@@ -60,12 +53,6 @@ export default class Upload extends Component {
       title: e.target.value,
     });
   }
-
-  // onChangeYouTubeLink(e){
-  //   this.setState({
-  //     youtubelink : e.target.value
-  //   });
-  // }
 
   checkMimeType = (event) => {
     //getting file object
@@ -131,24 +118,29 @@ export default class Upload extends Component {
       });
     }
   };
-  onClickHandler = () => {
+  onClickHandler = (event) => {
+    event.preventDefault();
     console.log(`Todo course: ${this.state.course}`);
     console.log(`Todo title: ${this.state.title}`);
 
-    const data = new FormData();
-    data.append("course", this.state.course);
-    data.append("title", this.state.title);
-    if (this.state.youtubelink == "") {
-      for (var x = 0; x < this.state.selectedFile.length; x++) {
-        data.append("file", this.state.selectedFile[x]);
-      }
-    } else {
-      data.append("videoLink", this.state.youtubelink);
-    }
+    // const data = new FormData();
+    // data.append("course", this.state.course); // добавить данные в FormData
+    // data.append("title", this.state.title); // добавить данные в FormData
 
-    console.log(data);
+    // console.log(data.has("course")); // true, если данные 'course' были добавлены в FormData
+    // console.log(data.get("course")); // значение, связанное с ключом 'course'
+
+    // console.log(data.has("title")); // true, если данные 'title' были добавлены в FormData
+    // console.log(data.get("title"));
+    // console.log("data na fronte");
+    // console.log(data.values());
+
+    const form = new FormData();
+    form.append("course", this.state.course);
+    form.append("name", this.state.title);
+    form.append("video", this.state.selectedFile[0]);
     axios
-      .post("http://localhost:9000/lecture/add", data, {
+      .post("http://localhost:9000/lecture/add", form, {
         onUploadProgress: (ProgressEvent) => {
           this.setState({
             loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
@@ -156,19 +148,15 @@ export default class Upload extends Component {
         },
       })
       .then((res) => {
-        // then print response status
         toast.success("upload success");
       })
       .catch((err) => {
-        // then print response status
         toast.error("upload fail");
       });
-    setTimeout(
-      function () {
-        window.location.reload();
-      }.bind(this),
-      1300
-    );
+    // setTimeout(function(){
+    //   window.location.reload()
+    // }.bind(this), 1300
+    // )
   };
 
   render() {
@@ -213,7 +201,6 @@ export default class Upload extends Component {
                     type="file"
                     name="file"
                     class="form-control"
-                    multiple
                     onChange={this.onChangeHandler}
                   />
                 </div>
@@ -223,17 +210,7 @@ export default class Upload extends Component {
                     {Math.round(this.state.loaded, 2)}%
                   </Progress>
                 </div>
-                <h3 style={{ textAlign: "center" }}> OR </h3>
-                <div className="form-group">
-                  <label>Add YouTube Video URL </label>
-                  <input
-                    type="text"
-                    placeholder="ex: https://www.youtube.com/embed/yO7Q3YWzY"
-                    className="form-control"
-                    value={this.state.youtubelink}
-                    onChange={this.onChangeYouTubeLink}
-                  />
-                </div>
+
                 <button
                   type="button"
                   class="btn btn-success btn-block"

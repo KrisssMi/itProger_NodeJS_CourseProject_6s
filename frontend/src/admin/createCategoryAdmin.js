@@ -29,13 +29,18 @@ export default class CreateCategory extends Component {
   onSubmit(e) {
     e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
 
+    // Check if name field is empty
+    if (!this.state.name) {
+      alert("Category name cannot be empty.");
+      return;
+    }
+
     console.log(`Form submitted:`);
     console.log(`Todo category: ${this.state.name}`);
 
     const newTodo = {
       no: this.state.no,
       name: this.state.name,
-
       // todo_completed: this.state.todo_completed
     };
 

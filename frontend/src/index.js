@@ -12,7 +12,7 @@ import UserList from "./admin/ShowAllUsers";
 import EditUser from "./admin/EditUser";
 import ShowCategoryList from "./admin/ShowCategoryAdmin";
 import ShowCourseList from "./admin/ShowCourseAdmin";
-import EditCourseList from "./admin/editCourseAdmin";
+import EditCourseList from "./admin/EditCourseAdmin";
 import CreateCategoryAdmin from "./admin/CreateCategoryAdmin";
 import EditCategoryList from "./admin/EditCategoryAdmin";
 import EnrollmentList from "./admin/ShowEnrollmentAdmin";
