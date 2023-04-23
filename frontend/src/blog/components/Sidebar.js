@@ -5,26 +5,21 @@ import PropTypes from "prop-types";
 class Sidebar extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
     this.state = {
     Courses:[]}
-   
 }
 
   componentDidMount() {
-    //to get data from mongo link
-    let user = JSON.parse(localStorage.getItem('userid'));
-    axios.get('http://localhost:5000/coursebyinstructor?id='+user)
+    let user = JSON.parse(localStorage.getItem('id'));
+    axios.get('http://localhost:9000/courses')
         .then(response => {
             this.setState({ Courses: response.data });
             console.log(user);
-
         })
         .catch(function (error){
             console.log(error);
         })
 }
- 
 
   render() {
     /* sidebar category */
@@ -32,37 +27,37 @@ class Sidebar extends Component {
       return (
         <li key={i}>
           <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
-            {val.courseName}
+            {val.name}
           </a>
         </li>
       );
     });
    
-    // let categoryData = [
-    //   { categoryLink: "blog-left-sidebar", categoryName: courseList[0] },
-    //   { categoryLink: "blog-left-sidebar", categoryName: "Mobile Apps" },
-    //   {
-    //     categoryLink: "blog-left-sidebar",
-    //     categoryName: "Programming Languages"
-    //   },
-    //   { categoryLink: "blog-left-sidebar", categoryName: "Game Development" },
-    //   { categoryLink: "blog-left-sidebar", categoryName: "Databases" },
-    //   { categoryLink: "blog-left-sidebar", categoryName: "Software Testing" },
-    //   {
-    //     categoryLink: "blog-left-sidebar",
-    //     categoryName: "Software Engineering"
-    //   }
-    // ];
+    let categoryData = [
+      { categoryLink: "blog-left-sidebar", categoryName: courseList[0] },
+      { categoryLink: "blog-left-sidebar", categoryName: "Mobile Apps" },
+      {
+        categoryLink: "blog-left-sidebar",
+        categoryName: "Programming Languages"
+      },
+      { categoryLink: "blog-left-sidebar", categoryName: "Game Development" },
+      { categoryLink: "blog-left-sidebar", categoryName: "Databases" },
+      { categoryLink: "blog-left-sidebar", categoryName: "Software Testing" },
+      {
+        categoryLink: "blog-left-sidebar",
+        categoryName: "Software Engineering"
+      }
+    ];
 
-    // let categoryDataList = courseList.map((val, i) => {
-    //   return (
-    //     <li key={i}>
-    //       <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
-    //         {val.courseName}
-    //       </a>
-    //     </li>
-    //   );
-    // });
+    let categoryDataList = courseList.map((val, i) => {
+      return (
+        <li key={i}>
+          <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
+            {val.name}
+          </a>
+        </li>
+      );
+    });
 
     /* sidebar popular post */
 

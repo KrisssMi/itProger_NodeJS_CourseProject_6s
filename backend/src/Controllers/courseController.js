@@ -62,7 +62,6 @@ class courseController {
           },
         },
       });
-
       return res.send(courses);
     } catch (e) {
       console.log(e);

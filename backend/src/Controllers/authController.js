@@ -358,6 +358,17 @@ class authController {
     }
   }
 
+  async deleteUser(req, res) {
+    try {
+      // Удаление пользователя
+      const removedUser = await DbClient.user.delete({
+        where: { id: req.query.id }
+      });
+      res.json(removedUser);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
 }
 
 module.exports = new authController();

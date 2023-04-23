@@ -8,19 +8,18 @@ import "./admin.css";
 export default class EnrollList extends Component {
   constructor(props) {
     super(props);
+    // initialize the state with an empty todos array
     this.state = { todos: [], search: "" };
     this.refreshEnrollList = this.refreshEnrollList.bind(this);
   }
 
-  //for searching event in page
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
-  // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
-      .get("http://localhost:9000/enrollments")
+      .get("http://localhost:9000/enrollments/")
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -34,6 +33,7 @@ export default class EnrollList extends Component {
       .delete("http://localhost:9000/enrollment?id=" + id)
       .then((result) => {
         // this.forceUpdate()
+
         toast.success("Deleted successfully");
         // this.props.history.push("/showenroll/")
       })
@@ -49,71 +49,44 @@ export default class EnrollList extends Component {
       1300
     );
   }
+
   refreshEnrollList = (res) => this.setState({ todos: res.data.todos });
   render() {
     const divStyle = {
       display: "contents",
     };
-    var message = "You selected " + this.state.todos.id;
-
+    // var message='You selected '+this.state.todos._id
     const Todo = (props) => (
       <div style={divStyle}>
         <tr>
-          {/* <td>{props.todo.user.email}</td>
-          <td>{props.todo.course.name}</td> */}
-          <td>{props.todo.user && props.todo.user.email}</td>
-          <td>{props.todo.course && props.todo.course.name}</td>
+          <td>{props.todo.user_id.email}</td>
+          <td>{props.todo.course_id.name}</td>
           <td>
-            <Link to={"users/edit/" + props.todo.id}>Edit</Link>
-            <button className="button muted-button" class="btn btn-success">
-              <Link to={"users/edit/" + props.todo.id}>Edit</Link>
-            </button>
-            <a
-              href={"showcourses/edit/" + props.todo.id}
-              class="btn btn-primary btn active"
-              role="button"
-              aria-pressed="true"
+            {/* <Link to={"users/edit/"+props.todo._id}>Edit</Link> */}
+            {/* <button className="button muted-button" class="btn btn-success"><Link to={"users/edit/"+props.todo._id}>Edit</Link></button> */}
+            {/* <a href={"showcourses/edit/"+props.todo._id} class="btn btn-primary btn active" role="button" aria-pressed="true">Delete</a> */}
+            {/* <link to='' refresh="true"> */}
+            <button
+              onClick={this.delete.bind(this, props.todo.id)}
+              class="btn btn-danger"
             >
               Delete
-            </a>
-            <link to="" refresh="true">
-              <button
-                onClick={this.delete.bind(this, props.todo.id)}
-                class="btn btn-danger"
-              >
-                Delete
-              </button>
-            </link>
-            <p>{message}</p>
+            </button>
+            {/* </link> */}
+            {/* <p>{message}</p> */}
           </td>
         </tr>
       </div>
     );
 
     let filteredusers = this.state.todos.filter((enroll) => {
-      console.log(enroll);
-      console.log(enroll.user_id);
-      console.log(enroll.course_id);
+      // console.log(enroll.user_id.email);
+      console.log(enroll.course_id?.name);
       return (
-        // enroll.user_id && enroll.user_id.email && enroll.course_id && enroll.course_id.name
-
         enroll.user_id.email.indexOf(this.state.search) !== -1 ||
         enroll.course_id.name.indexOf(this.state.search) !== -1
       );
     });
-
-    // let filteredusers = this.state.todos.filter((enroll) => {
-    //   console.log(enroll);
-    //   if (enroll && enroll.user && enroll.user.email) {
-    //     return (
-    //       enroll.user.email.indexOf(this.state.search) !== -1 ||
-    //       (enroll.course &&
-    //         enroll.course.name &&
-    //         enroll.course.name.indexOf(this.state.search) !== -1)
-    //     );
-    //   }
-    //   return false;
-    // });
 
     return (
       <div>
@@ -158,8 +131,8 @@ export default class EnrollList extends Component {
           >
             <thead>
               <tr>
-                <th>User Email</th>
-                <th>Course Name</th>
+                <th>Student Email</th>
+                <th>Course Title</th>
                 <th>Action</th>
               </tr>
             </thead>

@@ -42,7 +42,16 @@ class Services extends Component {
                   </a>
                 </h3>
                 <p className="subtitle">{val.description}</p>
-                {/* <a href={`${process.env.PUBLIC_URL}/`+`blog-details-left-sidebar/`+`${val._id}`} className="see-more-link">SEE MORE</a> */}
+                <a
+                  href={
+                    `${process.env.PUBLIC_URL}/` +
+                    `blog-details-left-sidebar/` +
+                    `${val.id}`
+                  }
+                  className="see-more-link"
+                >
+                  SEE MORE
+                </a>
               </div>
             </div>
           </div>
@@ -54,7 +63,6 @@ class Services extends Component {
       <div>
         {/* Navigation bar */}
         <NavBar />
-
         {/* breadcrumb */}
         {/*====================  breadcrumb area ====================*/}
         <div className="breadcrumb-area breadcrumb-bg">
@@ -63,10 +71,12 @@ class Services extends Component {
               <div className="col">
                 <div className="page-banner text-center">
                   <h1>ALL COURSES</h1>
-                  {/* <ul className="page-breadcrumb">
-                                        <li><a href="/">Home</a></li>
-                                        <li>Service</li>
-                                    </ul> */}
+                  <ul className="page-breadcrumb">
+                    <li>
+                      <a href="/">Home</a>
+                    </li>
+                    <li>Service</li>
+                  </ul>
                 </div>
               </div>
             </div>

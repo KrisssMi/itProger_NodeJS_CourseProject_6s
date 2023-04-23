@@ -19,7 +19,7 @@ export default class UserEdit extends Component {
   // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
-      .get("http://localhost:9000/user?id=" + this.props.match.params.id)
+      .get("http://localhost:9000/auth/user?id=" + this.props.match.params.id)
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -39,7 +39,6 @@ export default class UserEdit extends Component {
 
   RoleList() {
     return this.state.Roles.map(function (currentTodo, i) {
-      //  console.log(currentTodo.categoryName)
       return <ShowRole todo={currentTodo} key={i} />;
     });
   }
@@ -50,7 +49,7 @@ export default class UserEdit extends Component {
   };
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
-  deleteUser() {
+  delete() {
     axios
       .delete(
         "http://localhost:9000/auth/user?id=" + this.props.match.params.id
@@ -148,11 +147,16 @@ export default class UserEdit extends Component {
                   <p>{message}</p>
                 </div>
                 <br />
-                
+
                 <button type="submit" class="btn btn-dark">
                   Update
-                </button>{" "}
-                &nbsp;
+                </button>
+                <button
+                  onClick={this.delete.bind(this, this.state.todos.id)}
+                  class="btn btn-danger"
+                >
+                  Delete
+                </button>
               </form>
             </div>
           </div>

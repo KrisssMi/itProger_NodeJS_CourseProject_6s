@@ -6,8 +6,6 @@ const { uploadVideo } = require("./videoController.js");
 class lectureController {
   async addLecture(req, res) {
     try {
-      console.log("data:::");
-      console.log(req.body.video);
       const videoLink = await uploadVideo(req, res);
       const course = await DbClient.course.findFirst({
         where: {
@@ -53,6 +51,19 @@ class lectureController {
     } catch (error) {
       console.error(error);
       res.status(500).json("Server error");
+    }
+  }
+
+  async getAllLectures(req, res) {
+    try {
+      const lectures = await DbClient.lecture.findMany({
+        where: { course: req.query.id },
+        include: { Course: { select: { description: true } } }
+      });
+  
+      res.json(lectures);
+    } catch (err) {
+      res.status(500).json(err);
     }
   }
 }

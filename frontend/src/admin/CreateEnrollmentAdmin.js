@@ -52,14 +52,14 @@ export default class CreateEnroll extends Component {
 
   CourseList() {
     return this.state.Course.map(function (currentTodo, i) {
-      //  console.log(currentTodo.categoryName)
+      //console.log(currentTodo.name);
       return <ShowCourse todo={currentTodo} key={i} />;
     });
   }
 
   UserList() {
     return this.state.User.map(function (currentTodo, i) {
-      //  console.log(currentTodo.categoryName)
+      //console.log(currentTodo.name);
       return <ShowUser todo={currentTodo} key={i} />;
     });
   }
@@ -78,26 +78,23 @@ export default class CreateEnroll extends Component {
 
   /** Method to handle the submit event of the form **/
   onSubmit(e) {
-    e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
+    e.preventDefault();
 
     console.log(`Todo course for enrollment: ${this.state.course}`);
-    console.log(`Todo user for enrollment: ${this.state.user}`);
+    console.log(`Todo user for enrollment: ${this.state.student}`);
 
     const newTodo = {
-      student: this.state.user,
+      student: this.state.student,
       course: this.state.course,
       todo_completed: this.state.todo_completed,
     };
 
-    axios
-      .post("http://localhost:9000/enrollment/add", newTodo)
-      .then((result) => {
-        this.props.history.push("/EnrollmentList/");
-      });
+    axios.post("http://localhost:9000/enroll/add", newTodo).then((result) => {
+      this.props.history.push("/EnrollmentList/");
+    });
 
-    // Reset the Values.
     this.setState({
-      user: "",
+      student: "",
       course: "",
       todo_completed: false,
     });
@@ -105,7 +102,7 @@ export default class CreateEnroll extends Component {
   // JSX code which is needed to display the form
   render() {
     var message = "You selected " + this.state.course;
-    var message2 = "you have selected " + this.state.user;
+    var message2 = "you have selected " + this.state.student;
     return (
       <div>
         <NavBar />
@@ -113,9 +110,11 @@ export default class CreateEnroll extends Component {
           <div className="row">
             <div className="col-md-6 mt-5 mx-auto">
               <form onSubmit={this.onSubmit}>
-                {/* <Link to="/" className="btn btn-light">Go Back</Link>
-                            <br/>
-                            <br/> */}
+                <Link to="/" className="btn btn-light">
+                  Go Back
+                </Link>
+                <br />
+                <br />
                 <h1
                   className="h3 mb-3 font-weight-bold"
                   style={{ textDecoration: "underline" }}

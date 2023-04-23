@@ -34,21 +34,12 @@ model Enrollment {
 }
 
 model Lecture {
-  id        Int         @id @default(autoincrement())
-  name      String      @db.VarChar(100)
-  videoLink String?     @db.VarChar(400)
-  content   String?     @db.VarChar(200)
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(100)
+  videoLink String? @db.VarChar(400)
+  content   String? @db.VarChar(200)
   course_id Int?
-  Course    Course?     @relation(fields: [course_id], references: [id], onDelete: Cascade)
-  Statistic Statistic[]
-}
-
-model Statistic {
-  id         Int      @id @default(autoincrement())
-  user_id    Int?
-  lecture_id Int?
-  Lecture    Lecture? @relation(fields: [lecture_id], references: [id], onDelete: Cascade)
-  User       User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Course    Course? @relation(fields: [course_id], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -59,35 +50,34 @@ model User {
   photo      Bytes?
   role       Roles        @default(USER)
   Enrollment Enrollment[]
-  Statistic  Statistic[]
   // Пример связи один-к-одному
-  Profile   Profile?
+  Profile    Profile?
 }
 
 model Profile {
-  id Int            @id @default(autoincrement())
-  userId Int        @unique
-  handle String
-  company String?
-  location String?
-  skills String[]
-  bio String?
+  id             Int         @id @default(autoincrement())
+  userId         Int         @unique
+  handle         String
+  company        String?
+  location       String?
+  skills         String[]
+  bio            String?
   githubusername String?
-  education Education[]
-  date DateTime    @default(now())
-  user User        @relation(fields: [userId], references: [id])
+  education      Education[]
+  date           DateTime    @default(now())
+  user           User        @relation(fields: [userId], references: [id])
 }
 
 model Education {
-  id Int            @id @default(autoincrement())
-  profileId Int
-  school String
-  degree String
+  id           Int       @id @default(autoincrement())
+  profileId    Int
+  school       String
+  degree       String
   fieldofstudy String
-  from DateTime
-  to DateTime?
+  from         DateTime
+  to           DateTime?
   // Связь многие-к-одному
-  profile Profile   @relation(fields: [profileId], references: [id])
+  profile      Profile   @relation(fields: [profileId], references: [id])
 }
 
 enum Roles {

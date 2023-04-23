@@ -24,7 +24,7 @@ import ServicesForInstructor from "./service/ServicesByInstructor";
 import Servicesforstudent from "./service/ServiceforStudent";
 import AddCourse from "./blog/AddCourse";
 import AddLecture from "./blog/AddLecture";
-//import BlogDetailsLeftSidebar from "./blog/BlogDetailsLeftSidebar";
+import BlogDetailsLeftSidebar from "./blog/BlogDetailsLeftSidebar";
 import PageNotFound from "./pages/404";
 import NoMAtch from "./pages/404";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -104,11 +104,11 @@ class Root extends Component {
               path={`${process.env.PUBLIC_URL}/addcourse/:id`}
               component={AddCourse}
             />
-            {/* <PrivateRoute
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/blog-details-left-sidebar/:id`}
               component={BlogDetailsLeftSidebar}
-            /> */}
+            />
             <Route
               exact
               path={`${process.env.PUBLIC_URL}/login/:role`}
