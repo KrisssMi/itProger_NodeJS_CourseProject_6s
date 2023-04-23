@@ -200,7 +200,6 @@
 //   { loginUser }
 // )(Login);
 
-
 import React, { Component } from "react";
 import "./style.css";
 import classnames from "classnames";
@@ -352,6 +351,13 @@ class Login extends Component {
                       </a>
                     </p>
                   </div>
+                </div>
+                <div className="col-md-6 d-none d-md-block">
+                  <img
+                    src="../assets/img/slider/login1.png"
+                    alt=""
+                    className="img-fluid"
+                  />
                 </div>
               </div>
             </div>

@@ -58,26 +58,23 @@ model Profile {
   id             Int         @id @default(autoincrement())
   userId         Int         @unique
   handle         String
-  company        String?
-  location       String?
   skills         String[]
   bio            String?
   githubusername String?
   education      Education[]
   date           DateTime    @default(now())
-  user           User        @relation(fields: [userId], references: [id])
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Education {
   id           Int       @id @default(autoincrement())
   profileId    Int
   school       String
-  degree       String
   fieldofstudy String
   from         DateTime
   to           DateTime?
   // Связь многие-к-одному
-  profile      Profile   @relation(fields: [profileId], references: [id])
+  Profile      Profile   @relation(fields: [profileId], references: [id])
 }
 
 enum Roles {

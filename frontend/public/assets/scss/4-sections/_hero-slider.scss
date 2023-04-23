@@ -1,37 +1,6 @@
 /*=============================================
 =            hero slider            =
 =============================================*/
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
-.hero-alider-area {
-  .ht-swiper-button {
-    &-nav {
-      background-color: rgba(255, 255, 255, 0.3);
-      border: 0;
-      color: $white;
-
-      &:hover {
-        background-color: $theme-color--blue;
-      }
-    }
-
-    &-prev {
-      left: 100px;
-
-      @media #{$laptop-device} {
-        left: 20px;
-      }
-    }
-
-    &-next {
-      right: 100px;
-
-      @media #{$laptop-device} {
-        right: 20px;
-      }
-    }
-  }
-
-
   .swiper-slide-active {
     .hero-slider__content {
       &>* {
@@ -40,7 +9,7 @@
           animation-duration: 1.5s;
           animation-delay: 0.5s;
           font-family: 'Nunito', sans-serif;
-          margin-left: 120px;
+          margin-left: -490px;
           width: 650px;
           margin-top: -140px;
           font-size: 55px;
@@ -66,7 +35,6 @@
     }
   }
 
-}
 
 .hero-slider {
 
@@ -112,7 +80,7 @@
     margin-bottom: 40px;
     margin-top: -15px;
     font-family: 'Nunito', sans-serif;
-    margin-left: 100px;
+    margin-left: -320px;
     width: 600px;
 
     @media #{$laptop-device} {
@@ -168,8 +136,8 @@
     border-radius: 30px;
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     font-family: 'Nunito', sans-serif;
-    background-color: rgba(232, 18, 36, 0.6784313725);
-    margin-left: 120px;
+    background-color: #16324e;
+    margin-left:-920px;
 
     &--style2 {
       align-self: center;
@@ -179,8 +147,8 @@
     &:focus,
     &:active {
       color: $white;
-      background-color: #d80012db;
-      border-color: #111;
+      background-color: #900000c1;
+      border-color: #11111180;
     }
   }
 }

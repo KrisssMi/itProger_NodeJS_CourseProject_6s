@@ -129,7 +129,7 @@ export default class CreateEnroll extends Component {
                     style={{
                       width: "100%",
                       padding: "10px",
-                      border: "1px solid lightgray",
+                      border: "1px solid #95c4e2",
                       borderRadius: "5px",
                     }}
                     name="student"

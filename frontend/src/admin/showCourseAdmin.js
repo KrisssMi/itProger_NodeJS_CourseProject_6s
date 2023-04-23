@@ -114,7 +114,7 @@ export default class UserList extends Component {
             style={{
               marginLeft: "600px",
               color: "#a5c41a",
-              fontFamily: "Nunigo",
+              fontFamily: "Nunito",
             }}
           >
             Course List

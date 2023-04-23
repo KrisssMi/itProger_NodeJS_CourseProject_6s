@@ -36,11 +36,8 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
 
 //profile stuff
-
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
-import AddExperience from "./components/add-credentials/AddExperience";
-import AddEducation from "./components/add-credentials/AddEducation";
 import Profile from "./components/profile/Profile";
 import FinalDashboard from "./components/FinalDashboard";
 import FinalProfiles from "./components/FinalProfiles";
@@ -194,11 +191,6 @@ class Root extends Component {
               path={`${process.env.PUBLIC_URL}/edit-profile`}
               component={EditProfile}
             />
-            <PrivateRoute
-              exact
-              path={`${process.env.PUBLIC_URL}/add-experience`}
-              component={AddExperience}
-            />
 
             <Route
               exact
@@ -209,11 +201,6 @@ class Root extends Component {
               exact
               path={`${process.env.PUBLIC_URL}/profile/:handle`}
               component={Profile}
-            />
-            <PrivateRoute
-              exact
-              path={`${process.env.PUBLIC_URL}/add-education`}
-              component={AddEducation}
             />
             <PrivateRoute component={NoMAtch} />
           </Switch>

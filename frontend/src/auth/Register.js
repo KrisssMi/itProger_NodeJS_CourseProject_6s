@@ -182,6 +182,13 @@ class Register extends Component {
                     </p>
                   </div>
                 </div>
+                <div className="col-md-6 d-none d-md-block">
+                  <img
+                    src="../assets/img/slider/register2.png"
+                    alt=""
+                    className="img-fluid"
+                  />
+                </div>
               </div>
             </div>
           </div>

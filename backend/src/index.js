@@ -7,7 +7,8 @@ const categoryRouter = require("./Routes/categoryRouter");
 const courseRouter = require("./Routes/courseRouter");
 const lectureRouter = require("./Routes/lectureRouter");
 const videoRouter = require("./Routes/videoRouter");
-const enrollment = require("./Routes/enrollmentRouter");
+const enrollmentRouter = require("./Routes/enrollmentRouter");
+const profileRouter = require("./Routes/profileRouter");
 
 const app = express();
 app.use(cors());
@@ -18,7 +19,9 @@ app.use(categoryRouter);
 app.use(courseRouter);
 app.use(lectureRouter);
 app.use(videoRouter);
-app.use(enrollment);
+app.use(enrollmentRouter);
+app.use("/profile", profileRouter);
+app.use(profileRouter);
 
 // app.use((req, res, next) => {
 //   res.setHeader("Access-Control-Allow-Origin", "http://localhost:9000");

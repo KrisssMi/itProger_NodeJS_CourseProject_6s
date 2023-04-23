@@ -13,7 +13,7 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get("/api/profile")
+    .get("http://localhost:9000/profile")
     .then(res =>
       dispatch({
         type: GET_PROFILE,
@@ -32,7 +32,7 @@ export const getCurrentProfile = () => dispatch => {
 export const getProfileByHandle = handle => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get(`/api/profile/handle/${handle}`)
+    .get(`http://localhost:9000/profile/handle/${handle}`)
     .then(res =>
       dispatch({
         type: GET_PROFILE,
@@ -50,70 +50,8 @@ export const getProfileByHandle = handle => dispatch => {
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
-    .post("/api/profile", profileData)
+    .post("http://localhost:9000/profile/", profileData)
     .then(res => history.push("/finaldashboard"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Add experience
-export const addExperience = (expData, history) => dispatch => {
-  axios
-    .post("/api/profile/experience", expData)
-    .then(res => history.push("/finaldashboard"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Add education
-export const addEducation = (eduData, history) => dispatch => {
-  axios
-    .post("/api/profile/education", eduData)
-    .then(res => history.push("/finaldashboard"))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Delete Experience
-export const deleteExperience = id => dispatch => {
-  axios
-    .delete(`/api/profile/experience/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Delete Education
-export const deleteEducation = id => dispatch => {
-  axios
-    .delete(`/api/profile/education/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -125,8 +63,7 @@ export const deleteEducation = id => dispatch => {
 // Get all profiles
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
-  axios
-    .get("/api/profile/all")
+  axios.get("http://localhost:9000/profile/all")
     .then(res =>
       dispatch({
         type: GET_PROFILES,
@@ -145,7 +82,7 @@ export const getProfiles = () => dispatch => {
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
     axios
-      .delete("/api/profile")
+      .delete("http://localhost:9000/profile")
       .then(res =>
         dispatch({
           type: SET_CURRENT_USER,

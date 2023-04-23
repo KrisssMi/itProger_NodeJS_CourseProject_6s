@@ -138,9 +138,9 @@ strong {
 }
 
 p.text-muted {
-  font-size: 13px;
+  font-size: 15px;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .card {
@@ -1487,15 +1487,15 @@ pre[class*=language-]:before {
 }
 
 .bg-info {
-  background-color: #00ACC1 !important;
+  background-color: #5aa6d59d !important;
 }
 
 .text-info {
-  color: #00ACC1 !important;
+  color:  #45a9e7 !important;
 }
 
 .b-info {
-  border: 1px solid #00ACC1 !important;
+  border: 1px solid  #4eb9fcd6 !important;
 }
 
 .bg-purple {
@@ -2959,17 +2959,16 @@ select.form-control-lg:not([size]):not([multiple]) {
 /* Alternate buttons */
 .btn-primary {
   color: #fff;
-  background-color: #b60012;
-  border-color: #5f131a;
-  margin-left: 60px;
+  background-color: #5aa6d5;
+  border-color: #2772a1;
   margin-top: 20px;
   font-family: 'Nunito';
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #ff5a6d;
-  border-color: #630101;
+  background-color: #0285d7;
+  border-color: #2772a1;
 }
 
 .btn-primary.disabled,
@@ -3043,14 +3042,14 @@ select.form-control-lg:not([size]):not([multiple]) {
 
 .btn-info {
   color: #fff;
-  background-color: #00ACC1;
-  border-color: #009eb2;
+  background-color: #5aa6d5;
+  border-color: #2772a1;
 }
 
 .btn-info:hover {
   color: #fff;
-  background-color: #008a9b;
-  border-color: #007f8e;
+  background-color: #0285d7;
+  border-color: #2772a1;
 }
 
 .btn-info.disabled,
@@ -3098,13 +3097,14 @@ select.form-control-lg:not([size]):not([multiple]) {
 .btn-danger {
   color: #fff;
   background-color: #f44336;
-  border-color: #f33527;
+  border-color: #83150d;
+  margin-top: 20px;
 }
 
 .btn-danger:hover {
   color: #fff;
-  background-color: #f22112;
-  border-color: #ea1c0d;
+  background-color: #bd1105;
+  border-color: #83150d;
 }
 
 .btn-danger.disabled,
@@ -3123,8 +3123,8 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 
 .btn-light {
-  color: #37474f;
-  background-color: #ECEFF1;
+  color: #1e2427;
+  background-color: #abaeb0;
   border-color: #e3e8eb;
 }
 
