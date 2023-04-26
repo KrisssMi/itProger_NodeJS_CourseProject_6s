@@ -6,13 +6,9 @@ class HeroSliderOne extends Component {
     const params = {
       slidesPerView: 1,
       loop: true,
-      speed: 1000,
+      speed: 800,
       watchSlidesVisibility: true,
       effect: "fade",
-      navigation: {
-        nextEl: ".ht-swiper-button-next",
-        prevEl: ".ht-swiper-button-prev",
-      },
       renderPrevButton: () => (
         <div className="ht-swiper-button-prev ht-swiper-button-nav d-none d-xl-block">
           <i className="ion-ios-arrow-left" />
@@ -69,7 +65,6 @@ class HeroSliderOne extends Component {
                       </a>
                     </div>
                   </div>
-                  {/* <div style={{ backgroundImage: `url(assets/img/backgraund.png)` }}/> */}
                 </div>
               </div>
             </div>

@@ -9,14 +9,22 @@ class profileController {
   async addProfile(req, res) {
     try {
       const authorizationHeader = req.headers.authorization;
+      let id; // Объявляем переменную i
       if (authorizationHeader) {
-        const token = authorizationHeader.split(" ")[1];
-        const decodedToken = jwt.verify(token, process.env.SECRET); // Здесь указываем ваш секретный ключ, используемый при создании токена
-        const id = decodedToken.id; // Предполагается, что id пользователя находится в поле id
+        console.log("auth header is exist");
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 1) {
+          const token = tokenArray[0];
+          console.log("My token: " + token);
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const id = decodedToken.id;
+          console.log(id);
+        } else {
+          console.error("Invalid Authorization header format");
+        }
+      
 
-        console.log(id);
-
-        const user = await DbClient.user.findUnique({
+        const user = await DbClient.user.findFirst({
           where: {
             id: id,
           },
@@ -107,18 +115,26 @@ class profileController {
   async getProfileByCurrentUser(req, res) {
     try {
       const authorizationHeader = req.headers.authorization;
+      let id; // Объявляем переменную i
       if (authorizationHeader) {
-        const token = authorizationHeader.split(" ")[1];
-        const decodedToken = jwt.verify(token, process.env.SECRET); // Здесь указываем ваш секретный ключ, используемый при создании токена
-        const id = decodedToken.id; // Предполагается, что id пользователя находится в поле id
+        console.log("auth header is exist");
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 1) {
+          const token = tokenArray[0];
+          console.log("My token: " + token);
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const id = decodedToken.id;
+          console.log(id);
+        } else {
+          console.error("Invalid Authorization header format");
+        }
 
-        console.log(id);
-
-        const user = await DbClient.user.findUnique({
+        const user = await DbClient.user.findFirst({
           where: {
             id: id,
           },
         });
+        console.log(user);
         if (!user) {
           return res.status(404).json({ error: "User not found" });
         }
@@ -205,7 +221,6 @@ class profileController {
     }
   }
 
-  // -
   async addEducation(req, res) {
     try {
       const { format } = require("date-fns");
@@ -267,40 +282,48 @@ class profileController {
   async deleteProfile(req, res) {
     // при удалении профиля, удаляется и user
     try {
-      const token = req.headers.authorization.split(" ")[1];
-      const { id } = await jwt.verify(token, process.env.SECRET);
-      const user = await DbClient.user.findUnique({
-        where: {
-          id: id,
-        },
-      });
+      const authorizationHeader = req.headers.authorization;
+      let id; // Объявляем переменную i
+      if (authorizationHeader) {
+        console.log("auth header is exist");
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 1) {
+          const token = tokenArray[0];
+          console.log("My token: " + token);
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const id = decodedToken.id;
+          console.log(id);
+        } else {
+          console.error("Invalid Authorization header format");
+        }
 
-      if (!user || !user.id) {
-        return res.status(401).json({ error: "Unauthorized" });
+        const user = await DbClient.user.findFirst({
+          where: {
+            id: id,
+          },
+        });
+
+        if (!user || !user.id) {
+          return res.status(401).json({ error: "Unauthorized" });
+        }
+        const profile = await DbClient.profile.findFirst({
+          where: {
+            userId: user.id,
+          },
+        });
+
+        if (!profile) {
+          return res.status(404).json({ error: "Profile not found" });
+        }
+
+        await DbClient.profile.delete({
+          where: {
+            id: profile.id,
+          },
+        });
+
+        res.json({ success: true });
       }
-      const profile = await DbClient.profile.findFirst({
-        where: {
-          userId: user.id,
-        },
-      });
-
-      if (!profile) {
-        return res.status(404).json({ error: "Profile not found" });
-      }
-
-      await DbClient.profile.delete({
-        where: {
-          id: profile.id,
-        },
-      });
-
-      await DbClient.user.delete({
-        where: {
-          id,
-        },
-      });
-
-      res.json({ success: true });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Failed to delete profile and user" });

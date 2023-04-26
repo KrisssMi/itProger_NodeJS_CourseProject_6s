@@ -488,11 +488,6 @@ class NavBar extends Component {
               </div>
             </Link>
           </li>
-          <li>
-            <Link className="nav-link" to="/login/instructor">
-              Teach On itProger
-            </Link>
-          </li>
         </React.Fragment>
       );
 

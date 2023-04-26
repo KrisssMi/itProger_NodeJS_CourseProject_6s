@@ -32,11 +32,8 @@ class Profile extends Component {
         <div>
           <div className="row">
             <div className="col-md-6">
-              <Link
-                to="/finaldashboard"
-                className="btn btn-light mb-3 float-left"
-              >
-                Back To Dashboard
+              <Link to="/home-two" className="btn btn-light mb-3 float-left">
+                Back
               </Link>
             </div>
             <div className="col-md-6" />
@@ -64,14 +61,11 @@ class Profile extends Component {
 
 Profile.propTypes = {
   getProfileByHandle: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  profile: state.profile
+const mapStateToProps = (state) => ({
+  profile: state.profile,
 });
 
-export default connect(
-  mapStateToProps,
-  { getProfileByHandle }
-)(Profile);
+export default connect(mapStateToProps, { getProfileByHandle })(Profile);

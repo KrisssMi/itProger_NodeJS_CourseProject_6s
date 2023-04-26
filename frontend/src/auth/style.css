@@ -3124,13 +3124,13 @@ select.form-control-lg:not([size]):not([multiple]) {
 
 .btn-light {
   color: #1e2427;
-  background-color: #abaeb0;
+  background-color: #abaeb08c;
   border-color: #e3e8eb;
 }
 
 .btn-light:hover {
   color: #37474f;
-  background-color: #d6dce1;
+  background-color: #d6dce1bc;
   border-color: #cfd6db;
 }
 

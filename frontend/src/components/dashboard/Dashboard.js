@@ -30,10 +30,10 @@ class Dashboard extends Component {
           <div>
             <p className="lead text-muted">
               <h1>
-                Welcome{" "}
+                Welcome, {" "}
                 <Link
                   to={`/profile/${profile.handle}`}
-                  style={{ color: "#a5c41a"}}
+                  style={{ color: "#FF9540"}}
                 >
                   {profile.handle}
                 </Link>
@@ -42,7 +42,7 @@ class Dashboard extends Component {
             </p>
             <ProfileActions />
           
-            <div style={{ marginBottom: "60px" }} />
+            <div className="d-flex justify-content-center align-items-center mt-2">
             <button
               onClick={this.onDeleteClick.bind(this)}
               className="btn btn-danger"
@@ -50,12 +50,13 @@ class Dashboard extends Component {
               Delete My Account
             </button>
           </div>
+          </div>
         );
       } else {
         // User is logged in but has no profile
         dashboardContent = (
           <div>
-            <p className="lead text-muted">Welcome {profile.handle}</p>
+            <p className="lead text-muted">Welcome, {profile.handle}</p>
             <p>You have not yet setup a profile, please add some info</p>
             <Link to="/create-profile" className="btn btn-lg btn-info">
               Create Profile
