@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class ProfileGithub extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 5,
-      sort: 'created: asc',
-      repos: []
+      count: 7,
+      sort: "created: asc",
+      repos: [],
     };
   }
 
@@ -19,27 +18,27 @@ class ProfileGithub extends Component {
     fetch(
       `https://api.github.com/users/${username}/repos?per_page=${count}&sort=${sort}`
     )
-      .then(res => res.json())
-      .then(data => {
-
-        if (this.refs.myRef && Array.isArray(data)) { // Add Array.isArray() check
+      .then((res) => res.json())
+      .then((data) => {
+        if (this.refs.myRef && Array.isArray(data)) {
+          // Add Array.isArray() check
           this.setState({ repos: data });
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   render() {
     const { repos } = this.state;
 
-    const repoItems = repos.map(repo => (
+    const repoItems = repos.map((repo) => (
       <div key={repo.id} className="card card-body mb-2">
         <div className="row">
           <div className="col-md-6">
             <h4>
-              <Link to={repo.html_url} className="text-info" target="_blank">
+              <a href={repo.html_url} className="text-info" target="_blank">
                 {repo.name}
-              </Link>
+              </a>
             </h4>
             <p>{repo.description}</p>
           </div>
@@ -68,7 +67,7 @@ class ProfileGithub extends Component {
 }
 
 ProfileGithub.propTypes = {
-  username: PropTypes.string.isRequired
+  username: PropTypes.string.isRequired,
 };
 
 export default ProfileGithub;

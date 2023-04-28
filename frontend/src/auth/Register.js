@@ -44,7 +44,7 @@ class Register extends Component {
       .post("http://localhost:9000/auth/registration", newUser)
       .then((res) => {
         console.log(res.data);
-        this.props.history.push("/login/" + this.props.match.params.role);
+        this.props.history.push("/login/");
       })
       .catch((err) => {
         if (err.response && err.response.data) {
@@ -171,10 +171,7 @@ class Register extends Component {
                     <p className="mb-2">
                       Already have an account?{" "}
                       <a
-                        href={
-                          `${process.env.PUBLIC_URL}/login/` +
-                          this.props.match.params.role
-                        }
+                        href={`${process.env.PUBLIC_URL}/login/`}
                         className="f-w-400"
                       >
                         Log in
@@ -184,7 +181,7 @@ class Register extends Component {
                 </div>
                 <div className="col-md-6 d-none d-md-block">
                   <img
-                    src="../assets/img/slider/register2.png"
+                    src="../assets/img/slider2.png"
                     alt=""
                     className="img-fluid"
                   />

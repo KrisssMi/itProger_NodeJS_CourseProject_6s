@@ -342,8 +342,7 @@ class Login extends Component {
                       Don’t have an account?{" "}
                       <a
                         href={
-                          `${process.env.PUBLIC_URL}/register/` +
-                          this.props.match.params.role
+                          `${process.env.PUBLIC_URL}/register/`
                         }
                         className="f-w-400"
                       >

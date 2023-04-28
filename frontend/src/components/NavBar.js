@@ -468,7 +468,7 @@ class NavBar extends Component {
       (
         <React.Fragment>
           <li>
-            <Link className="nav-link" to="/login/student">
+            <Link className="nav-link" to="/login">
               <div
                 style={{
                   display: "flex",
