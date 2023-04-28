@@ -8,7 +8,7 @@ class Services extends Component{
       async componentDidMount() {
         //this.onTextSubmit("react tutorials");
 
-        const response = await axios.get('http://localhost:5000/enrollmentbystudent?id='+ this.props.match.params.id)
+        const response = await axios.get('http://localhost:9000/enrollmentbystudent?id='+ this.props.match.params.id)
         .then((result) => {
           console.log(result.data[0]);
           return result;
@@ -33,7 +33,7 @@ class Services extends Component{
                         <a href={`${process.env.PUBLIC_URL}/`+`blog-details-left-sidebar/`+`${val.course.id}`}>{val.course.name}</a>
                         </h3>
                         <p className="subtitle">{val.course.description}</p>
-                        {/*  <a href={`${process.env.PUBLIC_URL}/${val.pageLink}`} className="see-more-link">SEE MORE</a> */}
+                         <a href={`${process.env.PUBLIC_URL}/${val.pageLink}`} className="see-more-link">SEE MORE</a>
                     </div>
                     </div>
                     </div>

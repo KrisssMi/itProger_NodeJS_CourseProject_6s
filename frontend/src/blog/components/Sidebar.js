@@ -49,15 +49,15 @@ class Sidebar extends Component {
       }
     ];
 
-    let categoryDataList = courseList.map((val, i) => {
-      return (
-        <li key={i}>
-          <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
-            {val.name}
-          </a>
-        </li>
-      );
-    });
+    // let categoryDataList = courseList.map((val, i) => {
+    //   return (
+    //     <li key={i}>
+    //       <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
+    //         {val.name}
+    //       </a>
+    //     </li>
+    //   );
+    // });
 
     /* sidebar popular post */
 
@@ -82,23 +82,23 @@ class Sidebar extends Component {
       }
     ];
 
-    let popularPostDataList = popularPostData.map((val, i) => {
-      return (
-        <div className="sidebar-blog" key={i}>
-          <a href="blog-details-left-sidebar.html" className="image">
-            <img src={`assets/img/blog/${val.postImage}`} alt="" />
-          </a>
-          <div className="content">
-            <h5>
-              <a href={`${process.env.PUBLIC_URL}/${val.postLink}`}>
-                {val.postTitle}
-              </a>
-            </h5>
-            <span>{val.postDate}</span>
-          </div>
-        </div>
-      );
-    });
+    // let popularPostDataList = popularPostData.map((val, i) => {
+    //   return (
+    //     <div className="sidebar-blog" key={i}>
+    //       <a href="blog-details-left-sidebar.html" className="image">
+    //         <img src={`assets/img/blog/${val.postImage}`} alt="" />
+    //       </a>
+    //       <div className="content">
+    //         <h5>
+    //           <a href={`${process.env.PUBLIC_URL}/${val.postLink}`}>
+    //             {val.postTitle}
+    //           </a>
+    //         </h5>
+    //         <span>{val.postDate}</span>
+    //       </div>
+    //     </div>
+    //   );
+    // });
 
     /* sidebar tag */
 

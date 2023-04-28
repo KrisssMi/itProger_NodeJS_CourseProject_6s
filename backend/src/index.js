@@ -1,6 +1,7 @@
 require("dotenv").config({ path: ".env" });
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const authRouter = require("./Routes/authRouter");
 const categoryRouter = require("./Routes/categoryRouter");
@@ -11,6 +12,13 @@ const enrollmentRouter = require("./Routes/enrollmentRouter");
 const profileRouter = require("./Routes/profileRouter");
 
 const app = express();
+
+// Путь к директории со статическими файлами
+const staticPath = path.join(__dirname, "static");
+console.log(staticPath);
+// Использование express.static
+app.use(express.static(staticPath));
+
 app.use(cors());
 app.options("*", cors());
 app.use(express.json());
@@ -23,17 +31,6 @@ app.use(enrollmentRouter);
 app.use("/profile", profileRouter);
 app.use(profileRouter);
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:9000");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, OPTIONS"
-//   );
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-//   next();
-// });
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
@@ -45,8 +42,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
-// app.use(express.static('media', {index: 'index.html'}));
 
 const bootstrap = () => {
   try {

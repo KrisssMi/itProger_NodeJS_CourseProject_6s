@@ -328,7 +328,7 @@ class authController {
     }
   }
 
-    async updateUser(req, res) {
+  async updateUser(req, res) {
     try {
       const id = parseInt(req.query.id);
       if (!Number.isInteger(id)) {
@@ -362,7 +362,7 @@ class authController {
     try {
       // Удаление пользователя
       const removedUser = await DbClient.user.delete({
-        where: { id: req.query.id }
+        where: { id: req.query.id },
       });
       res.json(removedUser);
     } catch (err) {

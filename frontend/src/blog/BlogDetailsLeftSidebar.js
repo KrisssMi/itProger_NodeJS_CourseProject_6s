@@ -28,7 +28,7 @@ class BlogDetailsLeftSidebar extends Component {
     // this.setState({
     //   course: this.props.match.params.id,
     //   student:
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjgyMTQ1MjAzLCJleHAiOjE2ODIyMzE2MDN9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZXMiOlsiQURNSU4iXSwiaWF0IjoxNjgyMTQ1MjAzLCJleHAiOjE2ODIyMzE2MDN9.soyCuoK13jyuEm_4rTfeZ6Mer6lIfcGluxz8JGBEA8g+Y=",
+    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE2ODI1MzcwOTYsImV4cCI6MTY4MjYyMzQ5Nn0.X8569OM24oPf1Hef-BH6La3uE2osfZvOvcgb95j1eiA",
     //   approved: true,
     // });
     console.log(`Form submitted:`);
@@ -43,7 +43,7 @@ class BlogDetailsLeftSidebar extends Component {
     };
     if (this.state.buttonclass == "btn btn-success") {
       axios
-        .post("http://localhost:5000/enrollbystudent/add", newTodo)
+        .post("http://localhost:9000/enrollmentbystudent/add", newTodo)
         .then((result) => {
           //this.props.history.push("/addtoplaylist/"+this.props.match.params.id)
           toast.success("Added successfully");
@@ -68,8 +68,7 @@ class BlogDetailsLeftSidebar extends Component {
       });
     }
 
-    const response = await axios
-      .get("http://localhost:9000/lectures?id=" + this.props.match.params.id)
+    const response = await axios.get("http://localhost:9000/lectures?id=" + this.props.match.params.id)
       .then((result) => {
         console.log(
           "http://localhost:9000/checkenrollment?id=" +
@@ -115,7 +114,6 @@ class BlogDetailsLeftSidebar extends Component {
       <div>
         {/* Navigation bar */}
         <NavBar />
-
         {/* breadcrumb */}
         {/*====================  breadcrumb area ====================*/}
         <div className="breadcrumb-area breadcrumb-bg">
@@ -173,11 +171,11 @@ class BlogDetailsLeftSidebar extends Component {
                         ? this.state.selectedVideo.title
                         : this.state.status}
                     </h2>
-                    <p>
+                    {/* <p>
                       {this.state.selectedVideo
-                        ? this.state.selectedVideo.course.description
+                        ? this.state.selectedVideo.сourse.description
                         : this.state.status}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
 
@@ -188,8 +186,7 @@ class BlogDetailsLeftSidebar extends Component {
                       type="button"
                       style={this.state.addcourse ? {} : { display: "none" }}
                       className={this.state.buttonclass}
-                      onClick={this.onClick}
-                    >
+                      onClick={this.onClick}>
                       {this.state.enrolled}
                     </button>
                   </div>

@@ -57,12 +57,13 @@ class lectureController {
   async getAllLectures(req, res) {
     try {
       const lectures = await DbClient.lecture.findMany({
-        where: { course: req.query.id },
-        include: { Course: { select: { description: true } } }
+        where: { course_id: Number(req.query.id) },
+        include: { Course: { select: { description: true } } },
       });
-  
+
       res.json(lectures);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   }

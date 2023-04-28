@@ -123,18 +123,6 @@ export default class Upload extends Component {
     console.log(`Todo course: ${this.state.course}`);
     console.log(`Todo title: ${this.state.title}`);
 
-    // const data = new FormData();
-    // data.append("course", this.state.course); // добавить данные в FormData
-    // data.append("title", this.state.title); // добавить данные в FormData
-
-    // console.log(data.has("course")); // true, если данные 'course' были добавлены в FormData
-    // console.log(data.get("course")); // значение, связанное с ключом 'course'
-
-    // console.log(data.has("title")); // true, если данные 'title' были добавлены в FormData
-    // console.log(data.get("title"));
-    // console.log("data na fronte");
-    // console.log(data.values());
-
     const form = new FormData();
     form.append("course", this.state.course);
     form.append("name", this.state.title);
@@ -153,10 +141,6 @@ export default class Upload extends Component {
       .catch((err) => {
         toast.error("upload fail");
       });
-    // setTimeout(function(){
-    //   window.location.reload()
-    // }.bind(this), 1300
-    // )
   };
 
   render() {

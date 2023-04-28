@@ -33,8 +33,8 @@ class enrollmentController {
     try {
       const enrollment = await DbClient.enrollment.findFirst({
         where: {
-          user_id: parseInt(req.query.id),
-          course_id: parseInt(req.query.courseid),
+          user_id: Number(req.query.id) || 0,
+          course_id: Number(req.query.courseid) || 0,
         },
         include: {
           Course: {
@@ -46,6 +46,7 @@ class enrollmentController {
       });
       res.json(enrollment);
     } catch (error) {
+      console.log(error);
       res.status(500).json(error);
     }
   }

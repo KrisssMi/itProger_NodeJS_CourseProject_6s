@@ -8,7 +8,7 @@ class Services extends Component{
       async componentDidMount() {
         //this.onTextSubmit("react tutorials");
 
-        const response = await axios.get('http://localhost:5000/coursebyinstructor?id='+ this.props.match.params.id)
+        const response = await axios.get('http://localhost:9000/courses')
         .then((result) => {
           console.log(result.data[0]);
           return result;
