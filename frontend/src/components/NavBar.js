@@ -74,7 +74,7 @@ class NavBar extends Component {
                           style={{ width: "100%" }}
                         >
                           <nav className="main-nav">
-                            <a href={`${process.env.PUBLIC_URL}/home-two`}>
+                            <a href={`${process.env.PUBLIC_URL}/home`}>
                               <div className="logoHead">
                                 <h2>itProger</h2>
                               </div>
@@ -508,14 +508,14 @@ class NavBar extends Component {
                         style={{ width: "100%" }}
                       >
                         <nav className="main-nav">
-                          <a href={`${process.env.PUBLIC_URL}/home-two`}>
+                          <a href={`${process.env.PUBLIC_URL}/home`}>
                             <div className="logoHead">
                               <h2>itProger</h2>
                             </div>
                           </a>
                           <ul id="main-nav-ul">
                             <li>
-                              <a href={`${process.env.PUBLIC_URL}/home-two`}>
+                              <a href={`${process.env.PUBLIC_URL}/home`}>
                                 <div
                                   style={{
                                     display: "flex",
@@ -558,13 +558,13 @@ class NavBar extends Component {
                             }}
                           >
                             <li className="has-children has-children--multilevel-submenu">
-                              <a href={`${process.env.PUBLIC_URL}/home-two`}>
+                              <a href={`${process.env.PUBLIC_URL}/home`}>
                                 HOME
                               </a>
                               <ul className="submenu">
                                 <li>
                                   <a
-                                    href={`${process.env.PUBLIC_URL}/home-two`}
+                                    href={`${process.env.PUBLIC_URL}/home`}
                                   >
                                     Homepage Two
                                   </a>

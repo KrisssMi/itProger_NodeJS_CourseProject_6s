@@ -21,7 +21,22 @@ class enrollmentController {
 
   async getAllEnrollments(req, res) {
     try {
-      const enrollments = await DbClient.enrollment.findMany();
+      const enrollments = await DbClient.enrollment.findMany({
+        select: {
+          id: true,
+          approved: true,
+          User: {
+            select: {
+              email: true,
+            },
+          },
+          Course: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
       return res.json(enrollments);
     } catch (e) {
       console.log(e);
@@ -112,9 +127,10 @@ class enrollmentController {
 
   async deleteEnrollment(req, res) {
     try {
+      const id = parseInt(req.query.id);
       const deletedEnrollment = await DbClient.enrollment.delete({
         where: {
-          id: parseInt(req.query.id),
+          id: Number(id),
         },
       });
       res.json(deletedEnrollment);

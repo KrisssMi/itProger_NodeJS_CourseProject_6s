@@ -8,8 +8,7 @@ import "./admin.css";
 export default class EnrollList extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
-    this.state = { todos: [], search: "" };
+    this.state = { enrollments: [], search: "" };
     this.refreshEnrollList = this.refreshEnrollList.bind(this);
   }
 
@@ -17,75 +16,71 @@ export default class EnrollList extends Component {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:9000/enrollments/")
-      .then((response) => {
-        this.setState({ todos: response.data });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get("http://localhost:9000/enrollments/");
+      this.setState({ enrollments: data });
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   delete(id) {
-    console.log(id);
+    // console.log(id);
     axios
       .delete("http://localhost:9000/enrollment?id=" + id)
       .then((result) => {
         // this.forceUpdate()
-
         toast.success("Deleted successfully");
         // this.props.history.push("/showenroll/")
       })
       .catch((err) => {
-        // then print response status
         toast.error("Course not deleted");
       });
-
     setTimeout(
       function () {
         window.location.reload();
       }.bind(this),
-      1300
+      700
     );
   }
 
-  refreshEnrollList = (res) => this.setState({ todos: res.data.todos });
+  refreshEnrollList = (res) => {
+    this.setState({
+      enrollments: res.data.enrollments.map((todo) => {
+        return {
+          user: todo.User,
+          course: todo.Course,
+        };
+      }),
+    });
+  };
   render() {
     const divStyle = {
       display: "contents",
     };
-    // var message='You selected '+this.state.todos._id
+    // var message='You selected '+this.state.todos.id
     const Todo = (props) => (
       <div style={divStyle}>
         <tr>
-          <td>{props.todo.user_id.email}</td>
-          <td>{props.todo.course_id.name}</td>
+          <td>{props.todo.User.email}</td>
+          <td>{props.todo.Course.name}</td>
           <td>
-            {/* <Link to={"users/edit/"+props.todo._id}>Edit</Link> */}
-            {/* <button className="button muted-button" class="btn btn-success"><Link to={"users/edit/"+props.todo._id}>Edit</Link></button> */}
-            {/* <a href={"showcourses/edit/"+props.todo._id} class="btn btn-primary btn active" role="button" aria-pressed="true">Delete</a> */}
-            {/* <link to='' refresh="true"> */}
             <button
               onClick={this.delete.bind(this, props.todo.id)}
               class="btn btn-danger"
             >
               Delete
             </button>
-            {/* </link> */}
             {/* <p>{message}</p> */}
           </td>
         </tr>
       </div>
     );
 
-    let filteredusers = this.state.todos.filter((enroll) => {
-      // console.log(enroll.user_id.email);
-      console.log(enroll.course_id?.name);
-      return (
-        enroll.user_id.email.indexOf(this.state.search) !== -1 ||
-        enroll.course_id.name.indexOf(this.state.search) !== -1
-      );
+    let filteredusers = this.state.enrollments.filter((enroll) => {
+      return enroll.user_id !== -1 || enroll.course_id !== -1;
+      // return enroll.user_id.email.indexOf(this.state.search) !== -1;
     });
 
     return (
@@ -137,7 +132,6 @@ export default class EnrollList extends Component {
               </tr>
             </thead>
             <tbody>
-              {/* displaying data coming  */}
               {filteredusers.map(function (currentTodo, i) {
                 return <Todo todo={currentTodo} key={i} />;
               })}

@@ -34,7 +34,7 @@ class BlogDetailsLeftSidebar extends Component {
     console.log(`Form submitted:`);
     console.log(`Todo userid: ` + this.state.user);
     console.log(`Todo courseId: ` + this.props.match.params.id);
-    //console.log(`Todo approved: `);
+    // console.log(`Todo approved: `);
 
     const newTodo = {
       student: this.state.user,
@@ -68,7 +68,8 @@ class BlogDetailsLeftSidebar extends Component {
       });
     }
 
-    const response = await axios.get("http://localhost:9000/lectures?id=" + this.props.match.params.id)
+    const response = await axios
+      .get("http://localhost:9000/lectures?id=" + this.props.match.params.id)
       .then((result) => {
         console.log(
           "http://localhost:9000/checkenrollment?id=" +
@@ -186,7 +187,8 @@ class BlogDetailsLeftSidebar extends Component {
                       type="button"
                       style={this.state.addcourse ? {} : { display: "none" }}
                       className={this.state.buttonclass}
-                      onClick={this.onClick}>
+                      onClick={this.onClick}
+                    >
                       {this.state.enrolled}
                     </button>
                   </div>

@@ -77,7 +77,7 @@ class Root extends Component {
 
             <Route
               exact
-              path={`${process.env.PUBLIC_URL}/home-two`}
+              path={`${process.env.PUBLIC_URL}/home`}
               component={HomeTwo}
             />
 

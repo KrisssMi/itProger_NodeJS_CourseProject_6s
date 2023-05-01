@@ -15,7 +15,7 @@ const app = express();
 
 // Путь к директории со статическими файлами
 const staticPath = path.join(__dirname, "static");
-console.log(staticPath);
+// console.log(staticPath);
 // Использование express.static
 app.use(express.static(staticPath));
 

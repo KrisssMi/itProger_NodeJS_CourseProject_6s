@@ -33,20 +33,6 @@ class courseController {
     }
   }
 
-  // async getAllCourses(req, res) {
-  //   try {
-  //     const courses = await DbClient.course.findMany({
-  //       include: {
-  //         Category: true, // Используем include для заполнения объектов category
-  //       },
-  //     });
-  //     return res.send(courses);
-  //   } catch (e) {
-  //     console.log(e);
-  //     res.status(400).send({ message: "Courses error" });
-  //   }
-  // }
-
   async getAllCourses(req, res) {
     try {
       const courses = await DbClient.course.findMany({

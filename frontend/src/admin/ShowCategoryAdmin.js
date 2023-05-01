@@ -10,7 +10,7 @@ export default class ShowCategory extends Component {
     /** Установка начального состояния компонента путем присвоения этому объекту this.state **/
     this.state = {
       todos: [],
-      search: ""
+      search: "",
     };
   }
 
@@ -21,44 +21,43 @@ export default class ShowCategory extends Component {
 
   componentDidMount() {
     axios
-    .get("http://localhost:9000/categories/")
-    .then(response => {
-      console.log(response.data);
-      this.setState({ todos: response.data ? response.data : [] });
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+      .get("http://localhost:9000/categories/")
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ todos: response.data ? response.data : [] });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   delete(id) {
     console.log(id);
     axios
       .delete("http://localhost:9000/category?id=" + id)
-      .then(result => {
+      .then((result) => {
         // this.forceUpdate()
         // this.props.history.push("/showcategory/")
         toast.success("Deleted successfully");
       })
-      .catch(err => {
+      .catch((err) => {
         // затем выведите статус ответа
         toast.error("Category not deleted");
       });
     setTimeout(
-      function() {
-        //Start the timer
+      function () {
         window.location.reload(); //After 1 second, set render to true
       }.bind(this),
-      1300
+      1000
     );
   }
 
   render() {
     const divStyle = {
-      display: "contents"
+      display: "contents",
     };
     //var message='You selected '+this.state.whoIsChecked.allowDestroyAll
-    const Todo = props => (
+    const Todo = (props) => (
       <div style={divStyle}>
         <tr>
           <td>{props.todo.name}</td>
@@ -72,14 +71,19 @@ export default class ShowCategory extends Component {
             >
               Edit
             </a>
-            <button onClick={this.delete.bind(this, props.todo.id)} class="btn btn-danger">Delete</button>
+            <button
+              onClick={this.delete.bind(this, props.todo.id)}
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
             {/* <p>{message}</p> */}
           </td>
         </tr>
       </div>
     );
     // используется при фильтрации содержимого, поступающего из базы данных
-    let filteredusers = this.state.todos.filter(category => {
+    let filteredusers = this.state.todos.filter((category) => {
       return category.name.indexOf(this.state.search) !== -1;
     });
     return (
@@ -90,7 +94,7 @@ export default class ShowCategory extends Component {
             padding: "20px",
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
           }}
         >
           <a
@@ -105,7 +109,7 @@ export default class ShowCategory extends Component {
           <h1
             style={{
               marginLeft: "-200px",
-              color: "#a5c41a"
+              color: "#a5c41a",
             }}
           >
             Category List
@@ -125,7 +129,7 @@ export default class ShowCategory extends Component {
             className="table table-striped"
             id="usertable"
             style={{ marginTop: 20 }}
-            ref={el => (this.el = el)}
+            ref={(el) => (this.el = el)}
             data-order='[[ 1, "asc" ]]'
             data-page-length="25"
           >
@@ -139,7 +143,7 @@ export default class ShowCategory extends Component {
             <ToastContainer />
             <tbody>
               {/* displaying data coming  */}
-              {filteredusers.map(function(currentTodo, i) {
+              {filteredusers.map(function (currentTodo, i) {
                 return <Todo todo={currentTodo} key={i} />;
               })}
             </tbody>

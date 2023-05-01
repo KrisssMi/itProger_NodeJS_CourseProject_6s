@@ -18,7 +18,6 @@ export default class CreateEnroll extends Component {
   constructor(props) {
     super(props);
 
-    /** Setting the initial state of the component by assigned an object to this.state **/
     this.state = {
       User: [],
       Course: [],
@@ -76,15 +75,14 @@ export default class CreateEnroll extends Component {
     });
   }
 
-  /** Method to handle the submit event of the form **/
   onSubmit(e) {
     e.preventDefault();
 
     console.log(`Todo course for enrollment: ${this.state.course}`);
-    console.log(`Todo user for enrollment: ${this.state.student}`);
+    console.log(`Todo user for enrollment: ${this.state.user}`);
 
     const newTodo = {
-      student: this.state.student,
+      student: this.state.user,
       course: this.state.course,
       todo_completed: this.state.todo_completed,
     };
@@ -102,7 +100,7 @@ export default class CreateEnroll extends Component {
   // JSX code which is needed to display the form
   render() {
     var message = "You selected " + this.state.course;
-    var message2 = "you have selected " + this.state.student;
+    var message2 = "you have selected " + this.state.user;
     return (
       <div>
         <NavBar />
@@ -110,7 +108,7 @@ export default class CreateEnroll extends Component {
           <div className="row">
             <div className="col-md-6 mt-5 mx-auto">
               <form onSubmit={this.onSubmit}>
-                <Link to="/" className="btn btn-light">
+                <Link to="/EnrollmentList/" className="btn btn-light">
                   Go Back
                 </Link>
                 <br />
@@ -135,7 +133,7 @@ export default class CreateEnroll extends Component {
                     name="student"
                     id="ada"
                     onChange={this.onChangeStudent}
-                    value={this.state.student}
+                    value={this.state.user}
                   >
                     {this.UserList()}
                     {/* <option value="Mobile Development">Android Development</option> */}

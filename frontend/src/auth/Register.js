@@ -37,9 +37,6 @@ class Register extends Component {
       password2: this.state.password2,
       role: this.props.match.params.role,
     };
-
-    console.log(newUser);
-
     axios
       .post("http://localhost:9000/auth/registration", newUser)
       .then((res) => {
@@ -78,9 +75,7 @@ class Register extends Component {
                     <form noValidate onSubmit={this.onSubmit}>
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="feather icon-user" />
-                          </span>
+                          <span className="input-group-text">☺ </span>
                         </div>
                         <input
                           type="text"
@@ -98,9 +93,7 @@ class Register extends Component {
                       </div>
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="feather icon-mail" />
-                          </span>
+                          <span className="input-group-text">✉</span>
                         </div>
                         <input
                           type="email"
@@ -118,9 +111,7 @@ class Register extends Component {
                       </div>
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="feather icon-lock" />
-                          </span>
+                          <span className="input-group-text">✔</span>
                         </div>
                         <input
                           type="password"
@@ -140,9 +131,7 @@ class Register extends Component {
                       </div>
                       <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="feather icon-lock" />
-                          </span>
+                          <span className="input-group-text">☑</span>
                         </div>
                         <input
                           type="password"
@@ -181,7 +170,7 @@ class Register extends Component {
                 </div>
                 <div className="col-md-6 d-none d-md-block">
                   <img
-                    src="../assets/img/slider2.png"
+                    src="../assets/img/slider/register2.png"
                     alt=""
                     className="img-fluid"
                   />
@@ -204,7 +193,6 @@ Register.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   errors: state.errors,
-  //so we can access data from this state like this.props.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { registerUser })(withRouter(Register));

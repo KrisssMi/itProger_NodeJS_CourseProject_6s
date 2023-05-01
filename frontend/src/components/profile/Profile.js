@@ -32,7 +32,7 @@ class Profile extends Component {
         <div>
           <div className="row">
             <div className="col-md-6">
-              <Link to="/home-two" className="btn btn-light mb-3 float-left">
+              <Link to="/home" className="btn btn-light mb-3 float-left">
                 Back
               </Link>
             </div>
