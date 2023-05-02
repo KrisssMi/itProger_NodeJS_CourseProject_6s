@@ -8,7 +8,7 @@ import "./admin.css";
 export default class EnrollList extends Component {
   constructor(props) {
     super(props);
-    this.state = { enrollments: [], search: "" };
+    this.state = { enrollments: [] };
     this.refreshEnrollList = this.refreshEnrollList.bind(this);
   }
 
@@ -41,7 +41,7 @@ export default class EnrollList extends Component {
       function () {
         window.location.reload();
       }.bind(this),
-      700
+      1300
     );
   }
 
@@ -103,17 +103,9 @@ export default class EnrollList extends Component {
             Create Enrollment
           </a>{" "}
           <br />
-          <h1 style={{ marginLeft: "-200px", color: "#a5c41a" }}>
+          <h1 style={{ marginRight: "640px", color: "#a5c41a" }}>
             Enrollment List
           </h1>
-          <input
-            type="text"
-            placeholder="Search..."
-            class="form-control input-sm"
-            style={{ width: "250px" }}
-            value={this.state.search}
-            onChange={this.updateSearch.bind(this)}
-          />
         </div>
 
         <div className="container" style={{ border: "10px solid lightgray" }}>
@@ -131,6 +123,7 @@ export default class EnrollList extends Component {
                 <th>Action</th>
               </tr>
             </thead>
+            <ToastContainer />
             <tbody>
               {filteredusers.map(function (currentTodo, i) {
                 return <Todo todo={currentTodo} key={i} />;

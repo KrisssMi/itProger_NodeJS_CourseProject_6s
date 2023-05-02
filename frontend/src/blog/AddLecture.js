@@ -37,9 +37,15 @@ export default class Upload extends Component {
   }
 
   CourseList() {
-    return this.state.Courses.map(function (currentTodo, i) {
+    const courseList = this.state.Courses.map(function (currentTodo, i) {
       return <ShowCourse todo={currentTodo} key={i} />;
     });
+    courseList.unshift(
+      <option key="default" value="" disabled>
+        Select course...
+      </option>
+    );
+    return courseList;
   }
 
   onChangeCourse(e) {
@@ -120,8 +126,19 @@ export default class Upload extends Component {
   };
   onClickHandler = (event) => {
     event.preventDefault();
-    console.log(`Todo course: ${this.state.course}`);
-    console.log(`Todo title: ${this.state.title}`);
+
+    if (this.state.course.trim() === '') {
+      toast.error('Please select a course.');
+      return;
+    }
+    if (this.state.title.trim() === '') {
+      toast.error('Please enter a title for the video.');
+      return;
+    }
+    if (!this.state.selectedFile) {
+      toast.error('Please select a video file.');
+      return;
+    }
 
     const form = new FormData();
     form.append("course", this.state.course);
@@ -164,7 +181,7 @@ export default class Upload extends Component {
                       name="course"
                       id="ada"
                       onChange={this.onChangeCourse}
-                      value={this.state.course}
+                      value={this.state.course || ""}
                     >
                       {this.CourseList()}
                     </select>

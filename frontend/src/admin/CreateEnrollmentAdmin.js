@@ -50,17 +50,27 @@ export default class CreateEnroll extends Component {
   }
 
   CourseList() {
-    return this.state.Course.map(function (currentTodo, i) {
-      //console.log(currentTodo.name);
+    const courseList = this.state.Course.map((currentTodo, i) => {
       return <ShowCourse todo={currentTodo} key={i} />;
     });
+    courseList.unshift(
+      <option key="default" value="" disabled>
+        Select course...
+      </option>
+    );
+    return courseList;
   }
 
   UserList() {
-    return this.state.User.map(function (currentTodo, i) {
-      //console.log(currentTodo.name);
+    const userList = this.state.User.map((currentTodo, i) => {
       return <ShowUser todo={currentTodo} key={i} />;
     });
+    userList.unshift(
+      <option key="default" value="" disabled>
+        Select user...
+      </option>
+    );
+    return userList;
   }
 
   onChangeCourse(e) {
@@ -99,8 +109,6 @@ export default class CreateEnroll extends Component {
   }
   // JSX code which is needed to display the form
   render() {
-    var message = "You selected " + this.state.course;
-    var message2 = "you have selected " + this.state.user;
     return (
       <div>
         <NavBar />
@@ -133,10 +141,9 @@ export default class CreateEnroll extends Component {
                     name="student"
                     id="ada"
                     onChange={this.onChangeStudent}
-                    value={this.state.user}
+                    value={this.state.user || ""}
                   >
                     {this.UserList()}
-                    {/* <option value="Mobile Development">Android Development</option> */}
                   </select>
                 </div>
                 <div>
@@ -153,8 +160,7 @@ export default class CreateEnroll extends Component {
                     name="course"
                     id="ada2"
                     onChange={this.onChangeCourse}
-                    value={this.state.course}
-                    defaultValue={this.state.course}
+                    value={this.state.course || ""}
                   >
                     {this.CourseList()}
                   </select>

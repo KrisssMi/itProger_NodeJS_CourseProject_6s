@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "../components/NavBar";
+import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
-
 import axios from "axios";
 
 export default class CreateCategory extends Component {
@@ -31,7 +31,7 @@ export default class CreateCategory extends Component {
 
     // Check if name field is empty
     if (!this.state.name) {
-      alert("Category name cannot be empty.");
+      toast.error("Category name cannot be empty.");
       return;
     }
 
@@ -62,9 +62,9 @@ export default class CreateCategory extends Component {
           <div className="row">
             <div className="col-md-6 mt-5 mx-auto">
               <form onSubmit={this.onSubmit}>
-                {/* <Link to="/" className="btn btn-light">Go Back</Link>
+                <Link to="/ShowCategoryList" className="btn btn-light">Go Back</Link>
                 <br/>
-                <br/> */}
+                <br/>
                 <h1 className="h3 mb-3 font-weight-bold">Create Category</h1>
                 <div className="form-group">
                   <label>New Category</label>
@@ -79,6 +79,9 @@ export default class CreateCategory extends Component {
                 </div>
 
                 <br />
+                <div class="form-group">
+                  <ToastContainer />
+                </div>
                 <button
                   type="submit"
                   value="Add Category"

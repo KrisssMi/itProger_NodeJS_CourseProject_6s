@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import NavBar from "../components/NavBar";
+import { ToastContainer, toast } from "react-toastify";
+import { Progress } from "reactstrap";
 
 const ShowCat = (props) => (
   <option key={props.todo.category} value={props.todo.category}>
@@ -10,7 +12,6 @@ const ShowCat = (props) => (
 export default class EditCourse extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
     this.state = { todos: [], Cat: [] };
   }
   componentDidMount() {
@@ -46,8 +47,6 @@ export default class EditCourse extends Component {
     this.setState({ todos: state });
   };
 
-  //   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
-
   handleChange(e) {
     var whoIsChecked = { ...this.state.whoIsChecked };
     whoIsChecked.allowDestroyAll = e.target.value;
@@ -63,7 +62,7 @@ export default class EditCourse extends Component {
 
     // Проверка, чтобы поле "name" не было пустым
     if (!name) {
-      alert("Course Title cannot be empty");
+      toast.error("Course title cannot be empty");
       return;
     }
 
@@ -121,6 +120,9 @@ export default class EditCourse extends Component {
                   />
                 </div>
                 <br />
+                <div class="form-group">
+                  <ToastContainer />
+                </div>
                 <button type="submit" class="btn btn-dark">
                   Update
                 </button>{" "}

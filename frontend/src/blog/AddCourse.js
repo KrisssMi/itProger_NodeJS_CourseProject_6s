@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { Progress } from "reactstrap";
 import NavBar from "../components/NavBar";
 import axios from "axios";
-// import ShowCategory from './ShowCategory';
 
 const ShowCat = (props) => (
   <option key={props.todo.name} value={props.todo.name}>
@@ -16,8 +17,7 @@ export default class AddCourse extends Component {
     this.state = {
       name: "",
       description: "",
-      // instructor: this.props.match.params.id,
-      category: "true",
+      category: [],
       todos: [],
     };
     this.onChangeCourseName = this.onChangeCourseName.bind(this);
@@ -26,7 +26,6 @@ export default class AddCourse extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   componentDidMount() {
-    //to get data from mongo link
     axios
       .get("http://localhost:9000/categories/")
       .then((response) => {
@@ -38,10 +37,15 @@ export default class AddCourse extends Component {
   }
 
   CatList() {
-    return this.state.todos.map(function (currentTodo, i) {
-      //  console.log(currentTodo.categoryName)
+    const categoryList = this.state.todos.map(function (currentTodo, i) {
       return <ShowCat todo={currentTodo} key={i} />;
     });
+    categoryList.unshift(
+      <option key="default" value="" disabled>
+        Select category...
+      </option>
+    );
+    return categoryList;
   }
 
   onChangeCourseName(e) {
@@ -57,10 +61,11 @@ export default class AddCourse extends Component {
   }
 
   onChangeCategory(e) {
+    const selectedCategory = e.target.value;
     this.setState({
-      category: e.target.value,
+      category: selectedCategory,
     });
-    console.log("category: " + this.state.category);
+    console.log("category: " + selectedCategory);
   }
   onSubmit(e) {
     e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
@@ -68,7 +73,15 @@ export default class AddCourse extends Component {
     // Check if the name field is not empty
     if (this.state.name.trim() === "") {
       // Display an error message or take appropriate action
-      alert("Course name cannot be empty");
+      toast.error("Course name cannot be empty");
+      return;
+    }
+    if (
+      typeof this.state.category !== "string" ||
+      this.state.category.trim() === ""
+    ) {
+      // Display an error message or take appropriate action
+      toast.error("Please select a category");
       return;
     }
 
@@ -81,7 +94,6 @@ export default class AddCourse extends Component {
     const newTodo = {
       name: this.state.name,
       description: this.state.description,
-      // instructor: this.props.match.params.id,
       category: this.state.category,
       // todo_completed: this.state.todo_completed
     };
@@ -138,14 +150,16 @@ export default class AddCourse extends Component {
                     name="category"
                     id="ada"
                     onChange={this.onChangeCategory}
-                    value={this.state.category}
+                    value={this.state.category || ""}
                   >
                     {this.CatList()}
-                    {/* <option value="Mobile Development">Android Development</option> */}
                   </select>
                 </div>
                 <p>{message}</p>
                 <br />
+                <div class="form-group">
+                  <ToastContainer />
+                </div>
                 <button
                   type="submit"
                   value="add course"

@@ -1,7 +1,18 @@
-require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env" }); // загрузка переменных из файла .env
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
+
+var key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, 'utf8');
+var cert = fs.readFileSync(process.env.PRIMARY_CERT_PATH, 'utf8');
+
+var options = {
+  key: key,
+  cert: cert,
+};
+
+var https = require("https");
 
 const authRouter = require("./Routes/authRouter");
 const categoryRouter = require("./Routes/categoryRouter");
@@ -54,3 +65,7 @@ const bootstrap = () => {
 };
 
 bootstrap();
+
+// https.createServer(options, app).listen(443, () => {
+//   console.log(`Server started on port: https://localhost:443`);
+// });

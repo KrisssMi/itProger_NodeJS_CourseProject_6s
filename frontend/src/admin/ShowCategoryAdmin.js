@@ -36,8 +36,6 @@ export default class ShowCategory extends Component {
     axios
       .delete("http://localhost:9000/category?id=" + id)
       .then((result) => {
-        // this.forceUpdate()
-        // this.props.history.push("/showcategory/")
         toast.success("Deleted successfully");
       })
       .catch((err) => {
@@ -56,7 +54,6 @@ export default class ShowCategory extends Component {
     const divStyle = {
       display: "contents",
     };
-    //var message='You selected '+this.state.whoIsChecked.allowDestroyAll
     const Todo = (props) => (
       <div style={divStyle}>
         <tr>

@@ -30,10 +30,10 @@ class Dashboard extends Component {
           <div>
             <p className="lead text-muted">
               <h1>
-                Welcome, {" "}
+                Welcome,{" "}
                 <Link
                   to={`/profile/${profile.handle}`}
-                  style={{ color: "#FF9540"}}
+                  style={{ color: "#FF9540" }}
                 >
                   {profile.handle}
                 </Link>
@@ -41,23 +41,23 @@ class Dashboard extends Component {
               <br />
             </p>
             <ProfileActions />
-          
+
             <div className="d-flex justify-content-center align-items-center mt-2">
-            <button
-              onClick={this.onDeleteClick.bind(this)}
-              className="btn btn-danger"
-            >
-              Delete My Account
-            </button>
-          </div>
+              <button
+                onClick={this.onDeleteClick.bind(this)}
+                className="btn btn-danger"
+              >
+                Delete My Account
+              </button>
+            </div>
           </div>
         );
       } else {
         // User is logged in but has no profile
         dashboardContent = (
-          <div>
-            <p className="lead text-muted">Welcome, {profile.handle}</p>
-            <p>You have not yet setup a profile, please add some info</p>
+          <div style={{ textAlign: "center", marginTop: "50px", fontSize: "30px" }}>
+            <p className="lead text-muted" style={{ fontSize: "40px" }} >Welcome, {profile.handle}</p>
+            <p style={{ fontSize: "20px" }}>you have not yet setup a profile, please add some info</p>
             <Link to="/create-profile" className="btn btn-lg btn-info">
               Create Profile
             </Link>
@@ -82,15 +82,14 @@ Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.profile,
-  auth: state.auth
+  auth: state.auth,
 });
 
-export default connect(
-  mapStateToProps,
-  { getCurrentProfile, deleteAccount }
-)(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
+  Dashboard
+);

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 
@@ -38,7 +39,7 @@ export default class CatEdit extends Component {
 
     // Проверка, чтобы поле "name" не было пустым
     if (!name) {
-      alert("Category name cannot be empty");
+      toast.error("Category name cannot be empty");
       return;
     }
 
@@ -53,7 +54,6 @@ export default class CatEdit extends Component {
   };
 
   render() {
-    var message = "You selected " + this.state.todos.role;
     return (
       <div>
         <NavBar />
@@ -81,6 +81,7 @@ export default class CatEdit extends Component {
                   />
                 </div>
                 <br />
+                <ToastContainer />
                 <button type="submit" className="btn btn-lg btn-info btn-block">
                   Update
                 </button>
