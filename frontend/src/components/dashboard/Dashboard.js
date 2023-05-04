@@ -55,9 +55,15 @@ class Dashboard extends Component {
       } else {
         // User is logged in but has no profile
         dashboardContent = (
-          <div style={{ textAlign: "center", marginTop: "50px", fontSize: "30px" }}>
-            <p className="lead text-muted" style={{ fontSize: "40px" }} >Welcome, {profile.handle}</p>
-            <p style={{ fontSize: "20px" }}>you have not yet setup a profile, please add some info</p>
+          <div
+            style={{ textAlign: "center", marginTop: "50px", fontSize: "30px" }}
+          >
+            <p className="lead text-muted" style={{ fontSize: "40px" }}>
+              Welcome, {profile.handle}
+            </p>
+            <p style={{ fontSize: "20px" }}>
+              you have not yet setup a profile, please add some info
+            </p>
             <Link to="/create-profile" className="btn btn-lg btn-info">
               Create Profile
             </Link>

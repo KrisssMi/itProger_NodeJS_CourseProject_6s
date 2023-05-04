@@ -19,9 +19,8 @@ import EnrollmentList from "./admin/ShowEnrollmentAdmin";
 import Dashboard from "./admin/Dashboard";
 import CreateEnrollAdmin from "./admin/CreateEnrollmentAdmin";
 import HomeTwo from "./HomeTwo";
-import Services from "./service/Services";
-import ServicesForInstructor from "./service/ServicesByInstructor";
-import Servicesforstudent from "./service/ServiceforStudent";
+import Services from "./listOfCourses/Courses";
+import Servicesforstudent from "./listOfCourses/CoursesForStudent";
 import AddCourse from "./blog/AddCourse";
 import AddLecture from "./blog/AddLecture";
 import BlogDetailsLeftSidebar from "./blog/BlogDetailsLeftSidebar";
@@ -85,11 +84,6 @@ class Root extends Component {
               exact
               path={`${process.env.PUBLIC_URL}/servicesforstudent/:id`}
               component={Servicesforstudent}
-            />
-            <PrivateRoute
-              exact
-              path={`${process.env.PUBLIC_URL}/services/:id`}
-              component={ServicesForInstructor}
             />
             <PrivateRoute
               exact

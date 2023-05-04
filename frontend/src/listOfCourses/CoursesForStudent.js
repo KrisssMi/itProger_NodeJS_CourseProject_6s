@@ -6,9 +6,7 @@ class Services extends Component{
         data: []
       };
       async componentDidMount() {
-        //this.onTextSubmit("react tutorials");
-
-        const response = await axios.get('http://localhost:9000/courses')
+        const response = await axios.get('http://localhost:9000/enrollmentbystudent?id='+ this.props.match.params.id)
         .then((result) => {
           console.log(result.data[0]);
           return result;
@@ -19,20 +17,18 @@ class Services extends Component{
         });
       }
     render(){
-
         let data = this.state.data;
-
         let Datalist = data.map((val, i) => {
             return(
                 <div className="col-lg-4 col-md-6 col-12 section-space--bottom--30" key={i}>
                     <div className="service-grid-item">
                     <div className="service-grid-item__image">
+
                     <div className="service-grid-item__content">
                         <h3 className="title">
-                        <a href={`${process.env.PUBLIC_URL}/`+`blog-details-left-sidebar/`+`${val.id}`}>{val.name}</a>
+                        <a href={`${process.env.PUBLIC_URL}/`+`blog-details-left-sidebar/`+`${val.Course.id}`}>{val.Course.name}</a>
                         </h3>
-                        <p className="subtitle">{val.description}</p>
-                        {/* <a href={`${process.env.PUBLIC_URL}/${val.pageLink}`} className="see-more-link">SEE MORE</a> */}
+                        <p className="subtitle">{val.Course.description}</p>
                     </div>
                     </div>
                     </div>
@@ -83,9 +79,7 @@ class Services extends Component{
                 </div>
                 {/*Service section end*/}
                 </div>
-
                 {/*====================  End of service page content  ====================*/}
-
             </div>
         )
     }

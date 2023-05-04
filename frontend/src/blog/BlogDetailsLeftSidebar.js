@@ -5,15 +5,13 @@ import axios from "axios";
 import VideoList from "./VideoList";
 import VideoDetail from "./VideoDetail";
 
-//const KEY = "AIzaSyC41NHooeOCgkfQlI3MXIAHDVSy_q2nOrk";
-
 class BlogDetailsLeftSidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       videos: [],
-      user: JSON.parse(localStorage.getItem("id")),
-      userRole: JSON.parse(localStorage.getItem("role")),
+      user: JSON.parse(localStorage.getItem("userid")),
+      userRole: JSON.parse(localStorage.getItem("userRole")),
       selectedVideo: null,
       enrolled: "ADD TO COURSE LIST",
       buttonclass: "btn btn-success",
@@ -25,12 +23,6 @@ class BlogDetailsLeftSidebar extends Component {
 
   onClick(e) {
     e.preventDefault();
-    // this.setState({
-    //   course: this.props.match.params.id,
-    //   student:
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE2ODI1MzcwOTYsImV4cCI6MTY4MjYyMzQ5Nn0.X8569OM24oPf1Hef-BH6La3uE2osfZvOvcgb95j1eiA",
-    //   approved: true,
-    // });
     console.log(`Form submitted:`);
     console.log(`Todo userid: ` + this.state.user);
     console.log(`Todo courseId: ` + this.props.match.params.id);
@@ -45,11 +37,9 @@ class BlogDetailsLeftSidebar extends Component {
       axios
         .post("http://localhost:9000/enrollmentbystudent/add", newTodo)
         .then((result) => {
-          //this.props.history.push("/addtoplaylist/"+this.props.match.params.id)
           toast.success("Added successfully");
         })
         .catch((err) => {
-          // then print response status
           toast.error("Course not added");
         });
     } else {

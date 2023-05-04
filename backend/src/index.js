@@ -4,8 +4,8 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 
-var key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, 'utf8');
-var cert = fs.readFileSync(process.env.PRIMARY_CERT_PATH, 'utf8');
+var key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
+var cert = fs.readFileSync(process.env.PRIMARY_CERT_PATH, "utf8");
 
 var options = {
   key: key,
@@ -64,8 +64,9 @@ const bootstrap = () => {
   }
 };
 
+
 bootstrap();
 
-// https.createServer(options, app).listen(443, () => {
-//   console.log(`Server started on port: https://localhost:443`);
+// https.createServer(options, app).listen(process.env.PORT, () => {
+//   console.log(`Server started on port: ${process.env.PORT}`);
 // });

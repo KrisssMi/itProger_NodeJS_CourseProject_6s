@@ -127,16 +127,6 @@ class NavBar extends Component {
                                   <li>
                                     <a
                                       href={
-                                        `${process.env.PUBLIC_URL}/services/` +
-                                        users.id
-                                      }
-                                    >
-                                      MY COURSES
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      href={
                                         `${process.env.PUBLIC_URL}/addcourse/` +
                                         users.id
                                       }
@@ -571,10 +561,6 @@ class NavBar extends Component {
                                 </li>
                               </ul>
                             </li>
-                            {/* <li> <a herf =" http://localhost:9000/hostname/:id">
-                              image
-                            </a>
-                            </li> */}
                             {isAuthenticated ? authLinks : guestLinks}
                           </ul>
                         </nav>

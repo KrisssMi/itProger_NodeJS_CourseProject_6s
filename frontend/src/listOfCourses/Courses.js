@@ -6,8 +6,6 @@ class Services extends Component {
     data: [],
   };
   async componentDidMount() {
-    //this.onTextSubmit("react tutorials");
-
     const response = await axios
       .get("http://localhost:9000/courses")
       .then((result) => {
@@ -100,7 +98,6 @@ class Services extends Component {
           </div>
           {/*Service section end*/}
         </div>
-
         {/*====================  End of service page content  ====================*/}
       </div>
     );

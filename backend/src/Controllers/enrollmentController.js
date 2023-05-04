@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const DbClient = new PrismaClient();
+const jwt = require("jsonwebtoken");
 
 class enrollmentController {
   async getEnrollmentByStudent(req, res) {
@@ -46,20 +47,42 @@ class enrollmentController {
 
   async checkEnrollment(req, res) {
     try {
-      const enrollment = await DbClient.enrollment.findFirst({
-        where: {
-          user_id: Number(req.query.id) || 0,
-          course_id: Number(req.query.courseid) || 0,
-        },
-        include: {
-          Course: {
-            select: {
-              name: true,
+      const authorizationHeader = req.headers.authorization;
+      let id; // Объявляем переменную id
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 1) {
+          const token = tokenArray[0];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          id = decodedToken.id;
+        } else {
+          console.error("Invalid Authorization header format");
+        }
+        const user = await DbClient.user.findFirst({
+          where: {
+            id: id,
+          },
+        });
+        console.log(user);
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+
+        const enrollment = await DbClient.enrollment.findFirst({
+          where: {
+            user_id: id, // здесь я должна передавать полученный id из токена в req.query
+            course_id: Number(req.query.courseid) || 0,
+          },
+          include: {
+            Course: {
+              select: {
+                name: true,
+              },
             },
           },
-        },
-      });
-      res.json(enrollment);
+        });
+        res.json(enrollment);
+      }
     } catch (error) {
       console.log(error);
       res.status(500).json(error);
@@ -99,9 +122,33 @@ class enrollmentController {
       });
       res.status(200).json(enrollment);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   }
+
+  // async addEnrollmentByStudent(req, res) {
+  //   // Проверяем наличие тела запроса
+  //   if (!req.body) {
+  //     return res.status(400).send("request body is missing");
+  //   }
+  //   try {
+  //     // Создаем новую запись Enrollment
+  //     const enrollment = await DbClient.enrollment.create({
+  //       data: {
+  //         User: { connect: { id: req.query.user_id } },
+  //         Course: { connect: { id: req.query.course_id } },
+  //         approved: req.body.approved || false,
+  //         checked: req.body.checked || false,
+  //       },
+  //     });
+  //     console.log(enrollment);
+  //     res.status(200).json(enrollment);
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(500).json(err);
+  //   }
+  // }
 
   async addEnrollmentByStudent(req, res) {
     // Проверяем наличие тела запроса
@@ -109,18 +156,42 @@ class enrollmentController {
       return res.status(400).send("request body is missing");
     }
     try {
-      // Создаем новую запись Enrollment
-      const enrollment = await DbClient.enrollment.create({
-        data: {
-          User: { connect: { id: req.body.user_id } },
-          Course: { connect: { id: req.body.course_id } },
-          approved: req.body.approved || false,
-          checked: req.body.checked || false,
-        },
-      });
-      console.log(enrollment);
-      res.status(200).json(enrollment);
+      const authorizationHeader = req.headers.authorization;
+      let id; // Объявляем переменную id
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 1) {
+          const token = tokenArray[0];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          id = decodedToken.id;
+        } else {
+          console.error("Invalid Authorization header format");
+        }
+        const user = await DbClient.user.findFirst({
+          where: {
+            id: id,
+          },
+        });
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+
+        // Создаем новую запись Enrollment
+        const enrollment = await DbClient.enrollment.create({
+          data: {
+            // user_id: id,
+            // course_id: req.params.id,
+            User: { connect: { id: user.id } },
+            Course: { connect: { id: req.params.id } },
+            approved: req.body.approved || false,
+            checked: req.body.checked || false,
+          },
+        });
+        console.log(enrollment);
+        res.status(200).json(enrollment);
+      }
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   }
