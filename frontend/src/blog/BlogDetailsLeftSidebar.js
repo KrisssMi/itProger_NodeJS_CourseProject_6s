@@ -35,7 +35,10 @@ class BlogDetailsLeftSidebar extends Component {
     };
     if (this.state.buttonclass == "btn btn-success") {
       axios
-        .post("http://localhost:9000/enrollmentbystudent/add", newTodo)
+        .post(
+          `http://localhost:9000/enrollmentbystudent/add/${this.props.match.params.id}`,
+          newTodo
+        )
         .then((result) => {
           toast.success("Added successfully");
         })

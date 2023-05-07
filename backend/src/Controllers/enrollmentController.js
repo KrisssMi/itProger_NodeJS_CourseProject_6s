@@ -157,7 +157,7 @@ class enrollmentController {
     }
     try {
       const authorizationHeader = req.headers.authorization;
-      let id; // Объявляем переменную id
+      let id;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 1) {
@@ -179,10 +179,8 @@ class enrollmentController {
         // Создаем новую запись Enrollment
         const enrollment = await DbClient.enrollment.create({
           data: {
-            // user_id: id,
-            // course_id: req.params.id,
-            User: { connect: { id: user.id } },
-            Course: { connect: { id: req.params.id } },
+            User: { connect: { id: Number(user.id) } },
+            Course: { connect: { id: Number(req.params.courseId) } },
             approved: req.body.approved || false,
             checked: req.body.checked || false,
           },

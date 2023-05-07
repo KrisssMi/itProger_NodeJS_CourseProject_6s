@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/NavBar";
 import axios from "axios";
 
@@ -12,11 +13,9 @@ const ShowRole = (props) => (
 export default class UserEdit extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
     this.state = { todos: [], Roles: [] };
   }
 
-  // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
       .get("http://localhost:9000/auth/user?id=" + this.props.match.params.id)
@@ -69,6 +68,12 @@ export default class UserEdit extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+
+    // Проверка, чтобы поле "name" не было пустым
+    if (!name) {
+      toast.error("User name cannot be empty");
+      return;
+    }
 
     const { name, email, password, role } = this.state.todos;
     console.log(this.state.todos);

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
+const bodyParser = require("body-parser");
 
 var key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
 var cert = fs.readFileSync(process.env.PRIMARY_CERT_PATH, "utf8");
@@ -31,6 +32,7 @@ const staticPath = path.join(__dirname, "static");
 app.use(express.static(staticPath));
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.options("*", cors());
 app.use(express.json());
 app.use("/auth", authRouter);
@@ -63,7 +65,6 @@ const bootstrap = () => {
     console.log(e);
   }
 };
-
 
 bootstrap();
 
