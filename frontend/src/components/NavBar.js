@@ -82,7 +82,7 @@ class NavBar extends Component {
                             <ul id="main-nav-ul">
                               <li>
                                 <Link
-                                  to={`${process.env.PUBLIC_URL}/dashboard`}
+                                  to={`${process.env.PUBLIC_URL}/statistic`}
                                 >
                                   <div
                                     style={{
@@ -403,57 +403,6 @@ class NavBar extends Component {
         </React.Fragment>
       );
     }
-    if (users.roles && users.roles.includes("INSTRUCTOR")) {
-      console.log("test Teacher");
-      var authLinks = (
-        <React.Fragment>
-          <li className="has-children has-children--multilevel-submenu">
-            <a>COURSES</a>
-            <ul className="submenu">
-              <li>
-                <a href={`${process.env.PUBLIC_URL}/services/` + users.id}>
-                  MY COURSES
-                </a>
-              </li>
-              <li>
-                <a href={`${process.env.PUBLIC_URL}/addcourse/` + users.id}>
-                  ADD COURSES
-                </a>
-              </li>
-              <li>
-                <a href={`${process.env.PUBLIC_URL}/add-lecture/` + users.id}>
-                  ADD LECTURE
-                </a>
-              </li>
-              <li>
-                <a href={`${process.env.PUBLIC_URL}/services`}>ALL COURSES</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href={`${process.env.PUBLIC_URL}/finaldashboard`}>PROFILE</a>{" "}
-          </li>
-          <li>
-            <a href={`${process.env.PUBLIC_URL}/finalprofiles`}>ALL PROFILES</a>
-          </li>
-          {/* <li>
-              <a href={`${process.env.PUBLIC_URL}/services/`}>
-                SERVICE
-              </a>{" "}
-              </li> */}
-          <li>
-            <a
-              href=""
-              onClick={this.onLogoutClick.bind(this)}
-              className="nav-link"
-            >
-              {" "}
-              LOGOUT
-            </a>
-          </li>
-        </React.Fragment>
-      );
-    }
     const guestLinks = // if user is not logged in
       (
         <React.Fragment>
@@ -553,9 +502,7 @@ class NavBar extends Component {
                               </a>
                               <ul className="submenu">
                                 <li>
-                                  <a
-                                    href={`${process.env.PUBLIC_URL}/home`}
-                                  >
+                                  <a href={`${process.env.PUBLIC_URL}/home`}>
                                     Homepage Two
                                   </a>
                                 </li>

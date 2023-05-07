@@ -26,26 +26,34 @@ export default class UserEdit extends Component {
         console.log(error);
       });
 
-    axios
-      .get("http://localhost:9000/showroles/")
-      .then((response) => {
-        this.setState({ Roles: response.data });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios
+    //   .get("http://localhost:9000/showroles/")
+    //   .then((response) => {
+    //     this.setState({ Roles: response.data });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
 
   RoleList() {
-    return this.state.Roles.map(function (currentTodo, i) {
+    const roleList = this.state.Roles.map(function (currentTodo, i) {
       return <ShowRole todo={currentTodo} key={i} />;
     });
+    roleList.unshift(
+      <option key="default" value="" disabled>
+        Select role...
+      </option>
+    );
+    return roleList;
   }
+
   onChange = (e) => {
     const state = this.state.todos;
     state[e.target.name] = e.target.value;
     this.setState({ todos: state });
   };
+
   toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
 
   delete() {
@@ -69,14 +77,29 @@ export default class UserEdit extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
+    const { name, email, password, role } = this.state.todos;
+    console.log(this.state.todos);
+
     // Проверка, чтобы поле "name" не было пустым
     if (!name) {
       toast.error("User name cannot be empty");
       return;
     }
 
-    const { name, email, password, role } = this.state.todos;
-    console.log(this.state.todos);
+    if (!email) {
+      toast.error("Email cannot be empty");
+      return;
+    }
+
+    if (
+      typeof this.state.todos.role !== "string" ||
+      this.state.todos.role.trim() === ""
+    ) {
+      // Display an error message or take appropriate action
+      toast.error("Please select a role");
+      return;
+    }
+
     axios
       .put("http://localhost:9000/auth/user?id=" + this.props.match.params.id, {
         name,
@@ -104,6 +127,9 @@ export default class UserEdit extends Component {
             <div class="panel-body">
               <br />
               <form onSubmit={this.onSubmit}>
+                <Link to="/allusers" className="btn btn-light">
+                  Go Back
+                </Link>
                 <div class="form-group">
                   <label for="First Name">Name:</label>
                   <input
@@ -126,17 +152,6 @@ export default class UserEdit extends Component {
                     placeholder="Email"
                   />
                 </div>
-                <div class="form-group">
-                  <label for="Password">Password:</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    value={this.state.todos.password}
-                    onChange={this.onChange}
-                    placeholder="Password"
-                  />
-                </div>
                 <div>
                   <label>Role</label>
                   <select
@@ -144,7 +159,7 @@ export default class UserEdit extends Component {
                     name="role"
                     id="ada"
                     onChange={this.onChange}
-                    value={this.state.todos.Roles}
+                    value={this.state.todos.role || ""}
                   >
                     <option value="ADMIN">ADMIN</option>
                     <option value="USER">USER</option>
@@ -152,7 +167,7 @@ export default class UserEdit extends Component {
                   <p>{message}</p>
                 </div>
                 <br />
-
+                <ToastContainer />
                 <button type="submit" class="btn btn-dark">
                   Update
                 </button>

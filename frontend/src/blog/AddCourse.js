@@ -65,7 +65,6 @@ export default class AddCourse extends Component {
     this.setState({
       category: selectedCategory,
     });
-    console.log("category: " + selectedCategory);
   }
   onSubmit(e) {
     e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
@@ -95,7 +94,6 @@ export default class AddCourse extends Component {
       name: this.state.name,
       description: this.state.description,
       category: this.state.category,
-      // todo_completed: this.state.todo_completed
     };
     console.log(newTodo);
     axios

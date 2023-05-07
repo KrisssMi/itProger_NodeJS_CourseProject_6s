@@ -7,11 +7,10 @@ import axios from "axios";
 export default class CatEdit extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
     this.state = { todos: [] };
   }
 
-  // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
+  // Чтобы извлечь данные из бд--> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
       .get("http://localhost:9000/category?id=" + this.props.match.params.id)

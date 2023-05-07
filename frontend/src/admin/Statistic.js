@@ -10,8 +10,7 @@ var dd = [];
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
-    this.state = { c1: [], c2: [], c3: [] };
+    this.state = { c1: [], c2: [] };
   }
   getCoursedata() {
     axios
@@ -19,30 +18,13 @@ class Dashboard extends Component {
       .then((response) => {
         var dict = {};
         dd = [];
-        response.data.forEach((element) => {
-          //console.log(element);
-          if (dict[element.instructor.email] == undefined) {
-            dict[element.instructor.email] = 1;
-          } else {
-            dict[element.instructor.email] += 1;
-          }
-        });
-
-        for (var k in dict) {
-          dd.push({ y: dict[k], label: k });
-        }
-        console.log(dd);
-
-        this.setState({ c1: dd });
-        dd = [];
-        dict = {};
 
         response.data.forEach((element) => {
-          //console.log(element);label
-          if (dict[element.category.name] == undefined) {
-            dict[element.category.name] = 1;
+          console.log(element);
+          if (dict[element.Category.name] == undefined) {
+            dict[element.Category.name] = 1;
           } else {
-            dict[element.category.name] += 1;
+            dict[element.Category.name] += 1;
           }
         });
 
@@ -51,7 +33,7 @@ class Dashboard extends Component {
         }
         console.log(dd);
 
-        this.setState({ c3: dd });
+        this.setState({ c2: dd });
       })
       .catch(function (error) {
         console.log(error);
@@ -65,11 +47,10 @@ class Dashboard extends Component {
         var dict = {};
         dd = [];
         response.data.forEach((element) => {
-          //console.log(element);
-          if (dict[element.course.name] == undefined) {
-            dict[element.course.name] = 1;
+          if (dict[element.Course.name] == undefined) {
+            dict[element.Course.name] = 1;
           } else {
-            dict[element.course.name] += 1;
+            dict[element.Course.name] += 1;
           }
         });
 
@@ -77,7 +58,7 @@ class Dashboard extends Component {
           dd.push({ y: dict[k], label: k });
         }
         console.log(dd);
-        this.setState({ c2: dd });
+        this.setState({ c1: dd });
       })
       .catch(function (error) {
         console.log(error);
@@ -94,38 +75,18 @@ class Dashboard extends Component {
       exportEnabled: true,
       animationEnabled: true,
       title: {
-        text: "Courses Per Instructor",
-      },
-      data: [
-        {
-          type: "pie",
-          startAngle: 75,
-          toolTipContent: "<b>{label}</b>: {y}",
-          showInLegend: "true",
-          legendText: "{label}",
-          indexLabelFontSize: 16,
-          indexLabel: "{label} - {y}",
-          dataPoints: this.state.c1,
-        },
-      ],
-    };
-
-    const options2 = {
-      exportEnabled: true,
-      animationEnabled: true,
-      title: {
         text: "Students Per Course",
       },
       data: [
         {
           // Change type to "doughnut", "line", "splineArea", etc.
           type: "column",
-          dataPoints: this.state.c2,
+          dataPoints: this.state.c1,
         },
       ],
     };
 
-    const options3 = {
+    const options2 = {
       exportEnabled: true,
       animationEnabled: true,
 
@@ -145,7 +106,7 @@ class Dashboard extends Component {
           showInLegend: true,
           indexLabel: "{name}: {y}",
           yValueFormatString: "#,###",
-          dataPoints: this.state.c3,
+          dataPoints: this.state.c2,
         },
       ],
     };
@@ -157,24 +118,17 @@ class Dashboard extends Component {
           <tr className="row">
             <th className="col-md-6">
               <CanvasJSChart
-                options={options1}
-                /* onRef={ref => this.chart = ref} */
-              />
-            </th>
-            <th className="col-md-6">
-              <CanvasJSChart
-                options={options3}
-                /* onRef={ref => this.chart = ref} */
+                options={options2}
+                // onRef={ref => this.chart = ref}
               />
             </th>
           </tr>
           <br></br>
           <div className="row">
             <CanvasJSChart
-              options={options2}
-              /* onRef={ref => this.chart = ref} */
+              options={options1}
+              // onRef={ref => this.chart = ref}
             />
-            {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
           </div>
         </div>
       </div>

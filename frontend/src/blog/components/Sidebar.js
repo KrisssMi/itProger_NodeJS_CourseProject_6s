@@ -1,63 +1,53 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import PropTypes from "prop-types";
 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    Courses:[]}
-}
+      Courses: [],
+    };
+  }
 
   componentDidMount() {
-    let user = JSON.parse(localStorage.getItem('id'));
-    axios.get('http://localhost:9000/courses')
-        .then(response => {
-            this.setState({ Courses: response.data });
-            console.log(user);
-        })
-        .catch(function (error){
-            console.log(error);
-        })
-}
+    let user = JSON.parse(localStorage.getItem("id"));
+    axios
+      .get("http://localhost:9000/courses")
+      .then((response) => {
+        this.setState({ Courses: response.data });
+        console.log(user);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   render() {
     /* sidebar category */
     let courseList = this.state.Courses.map((val, i) => {
       return (
         <li key={i}>
-          <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
-            {val.name}
-          </a>
+          <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>{val.name}</a>
         </li>
       );
     });
-   
+
     let categoryData = [
       { categoryLink: "blog-left-sidebar", categoryName: courseList[0] },
       { categoryLink: "blog-left-sidebar", categoryName: "Mobile Apps" },
       {
         categoryLink: "blog-left-sidebar",
-        categoryName: "Programming Languages"
+        categoryName: "Programming Languages",
       },
       { categoryLink: "blog-left-sidebar", categoryName: "Game Development" },
       { categoryLink: "blog-left-sidebar", categoryName: "Databases" },
       { categoryLink: "blog-left-sidebar", categoryName: "Software Testing" },
       {
         categoryLink: "blog-left-sidebar",
-        categoryName: "Software Engineering"
-      }
+        categoryName: "Software Engineering",
+      },
     ];
-
-    // let categoryDataList = courseList.map((val, i) => {
-    //   return (
-    //     <li key={i}>
-    //       <a href={`${process.env.PUBLIC_URL}/blog-left-sidebar`}>
-    //         {val.name}
-    //       </a>
-    //     </li>
-    //   );
-    // });
 
     /* sidebar popular post */
 
@@ -66,39 +56,21 @@ class Sidebar extends Component {
         postImage: "sidebar-blog-1.jpg",
         postTitle: "Making Sense of React Hooks?",
         postLink: "blog-details-left-sidebar",
-        postDate: "30 October 2019"
+        postDate: "30 October 2019",
       },
       {
         postImage: "sidebar-blog-2.jpg",
         postTitle: "Set Up Medium Feed in React",
         postLink: "blog-details-left-sidebar",
-        postDate: "30 October 2019"
+        postDate: "30 October 2019",
       },
       {
         postImage: "sidebar-blog-3.jpg",
         postTitle: "Five Things I Didn’t Know About Create-React-App",
         postLink: "blog-details-left-sidebar",
-        postDate: "30 October 2019"
-      }
+        postDate: "30 October 2019",
+      },
     ];
-
-    // let popularPostDataList = popularPostData.map((val, i) => {
-    //   return (
-    //     <div className="sidebar-blog" key={i}>
-    //       <a href="blog-details-left-sidebar.html" className="image">
-    //         <img src={`assets/img/blog/${val.postImage}`} alt="" />
-    //       </a>
-    //       <div className="content">
-    //         <h5>
-    //           <a href={`${process.env.PUBLIC_URL}/${val.postLink}`}>
-    //             {val.postTitle}
-    //           </a>
-    //         </h5>
-    //         <span>{val.postDate}</span>
-    //       </div>
-    //     </div>
-    //   );
-    // });
 
     /* sidebar tag */
 
@@ -109,7 +81,7 @@ class Sidebar extends Component {
       { tagLink: "blog-left-sidebar", tagName: "Game Development" },
       { tagLink: "blog-left-sidebar", tagName: "Databases" },
       { tagLink: "blog-left-sidebar", tagName: "Software Testing" },
-      { tagLink: "blog-left-sidebar", tagName: "Software Engineering" }
+      { tagLink: "blog-left-sidebar", tagName: "Software Engineering" },
     ];
 
     let tagDataList = tagData.map((val, i) => {

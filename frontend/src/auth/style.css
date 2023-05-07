@@ -3151,8 +3151,9 @@ select.form-control-lg:not([size]):not([multiple]) {
 
 .btn-dark {
   color: #fff;
-  background-color: #263238;
+  background-color: #354851;
   border-color: #202a2f;
+  margin-top: 20px;
 }
 
 .btn-dark:hover {

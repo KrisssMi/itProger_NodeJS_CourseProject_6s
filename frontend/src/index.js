@@ -16,7 +16,7 @@ import EditCourseList from "./admin/EditCourseAdmin";
 import CreateCategoryAdmin from "./admin/CreateCategoryAdmin";
 import EditCategoryList from "./admin/EditCategoryAdmin";
 import EnrollmentList from "./admin/ShowEnrollmentAdmin";
-import Dashboard from "./admin/Dashboard";
+import Statistic from "./admin/Statistic";
 import CreateEnrollAdmin from "./admin/CreateEnrollmentAdmin";
 import HomeTwo from "./HomeTwo";
 import Services from "./listOfCourses/Courses";
@@ -122,8 +122,8 @@ class Root extends Component {
             />
             <PrivateRoute
               exact
-              path={`${process.env.PUBLIC_URL}/dashboard`}
-              component={Dashboard}
+              path={`${process.env.PUBLIC_URL}/statistic`}
+              component={Statistic}
             />
             <Route
               exact
