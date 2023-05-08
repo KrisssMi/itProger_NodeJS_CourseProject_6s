@@ -2645,7 +2645,7 @@ select.form-control-lg:not([size]):not([multiple]) {
   overflow: hidden;
   min-width: 100%;
   min-height: 100vh;
-  background: cornflowerblue;
+  background: #7c87ff;
 }
 
 @media (min-width: 1200px) {

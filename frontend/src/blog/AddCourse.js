@@ -84,11 +84,11 @@ export default class AddCourse extends Component {
       return;
     }
 
-    console.log(`Form submitted:`);
-    console.log(`Todo name: ${this.state.name}`);
-    console.log(`Todo description: ${this.state.description}`);
-    console.log(`Todo instructor: ${this.state.instructor}`);
-    console.log(`Todo category: ${this.state.category}`);
+    // console.log(`Form submitted:`);
+    // console.log(`Todo name: ${this.state.name}`);
+    // console.log(`Todo description: ${this.state.description}`);
+    // console.log(`Todo instructor: ${this.state.instructor}`);
+    // console.log(`Todo category: ${this.state.category}`);
 
     const newTodo = {
       name: this.state.name,

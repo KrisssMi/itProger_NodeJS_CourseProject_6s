@@ -115,7 +115,10 @@ class Dashboard extends Component {
       <div>
         <NavBar />
         <div className="container">
-          <tr className="row">
+          <tr
+            className="row"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <th className="col-md-6">
               <CanvasJSChart
                 options={options2}

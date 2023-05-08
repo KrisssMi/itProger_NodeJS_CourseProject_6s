@@ -17,19 +17,7 @@ const generateAccessToken = (id, roles) => {
 
 class authController {
   async registration(req, res) {
-    // try {
-    //   const { errors, isValid } = validateRegisterInput(req.body);
-
-    //   // Check Validation
-    //   if (!isValid) {
-    //     return res.status(400).json(errors);
-    //   }
     try {
-      // const errors = validationResult(req);
-      // if (!errors.isEmpty()) {
-      //   return res.status(400).json({ message: "Registration error", errors });
-      // }
-
       const { id, name, email, password } = req.body;
       const candidate = await DbClient.user.findUnique({
         where: {
@@ -192,10 +180,11 @@ class authController {
     try {
       // Удаление пользователя
       const removedUser = await DbClient.user.delete({
-        where: { id: req.query.id },
+        where: { id: Number(req.query.id) },
       });
       res.json(removedUser);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   }

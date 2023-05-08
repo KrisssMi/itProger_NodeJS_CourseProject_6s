@@ -9,8 +9,6 @@ router.get("/all", profileController.getAllProfiles); // Get all profiles
 router.post("/", profileController.addProfile); // Create or edit user profile
 router.get("/user/:user_id", profileController.profileByUserId); // Get profile by user ID
 router.get("/handle/:handle", profileController.profileByHandle); // Get profile by handle
-// router.post("/education", profileController.addEducation); // Add education to profile
-// router.delete("/education/:edu_id", profileController.deleteEducation); // Delete education from profile
 router.delete("/", profileController.deleteProfile); // Delete user and profile
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const ShowUser = (props) => (
   <option selected="selected" key={props.todo.email} value={props.todo.email}>
@@ -21,6 +22,8 @@ export default class CreateEnroll extends Component {
     this.state = {
       User: [],
       Course: [],
+      user: [],
+      course: [],
     };
 
     /** Ensure to bind our methods to this by adding them here **/
@@ -88,8 +91,20 @@ export default class CreateEnroll extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Todo course for enrollment: ${this.state.course}`);
-    console.log(`Todo user for enrollment: ${this.state.user}`);
+    if (typeof this.state.user !== "string" || this.state.user.trim() === "") {
+      // Display an error message or take appropriate action
+      toast.error("Please select a user");
+      return;
+    }
+
+    if (
+      typeof this.state.course !== "string" ||
+      this.state.course.trim() === ""
+    ) {
+      // Display an error message or take appropriate action
+      toast.error("Please select a course");
+      return;
+    }
 
     const newTodo = {
       student: this.state.user,
@@ -107,8 +122,10 @@ export default class CreateEnroll extends Component {
       todo_completed: false,
     });
   }
-  // JSX code which is needed to display the form
+
   render() {
+    var message = "You selected " + this.state.user;
+    var message2 = "You selected " + this.state.course;
     return (
       <div>
         <NavBar />
@@ -146,8 +163,8 @@ export default class CreateEnroll extends Component {
                     {this.UserList()}
                   </select>
                 </div>
+                <p>{message}</p>
                 <div>
-                  <br />
                   <label>Course: </label>
                   <br />
                   <select
@@ -165,7 +182,11 @@ export default class CreateEnroll extends Component {
                     {this.CourseList()}
                   </select>
                 </div>
+                <p>{message2}</p>
                 <br />
+                <div class="form-group">
+                  <ToastContainer />
+                </div>
                 <button
                   type="submit"
                   value="Add User"

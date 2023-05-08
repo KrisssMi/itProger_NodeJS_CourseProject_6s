@@ -25,15 +25,6 @@ export default class UserEdit extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-    // axios
-    //   .get("http://localhost:9000/showroles/")
-    //   .then((response) => {
-    //     this.setState({ Roles: response.data });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   }
 
   RoleList() {

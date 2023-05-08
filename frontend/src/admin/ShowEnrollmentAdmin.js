@@ -41,7 +41,7 @@ export default class EnrollList extends Component {
       function () {
         window.location.reload();
       }.bind(this),
-      1300
+      100
     );
   }
 

@@ -16,5 +16,6 @@ router.post(
   enrollmentController.addEnrollmentByStudent
 );
 router.delete("/enrollment/", enrollmentController.deleteEnrollment);
+router.delete("/enrollmentbystudent/delete/:courseId", enrollmentController.deleteEnrollmentByStudent);
 
 module.exports = router;

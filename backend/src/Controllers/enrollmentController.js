@@ -127,29 +127,6 @@ class enrollmentController {
     }
   }
 
-  // async addEnrollmentByStudent(req, res) {
-  //   // Проверяем наличие тела запроса
-  //   if (!req.body) {
-  //     return res.status(400).send("request body is missing");
-  //   }
-  //   try {
-  //     // Создаем новую запись Enrollment
-  //     const enrollment = await DbClient.enrollment.create({
-  //       data: {
-  //         User: { connect: { id: req.query.user_id } },
-  //         Course: { connect: { id: req.query.course_id } },
-  //         approved: req.body.approved || false,
-  //         checked: req.body.checked || false,
-  //       },
-  //     });
-  //     console.log(enrollment);
-  //     res.status(200).json(enrollment);
-  //   } catch (err) {
-  //     console.log(err);
-  //     res.status(500).json(err);
-  //   }
-  // }
-
   async addEnrollmentByStudent(req, res) {
     // Проверяем наличие тела запроса
     if (!req.body) {
@@ -185,7 +162,6 @@ class enrollmentController {
             checked: req.body.checked || false,
           },
         });
-        console.log(enrollment);
         res.status(200).json(enrollment);
       }
     } catch (err) {
@@ -205,6 +181,57 @@ class enrollmentController {
       res.json(deletedEnrollment);
     } catch (error) {
       res.status(500).json(error);
+    }
+  }
+
+  async deleteEnrollmentByStudent(req, res) {
+    try {
+      const authorizationHeader = req.headers.authorization;
+      let id;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 1) {
+          const token = tokenArray[0];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          id = decodedToken.id;
+        } else {
+          console.error("Invalid Authorization header format");
+        }
+        const user = await DbClient.user.findFirst({
+          where: {
+            id: id,
+          },
+        });
+        if (!user) {
+          return res.status(404).json({ error: "User not found" });
+        }
+        const courseId = Number(req.params.courseId);
+        if (isNaN(courseId)) {
+          return res.status(400).json({ error: "Invalid course ID" });
+        }
+
+        const findEnrollment = await DbClient.enrollment.findFirst({
+          where: {
+            Course: { id: courseId },
+            User: { id: user.id },
+          },
+        });
+        if (!findEnrollment) {
+          return res.status(404).json({ error: "Enrollment not found" });
+        }
+
+        // Удаляем запись Enrollment
+        const enrollment = await DbClient.enrollment.delete({
+          where: {
+            id: findEnrollment.id,
+          },
+        });
+        console.log(enrollment);
+        res.status(200).json(enrollment);
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
     }
   }
 }

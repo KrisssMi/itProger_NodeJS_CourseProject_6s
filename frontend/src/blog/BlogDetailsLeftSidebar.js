@@ -15,7 +15,7 @@ class BlogDetailsLeftSidebar extends Component {
       selectedVideo: null,
       enrolled: "ADD TO COURSE LIST",
       buttonclass: "btn btn-success",
-      addcourse: false,
+      showRemoveButton: false,
     };
 
     this.onClick = this.onClick.bind(this);
@@ -23,10 +23,6 @@ class BlogDetailsLeftSidebar extends Component {
 
   onClick(e) {
     e.preventDefault();
-    console.log(`Form submitted:`);
-    console.log(`Todo userid: ` + this.state.user);
-    console.log(`Todo courseId: ` + this.props.match.params.id);
-    // console.log(`Todo approved: `);
 
     const newTodo = {
       student: this.state.user,
@@ -41,6 +37,11 @@ class BlogDetailsLeftSidebar extends Component {
         )
         .then((result) => {
           toast.success("Added successfully");
+          this.setState({
+            enrolled: "ALREADY ENROLLED",
+            buttonclass: "btn btn-danger",
+            showRemoveButton: true, // Добавляем свойство showRemoveButton
+          });
         })
         .catch((err) => {
           toast.error("Course not added");
@@ -50,6 +51,27 @@ class BlogDetailsLeftSidebar extends Component {
       toast.error("Course already added");
     }
   }
+
+  // Добавляем метод handleClick для удаления курса
+  handleClick(e) {
+    e.preventDefault();
+    axios
+      .delete(
+        `http://localhost:9000/enrollmentbystudent/delete/${this.props.match.params.id}`
+      )
+      .then((result) => {
+        toast.success("Removed successfully");
+        this.setState({
+          enrolled: "ADD TO COURSE LIST",
+          buttonclass: "btn btn-success",
+          showRemoveButton: false, // Обновляем свойство showRemoveButton
+        });
+      })
+      .catch((err) => {
+        toast.error("Course not removed");
+      });
+  }
+
   componentDidMount() {
     this.onTextSubmit("react tutorials");
   }
@@ -82,6 +104,7 @@ class BlogDetailsLeftSidebar extends Component {
               this.setState({
                 enrolled: "ALREADY ENROLLED",
                 buttonclass: "btn btn-danger",
+                showRemoveButton: true, // Обновляем свойство showRemoveButton
               });
             } else {
               console.log(result.data);
@@ -184,6 +207,20 @@ class BlogDetailsLeftSidebar extends Component {
                     >
                       {this.state.enrolled}
                     </button>
+                    {this.state.showRemoveButton && (
+                      <button
+                        className="btn btn-danger"
+                        style={{
+                          backgroundColor: "blue",
+                          width: "180px",
+                          height: "43px",
+                          marginTop: "-1px",
+                        }}
+                        onClick={(e) => this.handleClick(e)}
+                      >
+                        REMOVE COURSE
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
