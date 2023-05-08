@@ -13,7 +13,7 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get("http://localhost:9000/profile")
+    .get("https://localhost:9000/profile")
     .then(res =>
       dispatch({
         type: GET_PROFILE,
@@ -32,7 +32,7 @@ export const getCurrentProfile = () => dispatch => {
 export const getProfileByHandle = handle => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get(`http://localhost:9000/profile/handle/${handle}`)
+    .get(`https://localhost:9000/profile/handle/${handle}`)
     .then(res =>
       dispatch({
         type: GET_PROFILE,
@@ -50,7 +50,7 @@ export const getProfileByHandle = handle => dispatch => {
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
-    .post("http://localhost:9000/profile/", profileData)
+    .post("https://localhost:9000/profile/", profileData)
     .then(res => history.push("/finaldashboard"))
     .catch(err =>
       dispatch({
@@ -63,7 +63,7 @@ export const createProfile = (profileData, history) => dispatch => {
 // Get all profiles
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
-  axios.get("http://localhost:9000/profile/all")
+  axios.get("https://localhost:9000/profile/all")
     .then(res =>
       dispatch({
         type: GET_PROFILES,
@@ -82,7 +82,7 @@ export const getProfiles = () => dispatch => {
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
     axios
-      .delete("http://localhost:9000/profile")
+      .delete("https://localhost:9000/profile")
       .then(res =>
         dispatch({
           type: SET_CURRENT_USER,

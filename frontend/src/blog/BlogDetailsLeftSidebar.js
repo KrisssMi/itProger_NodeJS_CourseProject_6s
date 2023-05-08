@@ -32,7 +32,7 @@ class BlogDetailsLeftSidebar extends Component {
     if (this.state.buttonclass == "btn btn-success") {
       axios
         .post(
-          `/enrollmentbystudent/add/${this.props.match.params.id}`,
+          `https://localhost:9000/enrollmentbystudent/add/${this.props.match.params.id}`,
           newTodo
         )
         .then((result) => {
@@ -57,7 +57,7 @@ class BlogDetailsLeftSidebar extends Component {
     e.preventDefault();
     axios
       .delete(
-        `http://localhost:9000/enrollmentbystudent/delete/${this.props.match.params.id}`
+        `https://localhost:9000/enrollmentbystudent/delete/${this.props.match.params.id}`
       )
       .then((result) => {
         toast.success("Removed successfully");
@@ -84,17 +84,17 @@ class BlogDetailsLeftSidebar extends Component {
     }
 
     const response = await axios
-      .get("http://localhost:9000/lectures?id=" + this.props.match.params.id)
+      .get("https://localhost:9000/lectures?id=" + this.props.match.params.id)
       .then((result) => {
         console.log(
-          "http://localhost:9000/checkenrollment?id=" +
+          "https://localhost:9000/checkenrollment?id=" +
             this.state.user +
             "&&courseid=" +
             this.props.match.params.id
         );
         const responseEnrolled = axios
           .get(
-            "http://localhost:9000/checkenrollment?id=" +
+            "https://localhost:9000/checkenrollment?id=" +
               this.state.user +
               "&&courseid=" +
               this.props.match.params.id

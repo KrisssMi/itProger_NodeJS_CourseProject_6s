@@ -56,18 +56,18 @@ app.use((req, res, next) => {
   next();
 });
 
-const bootstrap = () => {
-  try {
-    app.listen(process.env.PORT, () => {
-      console.log(`Server started on port: ${process.env.PORT}`);
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
+// const bootstrap = () => {
+//   try {
+//     app.listen(process.env.PORT, () => {
+//       console.log(`Server started on port: ${process.env.PORT}`);
+//     });
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 
-bootstrap();
+// bootstrap();
 
-// https.createServer(options, app).listen(process.env.PORT, () => {
-//   console.log(`Server started on port: ${process.env.PORT}`);
-// });
+https.createServer(options, app).listen(process.env.PORT, () => {
+  console.log(`Server started on port: ${process.env.PORT}`);
+});

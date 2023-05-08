@@ -12,7 +12,7 @@ const VideoDetail = ({ video }) => {
           <video
             width="740"
             controls
-            src={`http://localhost:9000/${video.videoLink.split("\\")[2]}`}
+            src={`https://localhost:9000/${video.videoLink.split("\\")[2]}`}
             title="videoplayer"
           />
           {/* отображает видео плеер внутри DIV-элемента, ссылаясь на ссылку видео в свойстве videoLink объекта видео. */}
