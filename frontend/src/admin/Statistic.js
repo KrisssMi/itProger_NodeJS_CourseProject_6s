@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "../components/NavBar";
 import CanvasJSReact from "../canvas/canvasjs.react";
-import axios from "axios";
+import axios from "../utils/axios";
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -14,7 +14,7 @@ class Dashboard extends Component {
   }
   getCoursedata() {
     axios
-      .get("http://localhost:9000/courses/")
+      .get("/courses/")
       .then((response) => {
         var dict = {};
         dd = [];
@@ -42,7 +42,7 @@ class Dashboard extends Component {
 
   getEnrollmentdata() {
     axios
-      .get("http://localhost:9000/enrollments/")
+      .get("/enrollments/")
       .then((response) => {
         var dict = {};
         dd = [];
@@ -122,7 +122,6 @@ class Dashboard extends Component {
             <th className="col-md-6">
               <CanvasJSChart
                 options={options2}
-                // onRef={ref => this.chart = ref}
               />
             </th>
           </tr>
@@ -130,7 +129,6 @@ class Dashboard extends Component {
           <div className="row">
             <CanvasJSChart
               options={options1}
-              // onRef={ref => this.chart = ref}
             />
           </div>
         </div>

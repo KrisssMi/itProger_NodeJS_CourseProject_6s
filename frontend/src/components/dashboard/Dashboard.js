@@ -53,7 +53,6 @@ class Dashboard extends Component {
           </div>
         );
       } else {
-        // User is logged in but has no profile
         dashboardContent = (
           <div
             style={{ textAlign: "center", marginTop: "50px", fontSize: "30px" }}

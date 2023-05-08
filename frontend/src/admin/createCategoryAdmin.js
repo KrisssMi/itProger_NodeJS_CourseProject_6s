@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import NavBar from "../components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/axios";
 
 export default class CreateCategory extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class CreateCategory extends Component {
     };
 
     axios
-      .post("http://localhost:9000/category/add", newTodo)
+      .post("/category/add", newTodo)
       .then((result) => {
         this.props.history.push("/ShowCategoryList/");
       })

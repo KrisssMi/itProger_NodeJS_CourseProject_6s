@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-// import { Link } from 'react-router-dom';
 import NavBar from "../components/NavBar";
-import axios from "axios";
+import axios from "../utils/axios";
 import "./admin.css";
 
 const divStyle = {
@@ -15,8 +14,6 @@ const Todo = (props) => (
       <td>{props.todo.email}</td>
       <td>{props.todo.role}</td>
       <td>
-        {/* <Link to={"users/edit/"+props.todo._id}>Edit</Link> */}
-        {/* <button className="button muted-button" className="btn btn-success"><Link to={"users/edit/"+props.todo._id}>Edit</Link></button> */}
         <a
           href={"/allusers/edit/" + props.todo.id}
           className="btn btn-primary btn-info"
@@ -33,20 +30,17 @@ const Todo = (props) => (
 export default class UserList extends Component {
   constructor(props) {
     super(props);
-    // initialize the state with an empty todos array
     this.state = { todos: [], search: "" };
   }
 
-  //for searching event in page
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
   // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
   componentDidMount() {
-    //to get data from mongo link
     axios
-      .get("http://localhost:9000/auth/users/")
+      .get("/auth/users/")
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -111,7 +105,6 @@ export default class UserList extends Component {
               </tr>
             </thead>
             <tbody>
-              {/* displaying data coming  */}
               {filteredusers.map(function (currentTodo, i) {
                 return <Todo todo={currentTodo} key={i} />;
               })}

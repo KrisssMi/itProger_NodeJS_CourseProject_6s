@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NavBar from "../components/NavBar";
-import axios from "axios";
+import axios from "../utils/axios";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -34,7 +34,7 @@ export default class CreateEnroll extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:9000/courses/")
+      .get("/courses/")
       .then((response) => {
         this.setState({ Course: response.data });
       })
@@ -43,7 +43,7 @@ export default class CreateEnroll extends Component {
       });
 
     axios
-      .get("http://localhost:9000/auth/users/")
+      .get("/auth/users/")
       .then((response) => {
         this.setState({ User: response.data });
       })
@@ -113,7 +113,7 @@ export default class CreateEnroll extends Component {
     };
 
     axios
-      .post("http://localhost:9000/enroll/add", newTodo)
+      .post("/enroll/add", newTodo)
       .then((result) => {
         this.props.history.push("/EnrollmentList/");
       })

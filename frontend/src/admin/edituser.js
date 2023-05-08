@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/NavBar";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const ShowRole = (props) => (
   <option key={props.todo.name} value={props.todo.name}>
@@ -18,7 +18,7 @@ export default class UserEdit extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:9000/auth/user?id=" + this.props.match.params.id)
+      .get("/auth/user?id=" + this.props.match.params.id)
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -49,9 +49,7 @@ export default class UserEdit extends Component {
 
   delete() {
     axios
-      .delete(
-        "http://localhost:9000/auth/user?id=" + this.props.match.params.id
-      )
+      .delete("/auth/user?id=" + this.props.match.params.id)
       .then((result) => {
         this.props.history.push("/allusers/");
       });
@@ -91,7 +89,7 @@ export default class UserEdit extends Component {
     }
 
     axios
-      .put("http://localhost:9000/auth/user?id=" + this.props.match.params.id, {
+      .put("/auth/user?id=" + this.props.match.params.id, {
         name,
         email,
         password,
@@ -142,7 +140,7 @@ export default class UserEdit extends Component {
                   <label for="Email">Email:</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     name="email"
                     value={this.state.todos.email}
                     onChange={this.onChange}

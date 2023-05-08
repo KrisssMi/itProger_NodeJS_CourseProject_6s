@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Progress } from "reactstrap";
 import NavBar from "../components/NavBar";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const ShowCat = (props) => (
   <option key={props.todo.name} value={props.todo.name}>
@@ -13,7 +13,6 @@ export default class AddCourse extends Component {
   constructor(props) {
     super(props);
 
-    /** Setting the initial state of the component by assigned an object to this.state **/
     this.state = {
       name: "",
       description: "",
@@ -27,7 +26,7 @@ export default class AddCourse extends Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:9000/categories/")
+      .get("/categories/")
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -67,11 +66,9 @@ export default class AddCourse extends Component {
     });
   }
   onSubmit(e) {
-    e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
+    e.preventDefault(); 
 
-    // Check if the name field is not empty
     if (this.state.name.trim() === "") {
-      // Display an error message or take appropriate action
       toast.error("Course name cannot be empty");
       return;
     }
@@ -79,7 +76,6 @@ export default class AddCourse extends Component {
       typeof this.state.category !== "string" ||
       this.state.category.trim() === ""
     ) {
-      // Display an error message or take appropriate action
       toast.error("Please select a category");
       return;
     }
@@ -91,7 +87,7 @@ export default class AddCourse extends Component {
     };
     console.log(newTodo);
     axios
-      .post("http://localhost:9000/course/add", newTodo)
+      .post("/course/add", newTodo)
       .then((result) => {
         this.props.history.push("/add-lecture/" + this.props.match.params.id);
       })

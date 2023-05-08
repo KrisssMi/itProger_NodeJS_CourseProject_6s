@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../utils/axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
@@ -6,7 +6,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 //registerUser action creator takes data and dispatch action to reducer along with payload
 export const registerUser = (userData, history) => (dispatch) => {
   axios
-    .post("http://localhost:9000/auth/registration", userData)
+    .post("/auth/registration", userData)
     .then((res) => history.push("/login"))
     .catch((err) =>
       dispatch({
@@ -19,7 +19,7 @@ export const registerUser = (userData, history) => (dispatch) => {
 // Login - Get User Token
 export const loginUser = (userData) => (dispatch) => {
   axios
-    .post("http://localhost:9000/auth/login", userData)
+    .post("/auth/login", userData)
     .then((res) => {
       //save token to local storage
       const { token } = res.data;

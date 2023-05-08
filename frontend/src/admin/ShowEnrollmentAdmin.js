@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/axios";
 import NavBar from "../components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 import "./admin.css";
@@ -18,7 +18,7 @@ export default class EnrollList extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await axios.get("http://localhost:9000/enrollments/");
+      const { data } = await axios.get("/enrollments/");
       this.setState({ enrollments: data });
     } catch (error) {
       console.log(error);
@@ -26,13 +26,10 @@ export default class EnrollList extends Component {
   }
 
   delete(id) {
-    // console.log(id);
     axios
-      .delete("http://localhost:9000/enrollment?id=" + id)
+      .delete("/enrollment?id=" + id)
       .then((result) => {
-        // this.forceUpdate()
         toast.success("Deleted successfully");
-        // this.props.history.push("/showenroll/")
       })
       .catch((err) => {
         toast.error("Course not deleted");
@@ -59,7 +56,6 @@ export default class EnrollList extends Component {
     const divStyle = {
       display: "contents",
     };
-    // var message='You selected '+this.state.todos.id
     const Todo = (props) => (
       <div style={divStyle}>
         <tr>
@@ -72,7 +68,6 @@ export default class EnrollList extends Component {
             >
               Delete
             </button>
-            {/* <p>{message}</p> */}
           </td>
         </tr>
       </div>
@@ -80,7 +75,6 @@ export default class EnrollList extends Component {
 
     let filteredusers = this.state.enrollments.filter((enroll) => {
       return enroll.user_id !== -1 || enroll.course_id !== -1;
-      // return enroll.user_id.email.indexOf(this.state.search) !== -1;
     });
 
     return (

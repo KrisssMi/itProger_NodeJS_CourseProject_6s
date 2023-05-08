@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import NavBar from "../components/NavBar";
-import axios from "axios";
+import axios from "../utils/axios";
 
 export default class CatEdit extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class CatEdit extends Component {
   // Чтобы извлечь данные из бд--> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
-      .get("http://localhost:9000/category?id=" + this.props.match.params.id)
+      .get("/category?id=" + this.props.match.params.id)
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -42,7 +42,7 @@ export default class CatEdit extends Component {
     }
 
     axios
-      .put("http://localhost:9000/category?id=" + this.props.match.params.id, {
+      .put("/category?id=" + this.props.match.params.id, {
         no,
         name,
       })

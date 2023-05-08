@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
-import axios from "axios";
+import axios from "../utils/axios";
 import classnames from "classnames";
 import NavBar from "../components/NavBar";
 import PropTypes from "prop-types";
@@ -38,7 +38,7 @@ class Register extends Component {
       role: this.props.match.params.role,
     };
     axios
-      .post("http://localhost:9000/auth/registration", newUser)
+      .post("/auth/registration", newUser)
       .then((res) => {
         console.log(res.data);
         this.props.history.push("/login/");

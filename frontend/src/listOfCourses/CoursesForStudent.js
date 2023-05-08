@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import axios from "../utils/axios";
 import NavBar from '../components/NavBar';
 class Services extends Component{
     state = {
         data: []
       };
       async componentDidMount() {
-        const response = await axios.get('http://localhost:9000/enrollmentbystudent?id='+ this.props.match.params.id)
+        const response = await axios.get('/enrollmentbystudent?id='+ this.props.match.params.id)
         .then((result) => {
           console.log(result.data[0]);
           return result;

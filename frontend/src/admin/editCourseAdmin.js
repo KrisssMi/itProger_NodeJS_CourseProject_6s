@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import NavBar from "../components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 import { Progress } from "reactstrap";
@@ -16,7 +16,7 @@ export default class EditCourse extends Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:9000/course?id=" + this.props.match.params.id)
+      .get("/course?id=" + this.props.match.params.id)
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -25,7 +25,7 @@ export default class EditCourse extends Component {
       });
 
     axios
-      .get("http://localhost:9000/categories/")
+      .get("/categories/")
       .then((response) => {
         this.setState({ Cat: response.data });
       })
@@ -68,7 +68,7 @@ export default class EditCourse extends Component {
 
     console.log(this.state.todos);
     axios
-      .put("http://localhost:9000/course?id=" + this.state.todos.id, {
+      .put("/course?id=" + this.state.todos.id, {
         name,
         description,
         category,
@@ -133,8 +133,6 @@ export default class EditCourse extends Component {
                   Update
                 </button>{" "}
                 &nbsp;
-                {/* <button onClick={this.delete.bind(this, this.state.todos.id)} class="btn btn-danger">Delete</button>
-                <p>{message}</p> */}
               </form>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import NavBar from "../components/NavBar";
 import { Progress } from "reactstrap";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,7 +9,6 @@ const ShowCourse = (props) => (
   <option key={props.todo.name} value={props.todo.name}>
     {props.todo.name}
   </option>
-  // <button type="button" class="list-group-item list-group-item-action">{props.todo.courseName}</button>
 );
 export default class Upload extends Component {
   constructor(props) {
@@ -27,7 +26,7 @@ export default class Upload extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:9000/courses/")
+      .get("/courses/")
       .then((response) => {
         this.setState({ Courses: response.data });
       })
@@ -145,7 +144,7 @@ export default class Upload extends Component {
     form.append("name", this.state.title);
     form.append("video", this.state.selectedFile[0]);
     axios
-      .post("http://localhost:9000/lecture/add", form, {
+      .post("/lecture/add", form, {
         onUploadProgress: (ProgressEvent) => {
           this.setState({
             loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,

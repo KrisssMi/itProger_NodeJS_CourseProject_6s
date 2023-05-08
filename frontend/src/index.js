@@ -32,7 +32,6 @@ import * as serviceWorker from "./serviceWorker";
 import PrivateRoute from "./components/common/PrivateRoute";
 //actions
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-import { clearCurrentProfile } from "./actions/profileActions";
 
 //profile stuff
 import CreateProfile from "./components/create-profile/CreateProfile";

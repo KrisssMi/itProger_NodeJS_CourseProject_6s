@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../../utils/axios";
 import PropTypes from "prop-types";
 
 class Sidebar extends Component {
@@ -13,7 +13,7 @@ class Sidebar extends Component {
   componentDidMount() {
     let user = JSON.parse(localStorage.getItem("id"));
     axios
-      .get("http://localhost:9000/courses")
+      .get("/courses")
       .then((response) => {
         this.setState({ Courses: response.data });
         console.log(user);

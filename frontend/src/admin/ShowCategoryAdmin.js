@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { ToastContainer, toast } from "react-toastify";
 import NavBar from "../components/NavBar";
 
@@ -21,7 +21,7 @@ export default class ShowCategory extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:9000/categories/")
+      .get("/categories/")
       .then((response) => {
         console.log(response.data);
         this.setState({ todos: response.data ? response.data : [] });
@@ -34,7 +34,7 @@ export default class ShowCategory extends Component {
   delete(id) {
     console.log(id);
     axios
-      .delete("http://localhost:9000/category?id=" + id)
+      .delete("/category?id=" + id)
       .then((result) => {
         toast.success("Deleted successfully");
       })
@@ -74,7 +74,6 @@ export default class ShowCategory extends Component {
             >
               Delete
             </button>
-            {/* <p>{message}</p> */}
           </td>
         </tr>
       </div>
