@@ -86,7 +86,6 @@ export default class UserEdit extends Component {
       typeof this.state.todos.role !== "string" ||
       this.state.todos.role.trim() === ""
     ) {
-      // Display an error message or take appropriate action
       toast.error("Please select a role");
       return;
     }
@@ -100,6 +99,13 @@ export default class UserEdit extends Component {
       })
       .then((result) => {
         this.props.history.push("/allusers/");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          toast.error("A user with this email already exists.");
+        } else {
+          toast.error("Failed to update user data.");
+        }
       });
   };
 

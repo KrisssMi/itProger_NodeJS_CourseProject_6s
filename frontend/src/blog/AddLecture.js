@@ -127,16 +127,16 @@ export default class Upload extends Component {
   onClickHandler = (event) => {
     event.preventDefault();
 
-    if (this.state.course.trim() === '') {
-      toast.error('Please select a course.');
+    if (this.state.course.trim() === "") {
+      toast.error("Please select a course name.");
       return;
     }
-    if (this.state.title.trim() === '') {
-      toast.error('Please enter a title for the video.');
+    if (this.state.title.trim() === "") {
+      toast.error("Please enter a title for the video.");
       return;
     }
     if (!this.state.selectedFile) {
-      toast.error('Please select a video file.');
+      toast.error("Please select a video file.");
       return;
     }
 
@@ -153,15 +153,19 @@ export default class Upload extends Component {
         },
       })
       .then((res) => {
-        toast.success("upload success");
+        toast.success("Upload success!");
       })
       .catch((err) => {
-        toast.error("upload fail");
+        if (err.response.status === 409) {
+          toast.error("Lecture with this name already exists in this course");
+        } else {
+          toast.error("Upload fail");
+        }
       });
   };
 
   render() {
-    var message2 = "you have selected " + this.state.course;
+    var message2 = "You selected " + this.state.course;
     return (
       <div>
         <NavBar />

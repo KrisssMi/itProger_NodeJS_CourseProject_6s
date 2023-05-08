@@ -5,6 +5,16 @@ class categoryController {
   async addCategory(req, res) {
     try {
       const { name } = req.body;
+      // Check if the category already exists
+      const existingCategory = await DbClient.category.findUnique({
+        where: {
+          name,
+        },
+      });
+      if (existingCategory) {
+        // Return an error response if the category already exists
+        return res.status(409).send("Category already exists");
+      }
       const category = await DbClient.category.create({
         data: {
           name,
@@ -54,7 +64,7 @@ class categoryController {
       if (!Number.isInteger(id)) {
         return res.status(400).json({ message: "Invalid category ID" });
       }
-  
+
       // Удаление категории и всех связанных с ней курсов в рамках одной транзакции
       await DbClient.$transaction(async (prisma) => {
         await DbClient.course.deleteMany({
@@ -72,7 +82,7 @@ class categoryController {
         if (!category) {
           return res.status(404).json({ message: "Category not found" });
         }
-  
+
         return res.json(category);
       });
     } catch (e) {
@@ -88,6 +98,17 @@ class categoryController {
         return res.status(400).json({ message: "Invalid category ID" });
       }
       const { name } = req.body;
+
+      // Check if the category already exists
+      const existingCategory = await DbClient.category.findUnique({
+        where: {
+          name,
+        },
+      });
+      if (existingCategory) {
+        // Return an error response if the category already exists
+        return res.status(409).send("Category already exists");
+      }
       const category = await DbClient.category.update({
         where: {
           id: Number(id),

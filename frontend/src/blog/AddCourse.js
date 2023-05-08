@@ -84,12 +84,6 @@ export default class AddCourse extends Component {
       return;
     }
 
-    // console.log(`Form submitted:`);
-    // console.log(`Todo name: ${this.state.name}`);
-    // console.log(`Todo description: ${this.state.description}`);
-    // console.log(`Todo instructor: ${this.state.instructor}`);
-    // console.log(`Todo category: ${this.state.category}`);
-
     const newTodo = {
       name: this.state.name,
       description: this.state.description,
@@ -98,9 +92,15 @@ export default class AddCourse extends Component {
     console.log(newTodo);
     axios
       .post("http://localhost:9000/course/add", newTodo)
-
       .then((result) => {
         this.props.history.push("/add-lecture/" + this.props.match.params.id);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          toast.error("Course with this name already exists.");
+        } else {
+          toast.error("Failed to create course.");
+        }
       });
   }
   render() {

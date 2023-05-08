@@ -112,9 +112,18 @@ export default class CreateEnroll extends Component {
       todo_completed: this.state.todo_completed,
     };
 
-    axios.post("http://localhost:9000/enroll/add", newTodo).then((result) => {
-      this.props.history.push("/EnrollmentList/");
-    });
+    axios
+      .post("http://localhost:9000/enroll/add", newTodo)
+      .then((result) => {
+        this.props.history.push("/EnrollmentList/");
+      })
+      .catch((error) => {
+        if (error.response) {
+          toast.error(error.response.data);
+        } else {
+          console.log(error);
+        }
+      });
 
     this.setState({
       student: "",

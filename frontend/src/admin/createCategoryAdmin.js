@@ -8,12 +8,10 @@ export default class CreateCategory extends Component {
   constructor(props) {
     super(props);
 
-    /** Setting the initial state of the component by assigned an object to this.state **/
     this.state = {
       name: "",
     };
 
-    /** Ensure to bind our methods to this by adding them here **/
     this.onChangeCategoryName = this.onChangeCategoryName.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -25,7 +23,6 @@ export default class CreateCategory extends Component {
     });
   }
 
-  /** Method to handle the submit event of the form **/
   onSubmit(e) {
     e.preventDefault(); //ensure that the default HTML form submit behaviour is prevented
 
@@ -41,12 +38,21 @@ export default class CreateCategory extends Component {
     const newTodo = {
       no: this.state.no,
       name: this.state.name,
-      // todo_completed: this.state.todo_completed
+      todo_completed: this.state.todo_completed,
     };
 
-    axios.post("http://localhost:9000/category/add", newTodo).then((result) => {
-      this.props.history.push("/ShowCategoryList/");
-    });
+    axios
+      .post("http://localhost:9000/category/add", newTodo)
+      .then((result) => {
+        this.props.history.push("/ShowCategoryList/");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          toast.error("Category already exists.");
+        } else {
+          toast.error("Failed to create category.");
+        }
+      });
 
     // Reset the Values.
     this.setState({
@@ -62,9 +68,11 @@ export default class CreateCategory extends Component {
           <div className="row">
             <div className="col-md-6 mt-5 mx-auto">
               <form onSubmit={this.onSubmit}>
-                <Link to="/ShowCategoryList" className="btn btn-light">Go Back</Link>
-                <br/>
-                <br/>
+                <Link to="/ShowCategoryList" className="btn btn-light">
+                  Go Back
+                </Link>
+                <br />
+                <br />
                 <h1 className="h3 mb-3 font-weight-bold">Create Category</h1>
                 <div className="form-group">
                   <label>New Category</label>

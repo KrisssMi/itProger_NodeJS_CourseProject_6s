@@ -111,6 +111,19 @@ class enrollmentController {
       if (!student || !course) {
         return res.status(404).send("Student or Course not found");
       }
+
+      // Проверяем наличие записи Enrollment с такими же значениями user_id и course_id
+      const existingEnrollment = await DbClient.enrollment.findFirst({
+        where: {
+          user_id: student.id,
+          course_id: course.id,
+        },
+      });
+
+      if (existingEnrollment) {
+        return res.status(409).send("User already enrolled in this course");
+      }
+
       // Создаем новую запись Enrollment
       const enrollment = await DbClient.enrollment.create({
         data: {

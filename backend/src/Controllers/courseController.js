@@ -10,6 +10,18 @@ class courseController {
           name: req.body.category,
         },
       });
+
+      // Check if the course name already exists
+      const existingCourse = await DbClient.course.findFirst({
+        where: {
+          name: req.body.name,
+        },
+      });
+      if (existingCourse) {
+        // Return an error response if the course already exists
+        return res.status(409).json("Course with this name already exists.");
+      }
+
       // Создание курса и привязка к категории
       const createdCourse = await DbClient.course.create({
         data: {
@@ -17,7 +29,6 @@ class courseController {
           description: req.body.description,
           Category: {
             connect: {
-              // Привязка к категории
               id: category.id, // Поиск категории по id
             },
           },
@@ -117,44 +128,21 @@ class courseController {
     }
   }
 
-  // async updateCourse(req, res) {
-  //   try {
-  //     const { id } = req.params;
-  //     const { name, description } = req.body;
-  //     const category = await DbClient.category.findUnique({
-  //       where: {
-  //         name: req.body.category.toString(),
-  //       },
-  //     });
-
-  //     const course = await DbClient.course.update({
-  //       where: {
-  //         id: parseInt(req.params),
-  //       },
-  //       data: {
-  //         name: name,
-  //         description: description,
-  //         // Category: {
-  //         //   connect: {
-  //         //     id: category.id,
-  //         //   },
-  //         // },
-  //       },
-  //     });
-  //     if (!course) {
-  //       return res.status(404).send("Course with this id not found.");
-  //     }
-  //     return res.send(course);
-  //   } catch (e) {
-  //     console.log(e);
-  //     res.status(400).send({ message: "Course error" });
-  //   }
-  // }
-
   async updateCourse(req, res) {
     try {
       const { id } = req.query;
       const { name, description, category } = req.body; // Update to include category in req.body
+
+      // Check if the course name already exists
+      const existingCourse = await DbClient.course.findUnique({
+        where: {
+          name,
+        },
+      });
+      if (existingCourse) {
+        // Return an error response if the course already exists
+        return res.status(409).send("Course with this name already exists.");
+      }
 
       const course = await DbClient.course.update({
         where: {

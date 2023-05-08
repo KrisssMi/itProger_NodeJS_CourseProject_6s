@@ -34,7 +34,6 @@ export default class CatEdit extends Component {
     e.preventDefault();
 
     const { no, name } = this.state.todos;
-    console.log(this.state.todos);
 
     // Проверка, чтобы поле "name" не было пустым
     if (!name) {
@@ -49,6 +48,13 @@ export default class CatEdit extends Component {
       })
       .then((result) => {
         this.props.history.push("/ShowCategoryList/");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          toast.error("Category already exists.");
+        } else {
+          toast.error("Failed to update category.");
+        }
       });
   };
 

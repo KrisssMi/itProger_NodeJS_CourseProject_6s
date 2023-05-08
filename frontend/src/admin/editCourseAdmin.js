@@ -75,10 +75,16 @@ export default class EditCourse extends Component {
       })
       .then((result) => {
         this.props.history.push("/ShowCourseList/");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          toast.error("Course with this name already exists.");
+        } else {
+          toast.error("Failed to update course.");
+        }
       });
   };
   render() {
-    var message = "You selected " + this.state.todos.id;
     return (
       <div>
         <NavBar />

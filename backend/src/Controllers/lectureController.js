@@ -29,7 +29,7 @@ class lectureController {
         })
       ) {
         res
-          .status(400)
+          .status(409)
           .json("Lecture with this name already exists in this course");
         return;
       }
