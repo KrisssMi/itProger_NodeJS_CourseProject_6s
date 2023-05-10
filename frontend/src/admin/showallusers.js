@@ -37,8 +37,7 @@ export default class UserList extends Component {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
-  // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
-  componentDidMount() {
+  async componentDidMount() {
     axios
       .get("/auth/users/")
       .then((response) => {
@@ -58,7 +57,7 @@ export default class UserList extends Component {
       );
     });
     return (
-      <div>
+      <div style={{ overflow: "auto", height: "100vh" }}>
         <NavBar />
         <div
           style={{
@@ -86,7 +85,6 @@ export default class UserList extends Component {
             onChange={this.updateSearch.bind(this)}
           />
         </div>
-
         <div className="container" style={{ border: "10px solid lightgray" }}>
           <table
             className="table table-striped"

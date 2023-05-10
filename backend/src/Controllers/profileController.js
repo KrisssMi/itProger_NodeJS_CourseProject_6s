@@ -215,13 +215,12 @@ class profileController {
     // при удалении профиля, удаляется и user
     try {
       const authorizationHeader = req.headers.authorization;
-      let id; // Объявляем переменную id
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 1) {
           const token = tokenArray[0];
           const decodedToken = jwt.verify(token, process.env.SECRET);
-
+          const id = decodedToken.id;
           const user = await DbClient.user.findFirst({
             where: {
               id: Number(id),

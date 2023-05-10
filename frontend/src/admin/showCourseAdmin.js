@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import axios from "../utils/axios";
 import NavBar from "../components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import "react-toastify/dist/ReactToastify.css";
 
 export default class UserList extends Component {
   constructor(props) {
@@ -16,7 +15,7 @@ export default class UserList extends Component {
   }
 
   // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
-  componentDidMount() {
+  async componentDidMount() {
     axios
       .get("/courses/")
       .then((response) => {
@@ -32,16 +31,13 @@ export default class UserList extends Component {
       .delete("/course?id=" + id)
       .then((result) => {
         toast.success("Deleted successfully");
+        setTimeout(() => {
+          window.location.reload(); // обновление страницы после задержки
+        }, 1000);
       })
       .catch((err) => {
         toast.error("Course not deleted");
       });
-    setTimeout(
-      function () {
-        window.location.reload();
-      }.bind(this),
-      1000
-    );
   }
 
   render() {
@@ -49,29 +45,27 @@ export default class UserList extends Component {
       display: "contents",
     };
     const Todo = (props) => (
-      <div style={divStyle}>
-        <tr>
-          <td>{props.todo.name}</td>
-          <td>{props.todo.description}</td>
-          <td>{props.todo.Category.name}</td>
-          <td>
-            <a
-              href={"/ShowCourseList/edit/" + props.todo.id}
-              class="btn btn-primary btn-info"
-              role="button"
-              aria-pressed="true"
-            >
-              Edit
-            </a>
-            <button
-              onClick={this.delete.bind(this, props.todo.id)}
-              class="btn btn-danger"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </div>
+      <tr>
+        <td>{props.todo.name}</td>
+        <td>{props.todo.description}</td>
+        <td>{props.todo.Category.name}</td>
+        <td>
+          <a
+            href={"/ShowCourseList/edit/" + props.todo.id}
+            className="btn btn-primary btn-info"
+            role="button"
+            aria-pressed="true"
+          >
+            Edit
+          </a>
+          <button
+            onClick={this.delete.bind(this, props.todo.id)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
     );
 
     let filteredusers = this.state.todos.filter((course) => {
@@ -83,7 +77,7 @@ export default class UserList extends Component {
       );
     });
     return (
-      <div>
+      <div style={{ overflow: "auto", height: "100vh" }}>
         <NavBar />
         <div
           style={{
@@ -106,7 +100,7 @@ export default class UserList extends Component {
           <input
             type="text"
             placeholder="Search..."
-            class="form-control input-sm"
+            className="form-control input-sm"
             style={{ width: "250px" }}
             value={this.state.search}
             onChange={this.updateSearch.bind(this)}

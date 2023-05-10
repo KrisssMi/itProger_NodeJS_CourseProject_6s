@@ -19,7 +19,7 @@ export default class ShowCategory extends Component {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     axios
       .get("/categories/")
       .then((response) => {
@@ -31,23 +31,20 @@ export default class ShowCategory extends Component {
       });
   }
 
-  delete(id) {
+  async delete(id) {
     console.log(id);
     axios
       .delete("/category?id=" + id)
       .then((result) => {
         toast.success("Deleted successfully");
+        setTimeout(() => {
+          window.location.reload(); // обновление страницы после задержки
+        }, 1000);
       })
       .catch((err) => {
         // затем выведите статус ответа
         toast.error("Category not deleted");
       });
-    setTimeout(
-      function () {
-        window.location.reload(); //After 1 second, set render to true
-      }.bind(this),
-      1000
-    );
   }
 
   render() {
@@ -62,7 +59,7 @@ export default class ShowCategory extends Component {
           <td>
             <a
               href={"/ShowCategoryList/edit/" + props.todo.id}
-              class="btn btn-primary btn-info"
+              className="btn btn-primary btn-info"
               role="button"
               aria-pressed="true"
             >
@@ -70,7 +67,7 @@ export default class ShowCategory extends Component {
             </a>
             <button
               onClick={this.delete.bind(this, props.todo.id)}
-              class="btn btn-danger"
+              className="btn btn-danger"
             >
               Delete
             </button>
@@ -83,7 +80,7 @@ export default class ShowCategory extends Component {
       return category.name.indexOf(this.state.search) !== -1;
     });
     return (
-      <div>
+      <div style={{ overflow: "auto", height: "100vh" }}>
         <NavBar />
         <div
           style={{
@@ -113,7 +110,7 @@ export default class ShowCategory extends Component {
           <input
             type="text"
             placeholder="Search..."
-            class="form-control input-sm"
+            className="form-control input-sm"
             style={{ width: "250px" }}
             value={this.state.search}
             onChange={this.updateSearch.bind(this)}

@@ -128,13 +128,9 @@ class Login extends Component {
                             name="checkbox-fill-2"
                             id="checkbox-fill-2"
                           />
-
-                          <label htmlFor="checkbox-fill-2" className="cr">
-                            Save Credentials.
-                          </label>
                         </div>
                       </div>
-                      <button className="btn btn-primary shadow-2 mb-4">
+                      <button className="btn btn-primary shadow-4 mb-4">
                         Login
                       </button>
                     </form>

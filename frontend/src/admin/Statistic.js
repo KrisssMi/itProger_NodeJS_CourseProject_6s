@@ -76,6 +76,7 @@ class Dashboard extends Component {
       animationEnabled: true,
       title: {
         text: "Students Per Course",
+        fontFamily: "Nunito",
       },
       data: [
         {
@@ -92,6 +93,7 @@ class Dashboard extends Component {
 
       title: {
         text: "Courses Per Category",
+        fontFamily: "Nunito",
       },
       subtitles: [
         {
@@ -120,16 +122,15 @@ class Dashboard extends Component {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <th className="col-md-6">
-              <CanvasJSChart
-                options={options2}
-              />
+              <CanvasJSChart options={options2} />
             </th>
           </tr>
           <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <div className="row">
-            <CanvasJSChart
-              options={options1}
-            />
+            <CanvasJSChart options={options1} />
           </div>
         </div>
       </div>

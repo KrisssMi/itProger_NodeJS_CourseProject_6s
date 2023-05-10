@@ -17,29 +17,29 @@ export default class EnrollList extends Component {
   }
 
   async componentDidMount() {
-    try {
-      const { data } = await axios.get("/enrollments/");
-      this.setState({ enrollments: data });
-    } catch (error) {
-      console.log(error);
-    }
+    axios
+      .get("/enrollments/")
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ enrollments: response.data ? response.data : [] });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
-  delete(id) {
+  async delete(id) {
     axios
       .delete("/enrollment?id=" + id)
       .then((result) => {
         toast.success("Deleted successfully");
+        setTimeout(() => {
+          window.location.reload(); // обновление страницы после задержки
+        }, 1000);
       })
       .catch((err) => {
         toast.error("Course not deleted");
       });
-    setTimeout(
-      function () {
-        window.location.reload();
-      }.bind(this),
-      100
-    );
   }
 
   refreshEnrollList = (res) => {
@@ -64,7 +64,7 @@ export default class EnrollList extends Component {
           <td>
             <button
               onClick={this.delete.bind(this, props.todo.id)}
-              class="btn btn-danger"
+              className="btn btn-danger"
             >
               Delete
             </button>
@@ -78,7 +78,7 @@ export default class EnrollList extends Component {
     });
 
     return (
-      <div>
+      <div style={{ overflow: "auto", height: "100vh" }}>
         <NavBar />
         <div
           style={{
