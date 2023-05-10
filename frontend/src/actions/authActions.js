@@ -18,7 +18,6 @@ export const registerUser = (userData, history) => (dispatch) => {
 
 // Login - Get User Token
 export const loginUser = (userData) => (dispatch) => {
-  const self = this;
   axios
     .post("/auth/login", userData)
     .then((res) => {
@@ -36,24 +35,13 @@ export const loginUser = (userData) => (dispatch) => {
       console.log(userData);
     })
     .catch((err) => {
-      alert(err.response.data.message);
-      dispatch({
-        // позволяет отправить action в reducer, reducer - это функция которая принимает action и возвращает новый state
-        type: GET_ERRORS,
-        payload: err.response.data.message, //payload - это данные которые мы хотим отправить в reducer
-      });
+      if (err.response && err.response.data) {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data,
+        });
+      }
     });
-  // .catch((err) =>
-  //   dispatch({
-  //     type: GET_ERRORS,
-  //     payload: err.response.data,
-  //   }).then(() => {
-  //     if (err.response.data && err.response.data.message) {
-  //       // изменяем состояние компонента, чтобы отобразить сообщение об ошибке
-  //       self.setState({ errorMessage: err.response.data.message });
-  //     }
-  //   })
-  // );
 };
 
 export const setCurrentUser = (decoded) => {
@@ -69,5 +57,5 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("jwtToken");
   //Remove auth header for future requests
   setAuthToken(false);
-  dispatch(setCurrentUser({})); //передаем пустой объект
+  dispatch(setCurrentUser({})); // передаем пустой объект
 };

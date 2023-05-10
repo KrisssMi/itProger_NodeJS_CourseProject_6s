@@ -3,7 +3,6 @@ const DbClient = new PrismaClient();
 const jwt = require("jsonwebtoken");
 // Load Validation
 const validateProfileInput = require("../Validation/profile");
-const validateEducationInput = require("../Validation/education");
 
 class profileController {
   async addProfile(req, res) {
@@ -109,6 +108,7 @@ class profileController {
 
   async getProfileByCurrentUser(req, res) {
     try {
+      const { errors } = validateProfileInput(req.body);
       const authorizationHeader = req.headers.authorization;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");

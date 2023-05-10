@@ -7,10 +7,6 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
-import TextFieldGroup from "./../components/common/TextFieldGroup";
-import TextAreaFieldGroup from "./../components/common/TextAreaFieldGroup";
-import InputGroup from "./../components/common/InputGroup";
-import SelectListGroup from "./../components/common/SelectListGroup";
 
 class Register extends Component {
   constructor() {

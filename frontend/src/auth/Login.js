@@ -53,9 +53,6 @@ class Login extends Component {
   render() {
     // отрисовываем форму
     const { errors } = this.state;
-    const responseGoogle = (response) => {
-      console.log(response);
-    };
 
     return (
       <div>
@@ -84,14 +81,10 @@ class Login extends Component {
                           placeholder="Email address"
                           value={this.state.email}
                           onChange={this.onChange}
+                          error={errors.email}
                         />
                         {errors.email && (
                           <div className="invalid-feedback">{errors.email}</div>
-                        )}
-                        {this.state.errorMessage && (
-                          <div className="invalid-feedback">
-                            {this.state.errorMessage}
-                          </div>
                         )}
                       </div>
                       <div className="input-group mb-3">

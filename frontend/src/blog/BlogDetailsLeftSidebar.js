@@ -82,6 +82,11 @@ class BlogDetailsLeftSidebar extends Component {
         addcourse: true,
       });
     }
+    if (this.state.userRole == "ADMIN") {
+      this.setState({
+        showRemoveButton: false,
+      });
+    }
 
     const response = await axios
       .get("https://localhost:9000/lectures?id=" + this.props.match.params.id)
@@ -127,6 +132,11 @@ class BlogDetailsLeftSidebar extends Component {
   };
 
   render() {
+    const { userRole } = this.state;
+
+    // Проверяем роль пользователя и определяем, должна ли быть отображена кнопка "REMOTE COURSE"
+    const showRemoteCourseButton = userRole !== "ADMIN";
+
     return (
       <div>
         {/* Navigation bar */}
@@ -188,25 +198,22 @@ class BlogDetailsLeftSidebar extends Component {
                         ? this.state.selectedVideo.title
                         : this.state.status}
                     </h2>
-                    {/* <p>
-                      {this.state.selectedVideo
-                        ? this.state.selectedVideo.сourse.description
-                        : this.state.status}
-                    </p> */}
                   </div>
                 </div>
 
                 <div className="col-lg-4">
                   <div>
                     <ToastContainer />
-                    <button
-                      type="button"
-                      style={this.state.addcourse ? {} : { display: "none" }}
-                      className={this.state.buttonclass}
-                      onClick={this.onClick}
-                    >
-                      {this.state.enrolled}
-                    </button>
+                    {showRemoteCourseButton && (
+                      <button
+                        type="button"
+                        style={this.state.addcourse ? {} : { display: "none" }}
+                        className={this.state.buttonclass}
+                        onClick={this.onClick}
+                      >
+                        {this.state.enrolled}
+                      </button>
+                    )}
                     {this.state.showRemoveButton && (
                       <button
                         className="btn btn-danger"

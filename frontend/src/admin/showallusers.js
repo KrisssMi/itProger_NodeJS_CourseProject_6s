@@ -49,7 +49,6 @@ export default class UserList extends Component {
   }
 
   render() {
-    //used in filtering the content coming from database mongo
     let filteredusers = this.state.todos.filter((user) => {
       return (
         user.name.indexOf(this.state.search) !== -1 ||

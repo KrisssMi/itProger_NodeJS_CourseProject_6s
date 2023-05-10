@@ -3,7 +3,7 @@ const DbClient = new PrismaClient();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-//Load input  validation
+//Load input validation
 const validateRegisterInput = require("../Validation/register");
 const validateLoginInput = require("../Validation/login");
 
@@ -71,13 +71,13 @@ class authController {
         },
       });
       if (!user) {
-        return res
-          .status(400)
-          .json({ message: `User with email ${email} not found` });
+        const errors = { email: `User with email ${email} does not exist` };
+        return res.status(400).json(errors);
       }
       const validPassword = await bcrypt.compareSync(password, user.password);
       if (!validPassword) {
-        return res.status(400).json({ message: "Invalid password" });
+        const errors = { password: "Invalid password" };
+        return res.status(400).json(errors);
       }
       const token = generateAccessToken(user.id, user.role);
       return res.json({ token });

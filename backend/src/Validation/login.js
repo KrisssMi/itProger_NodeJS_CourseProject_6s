@@ -19,20 +19,7 @@ module.exports = function validateLoginInput(data) {
   } else if (!Validator.isLength(data.password, { min: 3, max: 30 })) {
     errors.password = "Password must be at least 3 characters";
   }
-
-  // try {
-  //   const user =  DbClient.user.findUnique({
-  //     where: {
-  //       email: data.email,
-  //     },
-  //   });
-  //   if (!user) {
-  //     errors.email = "User with email " + data.email + " not found";
-  //   }
-  // } catch (e) {
-  //   errors.email = "Error retrieving user data from the database";
-  // }
-
+  
   return {
     errors,
     isValid: isEmpty(errors),
