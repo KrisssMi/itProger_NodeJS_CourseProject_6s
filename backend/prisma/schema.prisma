@@ -14,13 +14,14 @@ model Category {
 }
 
 model Course {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique @db.VarChar(50)
-  description String?      @db.VarChar(200)
-  category    Int?
-  Category    Category?    @relation(fields: [category], references: [id], onDelete: Cascade)
-  Enrollment  Enrollment[]
-  Lecture     Lecture[]
+  id           Int           @id @default(autoincrement())
+  name         String        @unique @db.VarChar(50)
+  description  String?       @db.VarChar(200)
+  category     Int?
+  Category     Category?     @relation(fields: [category], references: [id], onDelete: Cascade)
+  Enrollment   Enrollment[]
+  Lecture      Lecture[]
+  Notification Notification?
 }
 
 model Enrollment {
@@ -47,7 +48,6 @@ model User {
   name       String       @db.VarChar(50)
   email      String       @unique @db.VarChar(100)
   password   String       @db.VarChar(100)
-  photo      Bytes?
   role       Roles        @default(USER)
   Enrollment Enrollment[]
   // Пример связи один-к-одному
@@ -55,26 +55,22 @@ model User {
 }
 
 model Profile {
-  id             Int         @id @default(autoincrement())
-  userId         Int         @unique
+  id             Int      @id @default(autoincrement())
+  userId         Int      @unique
   handle         String
   skills         String[]
   bio            String?
   githubusername String?
-  education      Education[]
-  date           DateTime    @default(now())
-  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date           DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Education {
-  id           Int       @id @default(autoincrement())
-  profileId    Int
-  school       String
-  fieldofstudy String
-  from         DateTime
-  to           DateTime?
-  // Связь многие-к-одному
-  Profile      Profile   @relation(fields: [profileId], references: [id])
+model Notification {
+  id       Int      @id @default(autoincrement())
+  courseId Int      @unique
+  content  String
+  date     DateTime @default(now())
+  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 enum Roles {

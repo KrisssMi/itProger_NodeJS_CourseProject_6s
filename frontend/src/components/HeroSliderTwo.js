@@ -60,7 +60,6 @@ class HeroSliderOne extends Component {
                         className="hero-slider__btn hero-slider__btn--style2"
                         href={`${process.env.PUBLIC_URL}/${val.btnLink}`}
                       >
-                        {" "}
                         GET START
                       </a>
                     </div>

@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const {initWS} = require("./ws/websocket.js");
 
 var key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
 var cert = fs.readFileSync(process.env.PRIMARY_CERT_PATH, "utf8");
@@ -22,6 +23,7 @@ const lectureRouter = require("./Routes/lectureRouter");
 const videoRouter = require("./Routes/videoRouter");
 const enrollmentRouter = require("./Routes/enrollmentRouter");
 const profileRouter = require("./Routes/profileRouter");
+const notificationRouter = require("./Routes/notificationRouter");
 
 const app = express();
 
@@ -43,9 +45,10 @@ app.use(videoRouter);
 app.use(enrollmentRouter);
 app.use("/profile", profileRouter);
 app.use(profileRouter);
+app.use(notificationRouter);
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "https://localhost:3000");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
@@ -68,6 +71,9 @@ app.use((req, res, next) => {
 
 // bootstrap();
 
-https.createServer(options, app).listen(process.env.PORT, () => {
+const httpsServer =  https.createServer(options, app).listen(process.env.PORT, () => {
   console.log(`Server started on port: ${process.env.PORT}`);
 });
+
+const wsServer = initWS(httpsServer);
+

@@ -1,11 +1,10 @@
 import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers"; //index.js file
+import thunk from "redux-thunk"; // Thunk позволяет писать асинхронные действия (actions) в Redux.
+import rootReducer from "./reducers"; // index.js file (объединяет все редьюсеры в единый корневой редьюсер)
 
 //initital state for store
 const initialState = {};
 
-//any other middleware add here
 const middleware = [thunk];
 
 //1st arg: reducer, 2nd arg: state, 3rd: enhancer
@@ -13,9 +12,7 @@ const store = createStore(
   rootReducer,
   initialState,
 
-  compose(
-    applyMiddleware(...middleware),
-  )
+  compose(applyMiddleware(...middleware))
 );
 
 export default store;

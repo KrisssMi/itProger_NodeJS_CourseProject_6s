@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const DbClient = new PrismaClient();
+const { getWS } = require("../ws/websocket");
 
 class courseController {
   async addCourse(req, res) {
@@ -37,6 +38,17 @@ class courseController {
       console.log(
         `Created course with name: ${createdCourse.name} and description: ${createdCourse.description}`
       );
+      const createdNotification = await DbClient.Notification.create({
+        data: {
+          courseId: createdCourse.id,
+          date: new Date(),
+          content: `Admin has created a new course: ${createdCourse.name}`,
+        },
+      });
+      if (createdNotification) {
+        let IO = getWS();
+        IO.emit("new-notification", { createdNotification });
+      }
       res.send(createdCourse);
     } catch (e) {
       console.log(e);

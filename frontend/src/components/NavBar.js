@@ -16,7 +16,7 @@ import {
   faComputer,
   faSignOutAlt,
   faSignIn,
-  faList12,
+  faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import "../components/NavBarStyle.css";
 
@@ -319,6 +319,27 @@ class NavBar extends Component {
       console.log("test User");
       var authLinks = (
         <React.Fragment>
+          <li>
+            <Link to={`${process.env.PUBLIC_URL}/Notifications`}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <FontAwesomeIcon icon={faComments} size="2x" />
+                <span
+                  style={{
+                    fontSize: "9px",
+                    marginTop: "5px",
+                  }}
+                >
+                  NOTIFICATIONS
+                </span>
+              </div>
+            </Link>
+          </li>
           <li className="has-children has-children--multilevel-submenu">
             <a>
               <div

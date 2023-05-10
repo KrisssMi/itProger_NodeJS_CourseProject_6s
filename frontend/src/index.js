@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+//import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.scss";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -18,16 +19,16 @@ import EditCategoryList from "./admin/EditCategoryAdmin";
 import EnrollmentList from "./admin/ShowEnrollmentAdmin";
 import Statistic from "./admin/Statistic";
 import CreateEnrollAdmin from "./admin/CreateEnrollmentAdmin";
-import HomeTwo from "./HomeTwo";
+import HomeTwo from "./Home";
 import Services from "./listOfCourses/Courses";
 import Servicesforstudent from "./listOfCourses/CoursesForStudent";
 import AddCourse from "./blog/AddCourse";
 import AddLecture from "./blog/AddLecture";
+import Notification from "./blog/Notification";
 import BlogDetailsLeftSidebar from "./blog/BlogDetailsLeftSidebar";
 import PageNotFound from "./pages/404";
 import NoMAtch from "./pages/404";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import * as serviceWorker from "./serviceWorker";
 
 import PrivateRoute from "./components/common/PrivateRoute";
 //actions
@@ -164,6 +165,11 @@ class Root extends Component {
               path={`${process.env.PUBLIC_URL}/add-lecture/:id`}
               component={AddLecture}
             />
+            <Route
+              exact
+              path={`${process.env.PUBLIC_URL}/Notifications`}
+              component={Notification}
+            />
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/404`}
@@ -203,6 +209,5 @@ class Root extends Component {
   }
 }
 
-ReactDOM.render(<Root />, document.getElementById("root"));
-
-serviceWorker.register();
+const rootElement = document.getElementById("root");
+createRoot(rootElement).render(<Root />);

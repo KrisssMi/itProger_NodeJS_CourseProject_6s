@@ -5,7 +5,8 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
 //registerUser action creator takes data and dispatch action to reducer along with payload
 export const registerUser = (userData, history) => (dispatch) => {
-  axios.post("/auth/registration", userData)
+  axios
+    .post("/auth/registration", userData)
     .then((res) => history.push("/login"))
     .catch((err) =>
       dispatch({
@@ -34,28 +35,25 @@ export const loginUser = (userData) => (dispatch) => {
       console.log(token);
       console.log(userData);
     })
-    // .catch((err) =>
-    //   dispatch({
-    //     // позволяет отправить action в reducer, reducer - это функция которая принимает action и возвращает новый state
-    //     type: GET_ERRORS,
-    //     payload: err.response.data, //payload - это данные которые мы хотим отправить в reducer
-    //   })
-    //   .then(() => {
-    //     if (err.response.data && err.response.data.message) {
-    //       this.setState({ errorMessage: err.response.data.message });
-    //     }
-    //   })
-    .catch((err) =>
+    .catch((err) => {
+      alert(err.response.data.message);
       dispatch({
+        // позволяет отправить action в reducer, reducer - это функция которая принимает action и возвращает новый state
         type: GET_ERRORS,
-        payload: err.response.data,
-      }).then(() => {
-        if (err.response.data && err.response.data.message) {
-          // изменяем состояние компонента, чтобы отобразить сообщение об ошибке
-          self.setState({ errorMessage: err.response.data.message });
-        }
-      })
-    );
+        payload: err.response.data.message, //payload - это данные которые мы хотим отправить в reducer
+      });
+    });
+  // .catch((err) =>
+  //   dispatch({
+  //     type: GET_ERRORS,
+  //     payload: err.response.data,
+  //   }).then(() => {
+  //     if (err.response.data && err.response.data.message) {
+  //       // изменяем состояние компонента, чтобы отобразить сообщение об ошибке
+  //       self.setState({ errorMessage: err.response.data.message });
+  //     }
+  //   })
+  // );
 };
 
 export const setCurrentUser = (decoded) => {
