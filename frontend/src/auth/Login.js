@@ -33,7 +33,6 @@ class Login extends Component {
     this.props.loginUser(newUser);
   }
 
-  
   componentWillReceiveProps(nextProps) {
     // вызывается каждый раз, когда компонент получает новые свойства
     if (nextProps.auth.isAuthenticated) {
@@ -57,7 +56,7 @@ class Login extends Component {
     const responseGoogle = (response) => {
       console.log(response);
     };
-    
+
     return (
       <div>
         <NavBar />
@@ -74,9 +73,7 @@ class Login extends Component {
                     <form noValidate onSubmit={this.onSubmit}>
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            ✉
-                          </span>
+                          <span className="input-group-text">✉</span>
                         </div>
                         <input
                           name="email"
@@ -91,12 +88,15 @@ class Login extends Component {
                         {errors.email && (
                           <div className="invalid-feedback">{errors.email}</div>
                         )}
+                        {this.state.errorMessage && (
+                          <div className="invalid-feedback">
+                            {this.state.errorMessage}
+                          </div>
+                        )}
                       </div>
                       <div className="input-group mb-3">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            ✔
-                          </span>
+                          <span className="input-group-text">✔</span>
                         </div>
                         <input
                           name="password"
@@ -128,7 +128,7 @@ class Login extends Component {
                             name="checkbox-fill-2"
                             id="checkbox-fill-2"
                           />
-                          
+
                           <label htmlFor="checkbox-fill-2" className="cr">
                             Save Credentials.
                           </label>
@@ -141,9 +141,7 @@ class Login extends Component {
                     <p className="mb-0 text-muted">
                       Don’t have an account?{" "}
                       <a
-                        href={
-                          `${process.env.PUBLIC_URL}/register/`
-                        }
+                        href={`${process.env.PUBLIC_URL}/register/`}
                         className="f-w-400"
                       >
                         Signup

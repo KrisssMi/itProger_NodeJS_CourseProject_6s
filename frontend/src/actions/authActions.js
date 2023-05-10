@@ -5,8 +5,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
 //registerUser action creator takes data and dispatch action to reducer along with payload
 export const registerUser = (userData, history) => (dispatch) => {
-  axios
-    .post("/auth/registration", userData)
+  axios.post("/auth/registration", userData)
     .then((res) => history.push("/login"))
     .catch((err) =>
       dispatch({
@@ -18,6 +17,7 @@ export const registerUser = (userData, history) => (dispatch) => {
 
 // Login - Get User Token
 export const loginUser = (userData) => (dispatch) => {
+  const self = this;
   axios
     .post("/auth/login", userData)
     .then((res) => {
@@ -34,11 +34,26 @@ export const loginUser = (userData) => (dispatch) => {
       console.log(token);
       console.log(userData);
     })
+    // .catch((err) =>
+    //   dispatch({
+    //     // позволяет отправить action в reducer, reducer - это функция которая принимает action и возвращает новый state
+    //     type: GET_ERRORS,
+    //     payload: err.response.data, //payload - это данные которые мы хотим отправить в reducer
+    //   })
+    //   .then(() => {
+    //     if (err.response.data && err.response.data.message) {
+    //       this.setState({ errorMessage: err.response.data.message });
+    //     }
+    //   })
     .catch((err) =>
       dispatch({
-        // позволяет отправить action в reducer, reducer - это функция которая принимает action и возвращает новый state
         type: GET_ERRORS,
-        payload: err.response.data, //payload - это данные которые мы хотим отправить в reducer
+        payload: err.response.data,
+      }).then(() => {
+        if (err.response.data && err.response.data.message) {
+          // изменяем состояние компонента, чтобы отобразить сообщение об ошибке
+          self.setState({ errorMessage: err.response.data.message });
+        }
       })
     );
 };

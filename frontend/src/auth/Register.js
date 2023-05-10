@@ -7,6 +7,10 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
+import TextFieldGroup from "./../components/common/TextFieldGroup";
+import TextAreaFieldGroup from "./../components/common/TextAreaFieldGroup";
+import InputGroup from "./../components/common/InputGroup";
+import SelectListGroup from "./../components/common/SelectListGroup";
 
 class Register extends Component {
   constructor() {
@@ -72,7 +76,7 @@ class Register extends Component {
                       <h3>itProger</h3>
                     </div>
                     <h4 className="mb-3 f-w-400">Sign up into your account</h4>
-                    <form noValidate onSubmit={this.onSubmit}>
+                    <form onSubmit={this.onSubmit}>
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">☺ </span>
@@ -84,6 +88,7 @@ class Register extends Component {
                             "is-invalid": errors.name,
                           })}
                           placeholder="Name"
+                          error={errors.name}
                           value={this.state.name}
                           onChange={this.onChange}
                         />
@@ -103,6 +108,7 @@ class Register extends Component {
                           })}
                           placeholder="Email address"
                           value={this.state.email}
+                          error={errors.email}
                           onChange={this.onChange}
                         />
                         {errors.email && (
@@ -120,6 +126,7 @@ class Register extends Component {
                             "is-invalid": errors.password,
                           })}
                           placeholder="Password"
+                          error={errors.password}
                           value={this.state.password}
                           onChange={this.onChange}
                         />
@@ -139,6 +146,7 @@ class Register extends Component {
                           className={classnames("form-control", {
                             "is-invalid": errors.password2,
                           })}
+                          error={errors.password2}
                           placeholder="Confirm Password"
                           value={this.state.password2}
                           onChange={this.onChange}
