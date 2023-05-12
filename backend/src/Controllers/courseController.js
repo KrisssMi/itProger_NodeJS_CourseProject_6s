@@ -35,9 +35,7 @@ class courseController {
           },
         },
       });
-      console.log(
-        `Created course with name: ${createdCourse.name} and description: ${createdCourse.description}`
-      );
+  
       const createdNotification = await DbClient.Notification.create({
         data: {
           courseId: createdCourse.id,

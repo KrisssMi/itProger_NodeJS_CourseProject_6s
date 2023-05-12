@@ -15,8 +15,9 @@ model Category {
 
 model Course {
   id           Int           @id @default(autoincrement())
-  name         String        @unique @db.VarChar(50)
-  description  String?       @db.VarChar(200)
+  name         String        @unique
+  description  String?
+  theory       String?
   category     Int?
   Category     Category?     @relation(fields: [category], references: [id], onDelete: Cascade)
   Enrollment   Enrollment[]
@@ -29,25 +30,24 @@ model Enrollment {
   user_id   Int?
   course_id Int?
   approved  Boolean @default(false)
-  checked   Boolean @default(false)
   Course    Course? @relation(fields: [course_id], references: [id], onDelete: Cascade)
   User      User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Lecture {
   id        Int     @id @default(autoincrement())
-  name      String  @db.VarChar(100)
-  videoLink String? @db.VarChar(400)
-  content   String? @db.VarChar(200)
+  name      String
+  videoLink String?
+  content   String?
   course_id Int?
   Course    Course? @relation(fields: [course_id], references: [id], onDelete: Cascade)
 }
 
 model User {
   id         Int          @id @default(autoincrement())
-  name       String       @db.VarChar(50)
-  email      String       @unique @db.VarChar(100)
-  password   String       @db.VarChar(100)
+  name       String
+  email      String       @unique
+  password   String
   role       Roles        @default(USER)
   Enrollment Enrollment[]
   // Пример связи один-к-одному

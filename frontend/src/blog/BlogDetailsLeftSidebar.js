@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import VideoList from "./VideoList";
 import VideoDetail from "./VideoDetail";
+import "./BlogDetailsLeftSidebar.css";
 
 class BlogDetailsLeftSidebar extends Component {
   constructor(props) {
@@ -73,10 +74,11 @@ class BlogDetailsLeftSidebar extends Component {
   }
 
   componentDidMount() {
-    this.onTextSubmit("react tutorials");
+    //this.onTextSubmit("react tutorials");
+    this.onTextSubmit(this.props.match.params.id);
   }
 
-  onTextSubmit = async (text) => {
+  onTextSubmit = async (courseId) => {
     if (this.state.userRole == "USER") {
       this.setState({
         addcourse: true,
@@ -89,7 +91,7 @@ class BlogDetailsLeftSidebar extends Component {
     }
 
     const response = await axios
-      .get("https://localhost:9000/lectures?id=" + this.props.match.params.id)
+      .get("https://localhost:9000/lectures?id=" + courseId)
       .then((result) => {
         console.log(
           "https://localhost:9000/checkenrollment?id=" +
@@ -114,7 +116,6 @@ class BlogDetailsLeftSidebar extends Component {
             } else {
               console.log(result.data);
             }
-            //return result;
           });
         console.log(result.data[0]);
         return result;
@@ -134,7 +135,7 @@ class BlogDetailsLeftSidebar extends Component {
   render() {
     const { userRole } = this.state;
 
-    // Проверяем роль пользователя и определяем, должна ли быть отображена кнопка "REMOTE COURSE"
+    // Проверяем роль пользователя и определяем, должна ли быть отображена кнопка "REMOVE COURSE"
     const showRemoteCourseButton = userRole !== "ADMIN";
 
     return (
@@ -170,14 +171,31 @@ class BlogDetailsLeftSidebar extends Component {
           {/*Projects section start*/}
           <div className="project-section">
             <div className="container">
-              {/* <SearchBar onFormSubmit={this.onTextSubmit} /> */}
               <div className="row">
                 <div className="col-12 section-space--bottom--40">
                   <div className="ui container">
                     <div className="ui grid">
                       <div className="ui row">
                         <div className="eleven wide column">
-                          <VideoDetail video={this.state.selectedVideo} />
+                          <div className="video-details">
+                            {this.state.selectedVideo && (
+                              <>
+                                <h2>{this.state.selectedVideo.title}</h2>
+
+                                <VideoDetail video={this.state.selectedVideo} />
+                                <br></br>
+                                <br></br>
+                                <div className="lecture-info">
+                                  <h3>
+                                    Lecture: {this.state.selectedVideo.name}
+                                  </h3>
+                                  <div>
+                                    <p>{this.state.selectedVideo.content}</p>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </div>
                         </div>
 
                         <div className="five wide column">
@@ -185,6 +203,37 @@ class BlogDetailsLeftSidebar extends Component {
                             onVideoSelect={this.onVideoSelect}
                             videos={this.state.videos}
                           />
+                          <div className="button-wrapper">
+                            <ToastContainer />
+                            {showRemoteCourseButton && (
+                              <button
+                                type="button"
+                                style={
+                                  this.state.addcourse
+                                    ? {}
+                                    : { display: "none" }
+                                }
+                                className={this.state.buttonclass}
+                                onClick={this.onClick}
+                              >
+                                {this.state.enrolled}
+                              </button>
+                            )}
+                            {this.state.showRemoveButton && (
+                              <button
+                                className="btn btn-danger"
+                                style={{
+                                  backgroundColor: "blue",
+                                  width: "180px",
+                                  height: "43px",
+                                  marginTop: "10px",
+                                }}
+                                onClick={(e) => this.handleClick(e)}
+                              >
+                                REMOVE COURSE
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -201,8 +250,8 @@ class BlogDetailsLeftSidebar extends Component {
                   </div>
                 </div>
 
-                <div className="col-lg-4">
-                  <div>
+                {/* <div className="col-lg-4">
+                  <div className="button-wrapper">
                     <ToastContainer />
                     {showRemoteCourseButton && (
                       <button
@@ -228,8 +277,8 @@ class BlogDetailsLeftSidebar extends Component {
                         REMOVE COURSE
                       </button>
                     )}
-                  </div>
-                </div>
+                  </div> 
+                </div>*/}
               </div>
             </div>
           </div>

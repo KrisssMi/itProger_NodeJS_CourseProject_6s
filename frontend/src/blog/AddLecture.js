@@ -16,12 +16,14 @@ export default class Upload extends Component {
     this.state = {
       selectedFile: null,
       loaded: 0,
+      content: "",
       Courses: [],
       course: "",
       title: "",
     };
     this.onChangeCourse = this.onChangeCourse.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onChangeContent = this.onChangeContent.bind(this);
   }
 
   componentDidMount() {
@@ -50,6 +52,12 @@ export default class Upload extends Component {
   onChangeCourse(e) {
     this.setState({
       course: e.target.value,
+    });
+  }
+
+  onChangeContent(e) {
+    this.setState({
+      content: e.target.value,
     });
   }
 
@@ -134,6 +142,10 @@ export default class Upload extends Component {
       toast.error("Please enter a title for the video.");
       return;
     }
+    if (this.state.content.trim() === "") {
+      toast.error("Please enter a description of the lecture.");
+      return;
+    }
     if (!this.state.selectedFile) {
       toast.error("Please select a video file.");
       return;
@@ -142,6 +154,7 @@ export default class Upload extends Component {
     const form = new FormData();
     form.append("course", this.state.course);
     form.append("name", this.state.title);
+    form.append("content", this.state.content);
     form.append("video", this.state.selectedFile[0]);
     axios
       .post("/lecture/add", form, {
@@ -178,7 +191,7 @@ export default class Upload extends Component {
               >
                 <div class="form-group files">
                   <div className="form-group">
-                    <label>Course Name </label>
+                    <label>Course name: </label>
                     <select
                       className="form-control"
                       name="course"
@@ -191,7 +204,7 @@ export default class Upload extends Component {
                     <p>{message2}</p>
                   </div>
                   <div className="form-group">
-                    <label>Video Title </label>
+                    <label>Lecture title: </label>
                     <input
                       type="text"
                       className="form-control"
@@ -200,13 +213,21 @@ export default class Upload extends Component {
                     />
                   </div>
 
-                  <label>Upload Your File </label>
+                  <label>Upload your file: </label>
                   <input
                     type="file"
                     name="file"
                     class="form-control"
                     onChange={this.onChangeHandler}
                   />
+                </div>
+                <div className="form-group">
+                  <label>Content: </label>
+                  <textarea
+                    className="form-control"
+                    value={this.state.content}
+                    onChange={this.onChangeContent.bind(this)}
+                  ></textarea>
                 </div>
                 <div class="form-group">
                   <ToastContainer />
@@ -220,7 +241,7 @@ export default class Upload extends Component {
                   class="btn btn-success btn-block"
                   onClick={this.onClickHandler}
                 >
-                  Submit
+                  Add a lecture
                 </button>
               </form>
             </div>
