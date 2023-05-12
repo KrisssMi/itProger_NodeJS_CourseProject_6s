@@ -170,17 +170,6 @@ class authController {
       }
       const { name, email, password, role } = req.body;
 
-      // // Check if the user with this email already exists
-      // const existingUser = await DbClient.user.findUnique({
-      //   where: {
-      //     email,
-      //   },
-      // });
-      // if (existingUser) {
-      //   // Return an error response if the user with this email already exists
-      //   return res.status(409).send("A user with this email already exists");
-      // }
-
       const userNew = await DbClient.user.update({
         where: {
           id: Number(id),

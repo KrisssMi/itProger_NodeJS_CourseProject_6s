@@ -24,6 +24,7 @@ export default class AddCourse extends Component {
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
   componentDidMount() {
     axios
       .get("/categories/")
@@ -65,8 +66,9 @@ export default class AddCourse extends Component {
       category: selectedCategory,
     });
   }
+
   onSubmit(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (this.state.name.trim() === "") {
       toast.error("Course name cannot be empty");

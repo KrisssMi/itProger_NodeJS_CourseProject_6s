@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import VideoList from "./VideoList";
 import VideoDetail from "./VideoDetail";
+import { Fieldset } from "primereact/fieldset";
 import "./BlogDetailsLeftSidebar.css";
 
 class BlogDetailsLeftSidebar extends Component {
@@ -20,6 +21,7 @@ class BlogDetailsLeftSidebar extends Component {
     };
 
     this.onClick = this.onClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   onClick(e) {
@@ -30,7 +32,7 @@ class BlogDetailsLeftSidebar extends Component {
       course: this.props.match.params.id,
       approved: true,
     };
-    if (this.state.buttonclass == "btn btn-success") {
+    if (this.state.buttonclass === "btn btn-success") {
       axios
         .post(
           `https://localhost:9000/enrollmentbystudent/add/${this.props.match.params.id}`,
@@ -41,7 +43,7 @@ class BlogDetailsLeftSidebar extends Component {
           this.setState({
             enrolled: "ALREADY ENROLLED",
             buttonclass: "btn btn-danger",
-            showRemoveButton: true, // Добавляем свойство showRemoveButton
+            showRemoveButton: true,
           });
         })
         .catch((err) => {
@@ -53,7 +55,6 @@ class BlogDetailsLeftSidebar extends Component {
     }
   }
 
-  // Добавляем метод handleClick для удаления курса
   handleClick(e) {
     e.preventDefault();
     axios
@@ -65,7 +66,7 @@ class BlogDetailsLeftSidebar extends Component {
         this.setState({
           enrolled: "ADD TO COURSE LIST",
           buttonclass: "btn btn-success",
-          showRemoveButton: false, // Обновляем свойство showRemoveButton
+          showRemoveButton: false,
         });
       })
       .catch((err) => {
@@ -74,31 +75,31 @@ class BlogDetailsLeftSidebar extends Component {
   }
 
   componentDidMount() {
-    //this.onTextSubmit("react tutorials");
     this.onTextSubmit(this.props.match.params.id);
   }
 
   onTextSubmit = async (courseId) => {
-    if (this.state.userRole == "USER") {
+    if (this.state.userRole === "USER") {
       this.setState({
         addcourse: true,
       });
     }
-    if (this.state.userRole == "ADMIN") {
-      this.setState({
-        showRemoveButton: false,
-      });
-    }
+    // if (this.state.userRole === "ADMIN") {
+    //   this.setState({
+    //     showRemoveButton: false,
+    //   });
+    // }
 
     const response = await axios
       .get("https://localhost:9000/lectures?id=" + courseId)
       .then((result) => {
         console.log(
-          "https://localhost:9000/checkenrollment?id=" +
+          "http://localhost:9000/checkenrollment?id=" +
             this.state.user +
             "&&courseid=" +
             this.props.match.params.id
         );
+
         const responseEnrolled = axios
           .get(
             "https://localhost:9000/checkenrollment?id=" +
@@ -116,11 +117,11 @@ class BlogDetailsLeftSidebar extends Component {
             } else {
               console.log(result.data);
             }
+            //return result;
           });
         console.log(result.data[0]);
         return result;
       });
-
     this.setState({
       videos: response.data,
       selectedVideo: response.data[0],
@@ -134,10 +135,8 @@ class BlogDetailsLeftSidebar extends Component {
 
   render() {
     const { userRole } = this.state;
-
     // Проверяем роль пользователя и определяем, должна ли быть отображена кнопка "REMOVE COURSE"
-    const showRemoteCourseButton = userRole !== "ADMIN";
-
+    const showRemoveCourseButton = userRole !== "ADMIN";
     return (
       <div>
         {/* Navigation bar */}
@@ -181,17 +180,29 @@ class BlogDetailsLeftSidebar extends Component {
                             {this.state.selectedVideo && (
                               <>
                                 <h2>{this.state.selectedVideo.title}</h2>
-
                                 <VideoDetail video={this.state.selectedVideo} />
-                                <br></br>
-                                <br></br>
-                                <div className="lecture-info">
-                                  <h3>
-                                    Lecture: {this.state.selectedVideo.name}
-                                  </h3>
-                                  <div>
-                                    <p>{this.state.selectedVideo.content}</p>
-                                  </div>
+                                <br />
+                                <br />
+                                <div className="lecture-content">
+                                  <Fieldset
+                                    legend={
+                                      <span
+                                        style={{
+                                          color: "#2196f3",
+                                          fontSize: "60px",
+                                          border: "#2196f3",
+                                        }}
+                                      >
+                                        {` ${this.state.selectedVideo.name}`}
+                                      </span>
+                                    }
+                                    toggleable
+                                    style={{ padding: "3px" }}
+                                  >
+                                    <h5 className="lecture-content__text">
+                                      {this.state.selectedVideo.content}
+                                    </h5>
+                                  </Fieldset>
                                 </div>
                               </>
                             )}
@@ -205,7 +216,7 @@ class BlogDetailsLeftSidebar extends Component {
                           />
                           <div className="button-wrapper">
                             <ToastContainer />
-                            {showRemoteCourseButton && (
+                            {showRemoveCourseButton && (
                               <button
                                 type="button"
                                 style={
@@ -242,52 +253,23 @@ class BlogDetailsLeftSidebar extends Component {
                 <div className="col-lg-8 col-12 section-space--bottom--30 pl-30 pl-sm-15 pl-xs-15">
                   <div className="project-details">
                     <h2>
-                      {" "}
                       {this.state.selectedVideo
                         ? this.state.selectedVideo.title
                         : this.state.status}
                     </h2>
                   </div>
                 </div>
-
-                {/* <div className="col-lg-4">
-                  <div className="button-wrapper">
-                    <ToastContainer />
-                    {showRemoteCourseButton && (
-                      <button
-                        type="button"
-                        style={this.state.addcourse ? {} : { display: "none" }}
-                        className={this.state.buttonclass}
-                        onClick={this.onClick}
-                      >
-                        {this.state.enrolled}
-                      </button>
-                    )}
-                    {this.state.showRemoveButton && (
-                      <button
-                        className="btn btn-danger"
-                        style={{
-                          backgroundColor: "blue",
-                          width: "180px",
-                          height: "43px",
-                          marginTop: "-1px",
-                        }}
-                        onClick={(e) => this.handleClick(e)}
-                      >
-                        REMOVE COURSE
-                      </button>
-                    )}
-                  </div> 
-                </div>*/}
               </div>
             </div>
           </div>
           {/*Projects section end*/}
         </div>
-        {/*====================  End of project details page content  ====================*/}
       </div>
     );
   }
+}
+{
+  /*====================  End of project details page content  ====================*/
 }
 
 export default BlogDetailsLeftSidebar;

@@ -130,7 +130,6 @@ class enrollmentController {
           user_id: student.id, // Используем найденный id студента
           course_id: course.id, // Используем найденный id курса
           approved: req.body.approved || false,
-          checked: req.body.checked || false,
         },
       });
       res.status(200).json(enrollment);
@@ -172,7 +171,6 @@ class enrollmentController {
             User: { connect: { id: Number(user.id) } },
             Course: { connect: { id: Number(req.params.courseId) } },
             approved: req.body.approved || false,
-            checked: req.body.checked || false,
           },
         });
         res.status(200).json(enrollment);
@@ -239,7 +237,6 @@ class enrollmentController {
             id: findEnrollment.id,
           },
         });
-        console.log(enrollment);
         res.status(200).json(enrollment);
       }
     } catch (err) {

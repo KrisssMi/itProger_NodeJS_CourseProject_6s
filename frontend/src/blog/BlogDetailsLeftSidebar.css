@@ -22,3 +22,13 @@
   .lecture-info h3 {
     margin-bottom: 10px;
   }
+
+  .lecture-content {
+    display: flex;
+    width: 700px;
+  }
+
+  .lecture-content__text {
+    width: 730px;
+    min-height: 100px;
+  }

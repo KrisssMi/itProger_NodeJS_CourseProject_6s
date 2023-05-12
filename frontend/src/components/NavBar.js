@@ -56,7 +56,6 @@ class NavBar extends Component {
     console.log("users:", users);
 
     if (users.roles && users.roles.includes("ADMIN")) {
-      console.log("test Admin");
       return (
         <div>
           {/*====================  header area ====================*/}

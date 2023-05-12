@@ -32,7 +32,9 @@ export const loginUser = (userData) => (dispatch) => {
       //Set current user
       dispatch(setCurrentUser(decoded));
       console.log(token);
-      console.log(userData);
+      //console.log(userData);
+      
+      
     })
     .catch((err) => {
       if (err.response && err.response.data) {

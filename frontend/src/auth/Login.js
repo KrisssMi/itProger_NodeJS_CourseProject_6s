@@ -43,6 +43,7 @@ class Login extends Component {
       } else {
         this.props.history.push("/home");
       }
+      window.location.reload();
     }
 
     if (nextProps.errors) {

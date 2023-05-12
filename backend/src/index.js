@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const {initWS} = require("./ws/websocket.js");
+const { initWS } = require("./ws/websocket.js");
 
 var key = fs.readFileSync(process.env.PRIVATE_KEY_PATH, "utf8");
 var cert = fs.readFileSync(process.env.PRIMARY_CERT_PATH, "utf8");
@@ -29,7 +29,6 @@ const app = express();
 
 // Путь к директории со статическими файлами
 const staticPath = path.join(__dirname, "static");
-// console.log(staticPath);
 // Использование express.static
 app.use(express.static(staticPath));
 
@@ -59,21 +58,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// const bootstrap = () => {
-//   try {
-//     app.listen(process.env.PORT, () => {
-//       console.log(`Server started on port: ${process.env.PORT}`);
-//     });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
-
-// bootstrap();
-
-const httpsServer =  https.createServer(options, app).listen(process.env.PORT, () => {
-  console.log(`Server started on port: ${process.env.PORT}`);
-});
+const httpsServer = https
+  .createServer(options, app)
+  .listen(process.env.PORT, () => {
+    console.log(`Server started on port: ${process.env.PORT}`);
+  });
 
 const wsServer = initWS(httpsServer);
-
