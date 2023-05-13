@@ -117,7 +117,7 @@ export default class UserEdit extends Component {
           <div class="panel panel-default">
             <div class="panel-heading">
               <br />
-              <h3 class="panel-title">EDIT User</h3>
+              <h2 class="panel-title">Edit User</h2>
             </div>
             <div class="panel-body">
               <br />

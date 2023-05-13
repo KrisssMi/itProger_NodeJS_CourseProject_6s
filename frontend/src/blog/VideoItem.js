@@ -12,7 +12,7 @@ const VideoItem = ({ video, onVideoSelect }) => {
       <div className="content">
       <br/>
         <div>
-        <h5>{video.name}</h5>
+        <h4>{video.name}</h4>
         <hr />
         </div>
       </div>

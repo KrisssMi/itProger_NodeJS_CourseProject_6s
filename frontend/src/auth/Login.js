@@ -37,7 +37,8 @@ class Login extends Component {
     // вызывается каждый раз, когда компонент получает новые свойства
     if (nextProps.auth.isAuthenticated) {
       // проверяем авторизован ли пользователь
-      this.state.role = nextProps.auth.users.role; // получаем роль пользователя
+      // this.state.role = nextProps.auth.users.role; // получаем роль пользователя
+      this.setState({ role: nextProps.auth.users.role });
       if (nextProps.auth.users.role == "ADMIN") {
         this.props.history.push("/dashboard");
       } else {

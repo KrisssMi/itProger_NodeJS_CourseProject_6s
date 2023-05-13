@@ -73,7 +73,6 @@ class Root extends Component {
               path={`${process.env.PUBLIC_URL}/`}
               component={HomeTwo}
             />
-
             <Route
               exact
               path={`${process.env.PUBLIC_URL}/home`}
@@ -84,8 +83,9 @@ class Root extends Component {
               exact
               path={`${process.env.PUBLIC_URL}/servicesforstudent/:id`}
               component={Servicesforstudent}
+              roles={["USER"]}
             />
-            <PrivateRoute
+            <Route
               exact
               path={`${process.env.PUBLIC_URL}/services`}
               component={Services}
@@ -94,8 +94,9 @@ class Root extends Component {
               exact
               path={`${process.env.PUBLIC_URL}/addcourse/:id`}
               component={AddCourse}
+              roles={["ADMIN"]}
             />
-            <PrivateRoute
+            <Route
               exact
               path={`${process.env.PUBLIC_URL}/blog-details-left-sidebar/:id`}
               component={BlogDetailsLeftSidebar}
@@ -114,63 +115,75 @@ class Root extends Component {
               exact
               path={`${process.env.PUBLIC_URL}/allusers`}
               component={UserList}
+              roles={["ADMIN"]}
             />
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/allusers/edit/:id`}
               component={EditUser}
+              roles={["ADMIN"]}
             />
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/statistic`}
               component={Statistic}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/createEnrollAdmin`}
               component={CreateEnrollAdmin}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/EnrollmentList`}
               component={EnrollmentList}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/ShowCourseList`}
               component={ShowCourseList}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/ShowCategoryList`}
               component={ShowCategoryList}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/ShowCourseList/edit/:id`}
               component={EditCourseList}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/ShowCategoryList/edit/:id`}
               component={EditCategoryList}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/CreateCategoryAdmin`}
               component={CreateCategoryAdmin}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/add-lecture/:id`}
               component={AddLecture}
+              roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/Notifications`}
               component={Notification}
+              roles={["USER"]}
             />
-            <PrivateRoute
+            <Route
               exact
               path={`${process.env.PUBLIC_URL}/404`}
               component={PageNotFound}
@@ -179,29 +192,32 @@ class Root extends Component {
               exact
               path={`${process.env.PUBLIC_URL}/finaldashboard`}
               component={FinalDashboard}
+              roles={["USER"]}
             />
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/create-profile`}
               component={CreateProfile}
+              roles={["USER"]}
             />
             <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/edit-profile`}
               component={EditProfile}
+              roles={["USER"]}
             />
-
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/finalprofiles`}
               component={FinalProfiles}
+              roles={["ADMIN"]}
             />
             <Route
               exact
               path={`${process.env.PUBLIC_URL}/profile/:handle`}
               component={Profile}
             />
-            <PrivateRoute component={NoMAtch} />
+            <Route component={NoMAtch} />
           </Switch>
         </BrowserRouter>
       </Provider>

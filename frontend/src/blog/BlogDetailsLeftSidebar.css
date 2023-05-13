@@ -31,4 +31,5 @@
   .lecture-content__text {
     width: 730px;
     min-height: 100px;
+    text-align: left;
   }

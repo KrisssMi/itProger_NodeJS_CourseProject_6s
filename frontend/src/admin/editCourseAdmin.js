@@ -91,7 +91,8 @@ export default class EditCourse extends Component {
         <div class="container">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Edit Course</h3>
+              <br></br>
+              <h2 class="panel-title">Edit Course</h2>
             </div>
             <div class="panel-body">
               <a
