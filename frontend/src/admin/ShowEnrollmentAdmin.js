@@ -18,7 +18,10 @@ export default class EnrollList extends Component {
 
   async componentDidMount() {
     axios
-      .get("/enrollments/")
+      .get("/enrollments/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((response) => {
         console.log(response.data);
         this.setState({ enrollments: response.data ? response.data : [] });
@@ -30,7 +33,10 @@ export default class EnrollList extends Component {
 
   async delete(id) {
     axios
-      .delete("/enrollment?id=" + id)
+      .delete("/enrollment?id=" + id, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((result) => {
         toast.success("Deleted successfully");
         setTimeout(() => {

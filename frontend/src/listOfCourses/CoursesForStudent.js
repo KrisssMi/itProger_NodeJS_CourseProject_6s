@@ -7,7 +7,11 @@ class Services extends Component {
   };
   async componentDidMount() {
     const response = await axios
-      .get("/enrollmentbystudent?id=" + this.props.match.params.id)
+      .get("/enrollmentbystudent?id=" + this.props.match.params.id, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
       .then((result) => {
         console.log(result.data[0]);
         return result;
@@ -51,7 +55,6 @@ class Services extends Component {
       <div style={{ overflow: "auto", height: "100vh" }}>
         {/* Navigation bar */}
         <NavBar />
-
         {/* breadcrumb */}
         {/*====================  breadcrumb area ====================*/}
         <div className="breadcrumb-area breadcrumb-bg">

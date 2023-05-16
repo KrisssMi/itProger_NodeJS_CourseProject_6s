@@ -21,7 +21,10 @@ export default class ShowCategory extends Component {
 
   async componentDidMount() {
     axios
-      .get("/categories/")
+      .get("/categories/",{
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          }})
       .then((response) => {
         console.log(response.data);
         this.setState({ todos: response.data ? response.data : [] });
@@ -34,7 +37,10 @@ export default class ShowCategory extends Component {
   async delete(id) {
     console.log(id);
     axios
-      .delete("/category?id=" + id)
+      .delete("/category?id=" + id, {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          }})
       .then((result) => {
         toast.success("Deleted successfully");
         setTimeout(() => {

@@ -28,7 +28,10 @@ export default class Upload extends Component {
 
   componentDidMount() {
     axios
-      .get("/courses/")
+      .get("/courses/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((response) => {
         this.setState({ Courses: response.data });
       })

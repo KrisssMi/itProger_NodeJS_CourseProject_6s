@@ -14,10 +14,13 @@ export default class UserList extends Component {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
-  // To retrieve the todos data from the database --> use the componentDidMount lifecycle method
   async componentDidMount() {
     axios
-      .get("/courses/")
+      .get("/courses/", {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+      })
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -28,7 +31,11 @@ export default class UserList extends Component {
   delete(id) {
     console.log(id);
     axios
-      .delete("/course?id=" + id)
+      .delete("/course?id=" + id, {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+      })
       .then((result) => {
         toast.success("Deleted successfully");
         setTimeout(() => {

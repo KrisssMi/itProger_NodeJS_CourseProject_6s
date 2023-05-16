@@ -19,7 +19,6 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
-    console.log(profile);
     let dashboardContent;
     if (profile === null || loading) {
       dashboardContent = <Spinner />;

@@ -4,17 +4,27 @@ const jwt = require("jsonwebtoken");
 
 class enrollmentController {
   async getEnrollmentByStudent(req, res) {
-    const enrollments = await DbClient.enrollment.findMany({
-      where: {
-        User: {
-          id: parseInt(req.query.id), // Преобразуем id в число, если это необходимо
-        },
-      },
-      include: {
-        Course: true, // Включаем связанную модель Course
-      },
-    });
-    res.json(enrollments);
+    const authorizationHeader = req.headers.authorization;
+    if (authorizationHeader) {
+      const tokenArray = authorizationHeader.split(" ");
+      if (tokenArray.length === 2) {
+        const token = tokenArray[1];
+        const decodedToken = jwt.verify(token, process.env.SECRET);
+        const id = decodedToken.id;
+
+        const enrollments = await DbClient.enrollment.findMany({
+          where: {
+            User: {
+              id: parseInt(req.query.id), // Преобразуем id в число, если это необходимо
+            },
+          },
+          include: {
+            Course: true, // Включаем связанную модель Course
+          },
+        });
+        res.json(enrollments);
+      }
+    }
   }
   catch(err) {
     res.status(500).json(err);
@@ -22,26 +32,38 @@ class enrollmentController {
 
   async getAllEnrollments(req, res) {
     try {
-      const enrollments = await DbClient.enrollment.findMany({
-        select: {
-          id: true,
-          approved: true,
-          User: {
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+          const enrollments = await DbClient.enrollment.findMany({
             select: {
-              email: true,
+              id: true,
+              approved: true,
+              User: {
+                select: {
+                  email: true,
+                },
+              },
+              Course: {
+                select: {
+                  name: true,
+                },
+              },
             },
-          },
-          Course: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
-      return res.json(enrollments);
+          });
+          return res.json(enrollments);
+        }
+      }
     } catch (e) {
       console.log(e);
-      res.status(400).json({ message: "Enrollments error" });
+      res.status(400).json({message: "Enrollments error"});
     }
   }
 
@@ -51,8 +73,8 @@ class enrollmentController {
       let id; // Объявляем переменную id
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
-        if (tokenArray.length === 1) {
-          const token = tokenArray[0];
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
           const decodedToken = jwt.verify(token, process.env.SECRET);
           id = decodedToken.id;
         } else {
@@ -63,9 +85,8 @@ class enrollmentController {
             id: id,
           },
         });
-        console.log(user);
         if (!user) {
-          return res.status(404).json({ error: "User not found" });
+          return res.status(404).json({error: "User not found"});
         }
 
         const enrollment = await DbClient.enrollment.findFirst({
@@ -90,50 +111,63 @@ class enrollmentController {
   }
 
   async addEnrollment(req, res) {
-    // Проверяем наличие тела запроса
-    if (Object.keys(req.body).length === 0) {
-      return res.status(400).send("request body is missing");
-    }
     try {
-      // Используем Prisma для поиска пользователя и курса по имени
-      const student = await DbClient.user.findFirst({
-        where: {
-          email: req.body.student,
-        },
-      });
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+          // Проверяем наличие тела запроса
+          if (Object.keys(req.body).length === 0) {
+            return res.status(400).send("request body is missing");
+          }
+          // Используем Prisma для поиска пользователя и курса по имени
+          const student = await DbClient.user.findFirst({
+            where: {
+              email: req.body.student,
+            },
+          });
 
-      const course = await DbClient.course.findFirst({
-        where: {
-          name: req.body.course,
-        },
-      });
+          const course = await DbClient.course.findFirst({
+            where: {
+              name: req.body.course,
+            },
+          });
 
-      if (!student || !course) {
-        return res.status(404).send("Student or Course not found");
+          if (!student || !course) {
+            return res.status(404).send("Student or Course not found");
+          }
+
+          // Проверяем наличие записи Enrollment с такими же значениями user_id и course_id
+          const existingEnrollment = await DbClient.enrollment.findFirst({
+            where: {
+              user_id: student.id,
+              course_id: course.id,
+            },
+          });
+
+          if (existingEnrollment) {
+            return res.status(409).send("User already enrolled in this course");
+          }
+
+          // Создаем новую запись Enrollment
+          const enrollment = await DbClient.enrollment.create({
+            data: {
+              user_id: student.id, // Используем найденный id студента
+              course_id: course.id, // Используем найденный id курса
+              approved: req.body.approved || false,
+            },
+          });
+          res.status(200).json(enrollment);
+        }
       }
-
-      // Проверяем наличие записи Enrollment с такими же значениями user_id и course_id
-      const existingEnrollment = await DbClient.enrollment.findFirst({
-        where: {
-          user_id: student.id,
-          course_id: course.id,
-        },
-      });
-
-      if (existingEnrollment) {
-        return res.status(409).send("User already enrolled in this course");
-      }
-
-      // Создаем новую запись Enrollment
-      const enrollment = await DbClient.enrollment.create({
-        data: {
-          user_id: student.id, // Используем найденный id студента
-          course_id: course.id, // Используем найденный id курса
-          approved: req.body.approved || false,
-        },
-      });
-      res.status(200).json(enrollment);
-    } catch (err) {
+    }
+    catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
@@ -149,8 +183,8 @@ class enrollmentController {
       let id;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
-        if (tokenArray.length === 1) {
-          const token = tokenArray[0];
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
           const decodedToken = jwt.verify(token, process.env.SECRET);
           id = decodedToken.id;
         } else {
@@ -183,14 +217,28 @@ class enrollmentController {
 
   async deleteEnrollment(req, res) {
     try {
-      const id = parseInt(req.query.id);
-      const deletedEnrollment = await DbClient.enrollment.delete({
-        where: {
-          id: Number(id),
-        },
-      });
-      res.json(deletedEnrollment);
-    } catch (error) {
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+          const id = parseInt(req.query.id);
+          const deletedEnrollment = await DbClient.enrollment.delete({
+            where: {
+              id: Number(id),
+            },
+          });
+          res.json(deletedEnrollment);
+        }
+      }
+    }
+    catch (error) {
+      console.log(error);
       res.status(500).json(error);
     }
   }
@@ -201,8 +249,8 @@ class enrollmentController {
       let id;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
-        if (tokenArray.length === 1) {
-          const token = tokenArray[0];
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
           const decodedToken = jwt.verify(token, process.env.SECRET);
           id = decodedToken.id;
         } else {

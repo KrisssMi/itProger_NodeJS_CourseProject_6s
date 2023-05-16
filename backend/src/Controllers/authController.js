@@ -12,7 +12,7 @@ const generateAccessToken = (id, roles) => {
     id,
     roles: Array.isArray(roles) ? roles : [roles],
   };
-  return jwt.sign(payload, process.env.SECRET, { expiresIn: "24h" });
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "24h" }); // jwt.sign() - функция, которая создает токен
 };
 
 class authController {
@@ -81,16 +81,29 @@ class authController {
       }
       const token = generateAccessToken(user.id, user.role);
       return res.json({ token });
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
       res.status(400).json({ message: "Login error" });
     }
   }
 
   async getUsers(req, res) {
     try {
-      const users = await DbClient.user.findMany();
-      return res.json(users);
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+
+          const users = await DbClient.user.findMany();
+          return res.json(users);
+        }
+      }
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: "Get users error" });
@@ -156,29 +169,49 @@ class authController {
 
   async updateUser(req, res) {
     try {
-      const id = parseInt(req.query.id);
-      if (!Number.isInteger(id)) {
-        return res.status(400).json({ message: "Invalid user ID" });
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+          const id = parseInt(req.query.id);
+          if (!Number.isInteger(id)) {
+            return res.status(400).json({ message: "Invalid user ID" });
+          }
+          const user = await DbClient.user.findUnique({
+            where: {
+              id,
+            },
+          });
+          if (!user) {
+            return res.status(404).json({ message: "User not found" });
+          }
+          const { name, email, role } = req.body;
+          const existingUser = await DbClient.user.findUnique({
+            where: {
+              email,
+            },
+          });
+          if (existingUser && existingUser.id !== id) {
+            // Return an error response if the category already exists
+            return res.status(409).send("User with this email already exists");
+          }
+          const userNew = await DbClient.user.update({
+            where: {
+              id: Number(id),
+            },
+            data: {
+              ...req.body,
+            },
+          });
+          return res.json(userNew);
+        }
       }
-      const user = await DbClient.user.findUnique({
-        where: {
-          id,
-        },
-      });
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      const { name, email, password, role } = req.body;
-
-      const userNew = await DbClient.user.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          ...req.body,
-        },
-      });
-      return res.json(userNew);
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: "User error" });

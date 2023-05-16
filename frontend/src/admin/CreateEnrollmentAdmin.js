@@ -34,7 +34,10 @@ export default class CreateEnroll extends Component {
 
   componentDidMount() {
     axios
-      .get("/courses/")
+      .get("/courses/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((response) => {
         this.setState({ Course: response.data });
       })
@@ -43,7 +46,10 @@ export default class CreateEnroll extends Component {
       });
 
     axios
-      .get("/auth/users/")
+      .get("/auth/users/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((response) => {
         this.setState({ User: response.data });
       })
@@ -113,7 +119,10 @@ export default class CreateEnroll extends Component {
     };
 
     axios
-      .post("/enroll/add", newTodo)
+      .post("/enroll/add", newTodo, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((result) => {
         this.props.history.push("/EnrollmentList/");
       })

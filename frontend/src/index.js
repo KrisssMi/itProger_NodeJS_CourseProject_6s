@@ -50,13 +50,11 @@ if (localStorage.jwtToken) {
   //set user and isauthenticated
   //we can call any action using below method
   store.dispatch(setCurrentUser(decoded));
-
   //check for expired token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     //logout user
     store.dispatch(logoutUser());
-
     //Redirect to login
     window.location.href = "/";
   }
@@ -85,10 +83,11 @@ class Root extends Component {
               component={Servicesforstudent}
               roles={["USER"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/services`}
               component={Services}
+              roles={["USER", "ADMIN"]}
             />
             <PrivateRoute
               exact
@@ -96,10 +95,11 @@ class Root extends Component {
               component={AddCourse}
               roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/blog-details-left-sidebar/:id`}
               component={BlogDetailsLeftSidebar}
+              roles={["USER", "ADMIN"]}
             />
             <Route
               exact
@@ -212,10 +212,11 @@ class Root extends Component {
               component={FinalProfiles}
               roles={["ADMIN"]}
             />
-            <Route
+            <PrivateRoute
               exact
               path={`${process.env.PUBLIC_URL}/profile/:handle`}
               component={Profile}
+              roles={["USER", "ADMIN"]}
             />
             <Route component={NoMAtch} />
           </Switch>

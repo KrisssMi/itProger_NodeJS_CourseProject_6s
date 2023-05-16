@@ -7,8 +7,8 @@ module.exports = function validateProfileInput(data) {
   data.handle = !isEmpty(data.handle) ? data.handle : "";
   data.skills = !isEmpty(data.skills) ? data.skills : "";
 
-  if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-    errors.handle = "Handle needs to between 2 and 4 characters";
+  if (!Validator.isLength(data.handle, { min: 2, max: 25 })) {
+    errors.handle = "Handle needs to between 2 and 25 characters";
   }
 
   if (Validator.isEmpty(data.handle)) {

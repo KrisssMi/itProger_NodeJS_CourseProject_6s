@@ -6,6 +6,7 @@ import { logoutUser } from "../actions/authActions";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faChartColumn,
   faHome,
   faCode,
   faUser,
@@ -17,6 +18,8 @@ import {
   faSignOutAlt,
   faSignIn,
   faComments,
+  faPeopleGroup,
+  faPeople,
 } from "@fortawesome/free-solid-svg-icons";
 import "../components/NavBarStyle.css";
 
@@ -43,6 +46,7 @@ class NavBar extends Component {
 
   render() {
     const { isAuthenticated, users } = this.props.auth; // получаем данные из authReducer.js
+    console.log("isAuthenticated:", isAuthenticated);
     localStorage.setItem("userid", JSON.stringify(users.id));
     if (users.roles && users.roles.length > 0) {
       localStorage.setItem("userRole", JSON.stringify(users.roles[0]));
@@ -53,7 +57,6 @@ class NavBar extends Component {
     const { displayProp, flexProp } = this.state;
 
     console.log("isAuthenticated:", isAuthenticated);
-    console.log("users:", users);
 
     if (users.roles && users.roles.includes("ADMIN")) {
       return (
@@ -90,7 +93,10 @@ class NavBar extends Component {
                                       alignItems: "center",
                                     }}
                                   >
-                                    <FontAwesomeIcon icon={faHome} size="2x" />
+                                    <FontAwesomeIcon
+                                      icon={faChartColumn}
+                                      size="2x"
+                                    />
                                     <span
                                       style={{
                                         fontSize: "9px",
@@ -163,7 +169,10 @@ class NavBar extends Component {
                                       alignItems: "center",
                                     }}
                                   >
-                                    <FontAwesomeIcon icon={faBlog} size="2x" />
+                                    <FontAwesomeIcon
+                                      icon={faPeopleGroup}
+                                      size="2x"
+                                    />
                                     <span
                                       style={{
                                         fontSize: "9px",
@@ -315,7 +324,6 @@ class NavBar extends Component {
       );
     }
     if (users.roles && users.roles.includes("USER")) {
-      console.log("test User");
       var authLinks = (
         <React.Fragment>
           <li>

@@ -27,7 +27,10 @@ export default class AddCourse extends Component {
 
   componentDidMount() {
     axios
-      .get("/categories/")
+      .get("/categories/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -87,9 +90,11 @@ export default class AddCourse extends Component {
       description: this.state.description,
       category: this.state.category,
     };
-    console.log(newTodo);
     axios
-      .post("/course/add", newTodo)
+      .post("/course/add", newTodo, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
       .then((result) => {
         this.props.history.push("/add-lecture/" + this.props.match.params.id);
       })

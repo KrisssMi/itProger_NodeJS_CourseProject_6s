@@ -13,7 +13,11 @@ export default class CatEdit extends Component {
   // Чтобы извлечь данные из бд--> use the componentDidMount lifecycle method
   componentDidMount() {
     axios
-      .get("/category?id=" + this.props.match.params.id)
+      .get("/category?id=" + this.props.match.params.id, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -45,6 +49,10 @@ export default class CatEdit extends Component {
       .put("/category?id=" + this.props.match.params.id, {
         no,
         name,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
       })
       .then((result) => {
         this.props.history.push("/ShowCategoryList/");

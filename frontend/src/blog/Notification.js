@@ -1,70 +1,3 @@
-// import React, { Component } from "react";
-// import { ToastContainer, toast } from "react-toastify";
-// import { Progress } from "reactstrap";
-// import NavBar from "../components/NavBar";
-// import axios from "../utils/axios";
-// import DataList from "../components/NotificationList";
-
-// class Notification extends Component {
-//   state = {
-//     data: [],
-//   };
-
-//   async componentDidMount() {
-//     const response = await axios.get("/notifications").then((result) => {
-//       return result;
-//     });
-
-//     this.setState({
-//       data: response.data,
-//     });
-//   }
-
-//   render() {
-//     let data = this.state.data;
-//     return (
-//       <div>
-//         {/* Navigation bar */}
-//         <NavBar />
-//         {/* breadcrumb */}
-//         {/*====================  breadcrumb area ====================*/}
-//         <div className="breadcrumb-area breadcrumb-bg">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col">
-//                 <div className="page-banner text-center">
-//                   <h1>ALL NOTIFICATIONS</h1>
-//                   <ul className="page-breadcrumb">
-//                     <li>
-//                       <a href="/">Home</a>
-//                     </li>
-//                     <li>Notifications</li>
-//                   </ul>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//         {/*====================  End of breadcrumb area  ====================*/}
-
-//         {/*====================  notifications page content ====================*/}
-//         <div className="page-wrapper section-space--inner--120">
-//           {/*Notification section start*/}
-//           <div className="service-section">
-//             <div className="container">
-//               <DataList data={data} />
-//             </div>
-//           </div>
-//           {/*Notification section end*/}
-//         </div>
-//         {/*====================  End of notifications page content  ====================*/}
-//       </div>
-//     );
-//   }
-// }
-
-// export default Notification;
-
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Progress } from "reactstrap";
@@ -78,7 +11,11 @@ function Notification() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/notifications");
+        const response = await axios.get("/notifications", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        });
         setData(response.data);
       } catch (error) {
         // Обработка ошибки получения данных

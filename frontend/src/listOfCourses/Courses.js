@@ -8,7 +8,11 @@ const Services = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/courses");
+        const response = await axios.get("/courses", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        });
         setData(response.data);
       } catch (error) {
         console.error(error);

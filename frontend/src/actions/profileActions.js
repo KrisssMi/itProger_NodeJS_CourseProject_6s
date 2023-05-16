@@ -13,7 +13,10 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get("https://localhost:9000/profile")
+    .get("https://localhost:9000/profile", {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
     .then(res =>
       dispatch({
         type: GET_PROFILE,
@@ -50,7 +53,10 @@ export const getProfileByHandle = handle => dispatch => {
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
-    .post("https://localhost:9000/profile/", profileData)
+    .post("https://localhost:9000/profile/", profileData, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        }})
     .then(res => history.push("/finaldashboard"))
     .catch(err =>
       dispatch({
@@ -63,7 +69,10 @@ export const createProfile = (profileData, history) => dispatch => {
 // Get all profiles
 export const getProfiles = () => dispatch => {
   dispatch(setProfileLoading());
-  axios.get("https://localhost:9000/profile/all")
+  axios.get("https://localhost:9000/profile/all", {
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      }})
     .then(res =>
       dispatch({
         type: GET_PROFILES,
@@ -82,7 +91,10 @@ export const getProfiles = () => dispatch => {
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
     axios
-      .delete("https://localhost:9000/profile")
+      .delete("https://localhost:9000/profile", {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          }})
       .then(res =>
         dispatch({
           type: SET_CURRENT_USER,

@@ -72,6 +72,10 @@ export default class EditCourse extends Component {
         name,
         description,
         category,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
       })
       .then((result) => {
         this.props.history.push("/ShowCourseList/");

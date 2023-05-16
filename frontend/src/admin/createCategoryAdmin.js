@@ -42,7 +42,11 @@ export default class CreateCategory extends Component {
     };
 
     axios
-      .post("/category/add", newTodo)
+      .post("/category/add", newTodo, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
       .then((result) => {
         this.props.history.push("/ShowCategoryList/");
       })

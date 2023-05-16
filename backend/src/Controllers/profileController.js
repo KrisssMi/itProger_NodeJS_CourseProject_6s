@@ -10,8 +10,8 @@ class profileController {
       const authorizationHeader = req.headers.authorization;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
-        if (tokenArray.length === 1) {
-          const token = tokenArray[0];
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
           const decodedToken = jwt.verify(token, process.env.SECRET);
           const id = decodedToken.id;
 
@@ -56,8 +56,6 @@ class profileController {
             });
             res.json(updatedProfile);
           } else {
-            // Create
-            // Check if handle exists
             const existingProfile = await DbClient.profile.findFirst({
               where: { handle: profileFields.handle },
             });
@@ -85,21 +83,33 @@ class profileController {
 
   async getAllProfiles(req, res) {
     try {
-      const profiles = await DbClient.profile.findMany({
-        include: {
-          user: {
-            select: {
-              name: true,
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          const decodedToken = jwt.verify(token, process.env.SECRET);
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+          const profiles = await DbClient.profile.findMany({
+            include: {
+              user: {
+                select: {
+                  name: true,
+                },
+              },
             },
-          },
-        },
-      });
+          });
 
-      if (!profiles || profiles.length === 0) {
-        return res.status(404).json({ noprofile: "There are no profiles" });
+          if (!profiles || profiles.length === 0) {
+            return res.status(404).json({ noprofile: "There are no profiles" });
+          }
+
+          res.json(profiles);
+        }
       }
-
-      res.json(profiles);
     } catch (err) {
       console.log(err);
       return res.status(500).json({ error: "Failed to fetch profiles" });
@@ -112,8 +122,8 @@ class profileController {
       const authorizationHeader = req.headers.authorization;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
-        if (tokenArray.length === 1) {
-          const token = tokenArray[0];
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
           const decodedToken = jwt.verify(token, process.env.SECRET);
           const id = decodedToken.id;
 
@@ -203,7 +213,6 @@ class profileController {
           .status(404)
           .json({ noprofile: "There is no profile for this user" });
       }
-
       res.json(profile);
     } catch (err) {
       console.error(err); // Вывод ошибки в консоль
@@ -217,8 +226,8 @@ class profileController {
       const authorizationHeader = req.headers.authorization;
       if (authorizationHeader) {
         const tokenArray = authorizationHeader.split(" ");
-        if (tokenArray.length === 1) {
-          const token = tokenArray[0];
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
           const decodedToken = jwt.verify(token, process.env.SECRET);
           const id = decodedToken.id;
           const user = await DbClient.user.findFirst({

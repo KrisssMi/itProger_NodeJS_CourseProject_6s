@@ -14,15 +14,15 @@ model Category {
 }
 
 model Course {
-  id           Int           @id @default(autoincrement())
-  name         String        @unique
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
   description  String?
   theory       String?
   category     Int?
-  Category     Category?     @relation(fields: [category], references: [id], onDelete: Cascade)
+  Category     Category?      @relation(fields: [category], references: [id], onDelete: Cascade)
   Enrollment   Enrollment[]
   Lecture      Lecture[]
-  Notification Notification?
+  Notification Notification[]
 }
 
 model Enrollment {
@@ -67,10 +67,10 @@ model Profile {
 
 model Notification {
   id       Int      @id @default(autoincrement())
-  courseId Int      @unique
+  courseId Int?
   content  String
   date     DateTime @default(now())
-  course   Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course   Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
 }
 
 enum Roles {

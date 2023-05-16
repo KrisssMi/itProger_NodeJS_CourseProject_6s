@@ -33,18 +33,17 @@ class Login extends Component {
     this.props.loginUser(newUser);
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
     // вызывается каждый раз, когда компонент получает новые свойства
     if (nextProps.auth.isAuthenticated) {
       // проверяем авторизован ли пользователь
-      // this.state.role = nextProps.auth.users.role; // получаем роль пользователя
       this.setState({ role: nextProps.auth.users.role });
       if (nextProps.auth.users.role == "ADMIN") {
         this.props.history.push("/dashboard");
       } else {
         this.props.history.push("/home");
       }
-      window.location.reload();
+      // window.location.reload();
     }
 
     if (nextProps.errors) {

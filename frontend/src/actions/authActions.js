@@ -3,7 +3,6 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
-//registerUser action creator takes data and dispatch action to reducer along with payload
 export const registerUser = (userData, history) => (dispatch) => {
   axios
     .post("/auth/registration", userData)
@@ -16,26 +15,29 @@ export const registerUser = (userData, history) => (dispatch) => {
     );
 };
 
-// Login - Get User Token
 export const loginUser = (userData) => (dispatch) => {
   axios
     .post("/auth/login", userData)
     .then((res) => {
-      //save token to local storage
-      const { token } = res.data;
-      //set token to local storage
-      localStorage.setItem("jwtToken", token);
-      //set token to auth header
-      setAuthToken(token);
-      //Decode token to get user data
-      const decoded = jwt_decode(token);
-      //Set current user
-      dispatch(setCurrentUser(decoded));
+      const { token } = res.data; // извлекает токен из ответа сервера, если запрос успешный
+      const decoded = jwt_decode(token); // декодирует полученный токен
+      const { id, roles } = decoded; // извлекает идентификатор пользователя
+      localStorage.setItem("jwtToken", token); // сохраняет токен в локальном хранилище
+      setAuthToken(token); // устанавливает токен в заголовок аутентификации
+      dispatch(setCurrentUser({ id, roles })); // устанавливает текущего пользователя с помощью лишь идентификатора пользователя
       console.log(token);
-      //console.log(userData);
-      
-      
     })
+    // axios
+    //   .post("/auth/login", userData)
+    //   .then((res) => {
+    //     const { token } = res.data;
+    //     localStorage.setItem("jwtToken", token);
+    //     setAuthToken(token);
+    //     const decoded = jwt_decode(token);
+    //     const { id } = decoded;
+    //     dispatch(setCurrentUser(decoded));
+    //     console.log(token);
+    //   })
     .catch((err) => {
       if (err.response && err.response.data) {
         dispatch({
@@ -46,18 +48,15 @@ export const loginUser = (userData) => (dispatch) => {
     });
 };
 
-export const setCurrentUser = (decoded) => {
-  //decoded - это данные которые мы получили из токена
+export const setCurrentUser = (token) => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded,
+    payload: token,
   };
 };
 
 export const logoutUser = () => (dispatch) => {
-  //удаляем токен из local storage
-  localStorage.removeItem("jwtToken");
-  //Remove auth header for future requests
-  setAuthToken(false);
-  dispatch(setCurrentUser({})); // передаем пустой объект
+  localStorage.removeItem("jwtToken"); // удаляем токен из local storage
+  setAuthToken(false); // очищаем заголовок аутентификации, чтобы указать, что пользователь не аутентифицирован
+  dispatch(setCurrentUser({})); // передаем пустой объект в качестве текущего пользователя
 };

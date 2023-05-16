@@ -1,4 +1,5 @@
 import React from "react";
+import "./VideoDetail.css";
 
 const VideoDetail = ({ video }) => {
   if (!video) {
@@ -6,11 +7,11 @@ const VideoDetail = ({ video }) => {
   }
 
   return (
-    <div>
+    <div className="video-detail">
       <div className="cta-video-image">
         <div className="ui embed">
           <video
-            width="740"
+            className="video-player"
             controls
             src={`https://localhost:9000/${video.videoLink.split("\\")[2]}`}
             title="videoplayer"

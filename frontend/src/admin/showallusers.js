@@ -39,7 +39,11 @@ export default class UserList extends Component {
 
   async componentDidMount() {
     axios
-      .get("/auth/users/")
+      .get("/auth/users/", {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            },
+      })
       .then((response) => {
         this.setState({ todos: response.data });
       })

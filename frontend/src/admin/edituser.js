@@ -49,7 +49,11 @@ export default class UserEdit extends Component {
 
   delete() {
     axios
-      .delete("/auth/user?id=" + this.props.match.params.id)
+      .delete("/auth/user?id=" + this.props.match.params.id, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
       .then((result) => {
         this.props.history.push("/allusers/");
       });
@@ -94,6 +98,10 @@ export default class UserEdit extends Component {
         email,
         password,
         role,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
       })
       .then((result) => {
         this.props.history.push("/allusers/");
