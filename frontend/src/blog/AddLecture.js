@@ -31,7 +31,8 @@ export default class Upload extends Component {
       .get("/courses/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((response) => {
         this.setState({ Courses: response.data });
       })
@@ -180,7 +181,7 @@ export default class Upload extends Component {
   };
 
   render() {
-    var message2 = "You selected " + this.state.course;
+    var message = "You selected " + this.state.course;
     return (
       <div>
         <NavBar />
@@ -192,6 +193,9 @@ export default class Upload extends Component {
                 method="POST"
                 encType="multipart/form-data"
               >
+                <br></br>
+                <br></br>
+                <h1 className="h3 mb-3 font-weight-normal">Add Lecture</h1>
                 <div class="form-group files">
                   <div className="form-group">
                     <label>Course name: </label>
@@ -204,7 +208,7 @@ export default class Upload extends Component {
                     >
                       {this.CourseList()}
                     </select>
-                    <p>{message2}</p>
+                    <p>{message}</p>
                   </div>
                   <div className="form-group">
                     <label>Lecture title: </label>
