@@ -9,7 +9,12 @@ class enrollmentController {
       const tokenArray = authorizationHeader.split(" ");
       if (tokenArray.length === 2) {
         const token = tokenArray[1];
-        const decodedToken = jwt.verify(token, process.env.SECRET);
+        let decodedToken;
+        try {
+          decodedToken = jwt.verify(token, process.env.SECRET);
+        } catch (err) {
+          return res.status(401).json({ message: "Invalid token" });
+        }
         const id = decodedToken.id;
 
         const enrollments = await DbClient.enrollment.findMany({
@@ -37,7 +42,12 @@ class enrollmentController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -61,9 +71,10 @@ class enrollmentController {
           return res.json(enrollments);
         }
       }
+      return res.status(401).json({ message: "Missing authorization token" });
     } catch (e) {
       console.log(e);
-      res.status(400).json({message: "Enrollments error"});
+      res.status(400).json({ message: "Enrollments error" });
     }
   }
 
@@ -75,7 +86,12 @@ class enrollmentController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           id = decodedToken.id;
         } else {
           console.error("Invalid Authorization header format");
@@ -86,7 +102,7 @@ class enrollmentController {
           },
         });
         if (!user) {
-          return res.status(404).json({error: "User not found"});
+          return res.status(404).json({ error: "User not found" });
         }
 
         const enrollment = await DbClient.enrollment.findFirst({
@@ -117,7 +133,12 @@ class enrollmentController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -166,8 +187,7 @@ class enrollmentController {
           res.status(200).json(enrollment);
         }
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
@@ -185,7 +205,12 @@ class enrollmentController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           id = decodedToken.id;
         } else {
           console.error("Invalid Authorization header format");
@@ -222,7 +247,12 @@ class enrollmentController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -236,8 +266,7 @@ class enrollmentController {
           res.json(deletedEnrollment);
         }
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       res.status(500).json(error);
     }
@@ -251,7 +280,12 @@ class enrollmentController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           id = decodedToken.id;
         } else {
           console.error("Invalid Authorization header format");

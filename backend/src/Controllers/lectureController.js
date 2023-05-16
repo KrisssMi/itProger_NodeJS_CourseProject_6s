@@ -7,6 +7,25 @@ const jwt = require("jsonwebtoken");
 class lectureController {
   async addLecture(req, res) {
     try {
+      const authorizationHeader = req.headers.authorization;
+      // проверка, что пользователь авторизован:
+      if (!authorizationHeader) {
+        return res.status(401).json("You are not authorized");
+      }
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
           const videoLink = await uploadVideo(req, res);
           const course = await DbClient.course.findFirst({
             where: {
@@ -20,18 +39,18 @@ class lectureController {
           }
 
           if (
-              await DbClient.lecture.findFirst({
-                where: {
-                  name: req.body.name,
-                  Course: {
-                    id: course.id,
-                  },
+            await DbClient.lecture.findFirst({
+              where: {
+                name: req.body.name,
+                Course: {
+                  id: course.id,
                 },
-              })
+              },
+            })
           ) {
             res
-                .status(409)
-                .json("Lecture with this name already exists in this course");
+              .status(409)
+              .json("Lecture with this name already exists in this course");
             return;
           }
 
@@ -47,9 +66,10 @@ class lectureController {
               },
             },
           });
-          res.status(201).json({upload});
-    }
-    catch (error) {
+          res.status(201).json({ upload });
+        }
+      }
+    } catch (error) {
       console.error(error);
       res.status(500).json("Server error");
     }
@@ -57,7 +77,6 @@ class lectureController {
 
   async getAllLectures(req, res) {
     try {
-
       const lectures = await DbClient.lecture.findMany({
         where: { course_id: Number(req.query.id) },
         include: { Course: { select: { description: true } } },

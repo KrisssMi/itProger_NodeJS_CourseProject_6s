@@ -10,7 +10,12 @@ class notificationController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("USER")) {
             return res.status(403).json("You don't have enough rights");
@@ -31,8 +36,7 @@ class notificationController {
           return res.send(notifications);
         }
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
       res.status(400).send({ message: "Notifications error" });
     }

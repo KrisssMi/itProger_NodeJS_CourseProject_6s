@@ -11,7 +11,12 @@ class courseController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -31,7 +36,9 @@ class courseController {
           });
           if (existingCourse) {
             // Return an error response if the course already exists
-            return res.status(409).json("Course with this name already exists.");
+            return res
+              .status(409)
+              .json("Course with this name already exists.");
           }
 
           // Создание курса и привязка к категории
@@ -56,13 +63,12 @@ class courseController {
           });
           if (createdNotification) {
             let IO = getWS();
-            IO.emit("new-notification", {createdNotification});
+            IO.emit("new-notification", { createdNotification });
           }
           res.send(createdCourse);
         }
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       res.status(400).send({ message: "Course creation error" });
     }
@@ -71,10 +77,10 @@ class courseController {
   async getAllCourses(req, res) {
     try {
       // проверка, что пользователь авторизован:
-        const authorizationHeader = req.headers.authorization;
-        if (!authorizationHeader) {
-            return res.status(401).json("You are not authorized");
-        }
+      const authorizationHeader = req.headers.authorization;
+      if (!authorizationHeader) {
+        return res.status(401).json("You are not authorized");
+      }
 
       const courses = await DbClient.course.findMany({
         select: {
@@ -122,12 +128,17 @@ class courseController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
           }
-          const {id} = req.query;
+          const { id } = req.query;
           const course = await DbClient.course.delete({
             where: {
               id: Number(id),
@@ -136,8 +147,7 @@ class courseController {
           return res.json(course);
         }
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       res.status(400).json({ message: "Course deletion error" });
     }
@@ -178,14 +188,19 @@ class courseController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
           }
 
-          const {id} = req.query;
-          const {name, description, category} = req.body;
+          const { id } = req.query;
+          const { name, description, category } = req.body;
 
           const existingCourse = await DbClient.course.findUnique({
             where: {
@@ -195,7 +210,9 @@ class courseController {
 
           if (existingCourse && existingCourse.id !== parseInt(id)) {
             // Return an error response if the course with the same name exists and has a different id
-            return res.status(409).send("Course with this name already exists.");
+            return res
+              .status(409)
+              .send("Course with this name already exists.");
           }
 
           const course = await DbClient.course.update({
@@ -223,7 +240,7 @@ class courseController {
 
           if (createdNotification) {
             let IO = getWS();
-            IO.emit("new-notification", {createdNotification});
+            IO.emit("new-notification", { createdNotification });
           }
 
           if (!course) {
@@ -233,8 +250,7 @@ class courseController {
           return res.send(course);
         }
       }
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       res.status(400).send({ message: "Course updation error" });
     }

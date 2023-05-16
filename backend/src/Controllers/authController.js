@@ -94,7 +94,12 @@ class authController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json("Invalid token");
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -141,7 +146,12 @@ class authController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const id = decodedToken.id;
           const user = await DbClient.user.findUnique({
             where: {
@@ -185,7 +195,12 @@ class authController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -232,10 +247,27 @@ class authController {
   async deleteUser(req, res) {
     try {
       // Удаление пользователя
-      const removedUser = await DbClient.user.delete({
-        where: { id: Number(req.query.id) },
-      });
-      res.json(removedUser);
+      const authorizationHeader = req.headers.authorization;
+      if (authorizationHeader) {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
+          const roles = decodedToken.roles;
+          if (!roles.includes("ADMIN")) {
+            return res.status(403).json("You don't have enough rights");
+          }
+          const removedUser = await DbClient.user.delete({
+            where: { id: Number(req.query.id) },
+          });
+          res.json(removedUser);
+        }
+      }
     } catch (err) {
       console.log(err);
       res.status(500).json(err);

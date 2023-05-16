@@ -12,7 +12,12 @@ class profileController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const id = decodedToken.id;
 
           const user = await DbClient.user.findUnique({
@@ -88,7 +93,12 @@ class profileController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const roles = decodedToken.roles;
           if (!roles.includes("ADMIN")) {
             return res.status(403).json("You don't have enough rights");
@@ -124,7 +134,12 @@ class profileController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const id = decodedToken.id;
 
           const user = await DbClient.user.findUnique({
@@ -228,7 +243,12 @@ class profileController {
         const tokenArray = authorizationHeader.split(" ");
         if (tokenArray.length === 2) {
           const token = tokenArray[1];
-          const decodedToken = jwt.verify(token, process.env.SECRET);
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
           const id = decodedToken.id;
           const user = await DbClient.user.findFirst({
             where: {
