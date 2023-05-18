@@ -136,7 +136,7 @@ class NavBar extends Component {
                                         users.id
                                       }
                                     >
-                                      ADD COURSES
+                                      ADD COURSE
                                     </a>
                                   </li>
                                   <li>

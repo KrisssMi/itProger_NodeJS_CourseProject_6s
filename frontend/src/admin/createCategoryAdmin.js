@@ -32,9 +32,6 @@ export default class CreateCategory extends Component {
       return;
     }
 
-    console.log(`Form submitted:`);
-    console.log(`Todo category: ${this.state.name}`);
-
     const newTodo = {
       no: this.state.no,
       name: this.state.name,
@@ -53,6 +50,12 @@ export default class CreateCategory extends Component {
       .catch((error) => {
         if (error.response && error.response.status === 409) {
           toast.error("Category already exists.");
+        }
+        if (
+          (error.response && error.response.status === 401) ||
+          (error.response && error.response.status === 403)
+        ) {
+          window.location.href = "/login";
         } else {
           toast.error("Failed to create category.");
         }

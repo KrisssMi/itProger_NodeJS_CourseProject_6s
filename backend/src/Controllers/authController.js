@@ -12,7 +12,7 @@ const generateAccessToken = (id, roles) => {
     id,
     roles: Array.isArray(roles) ? roles : [roles],
   };
-  return jwt.sign(payload, process.env.SECRET, { expiresIn: "24h" }); // jwt.sign() - функция, которая создает токен
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "12h" }); // jwt.sign() - функция, которая создает токен
 };
 
 class authController {

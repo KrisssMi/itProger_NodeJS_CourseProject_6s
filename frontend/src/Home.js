@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import NavBar from "./components/NavBar";
 import HeroSliderTwo from "./components/HeroSliderTwo";
 
-class HomeTwo extends Component {
+class Home extends Component {
   render() {
     return (
       <div>
@@ -15,4 +15,4 @@ class HomeTwo extends Component {
   }
 }
 
-export default HomeTwo;
+export default Home;

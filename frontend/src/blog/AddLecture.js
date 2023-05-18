@@ -160,14 +160,25 @@ export default class Upload extends Component {
     form.append("name", this.state.title);
     form.append("content", this.state.content);
     form.append("video", this.state.selectedFile[0]);
+    console.log("FFF");
+    console.log(form);
     axios
-      .post("/lecture/add", form, {
-        onUploadProgress: (ProgressEvent) => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
-          });
+      .post(
+        "/lecture/add",
+        form,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
         },
-      })
+        {
+          onUploadProgress: (ProgressEvent) => {
+            this.setState({
+              loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
+            });
+          },
+        }
+      )
       .then((res) => {
         toast.success("Upload success!");
       })

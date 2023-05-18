@@ -6,105 +6,110 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
 } from "./types";
 
 // Get current profile
-export const getCurrentProfile = () => dispatch => {
+export const getCurrentProfile = () => (dispatch) => {
   dispatch(setProfileLoading());
   axios
     .get("https://localhost:9000/profile", {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
-    .then(res =>
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    })
+    .then((res) =>
       dispatch({
         type: GET_PROFILE,
-        payload: res.data
+        payload: res.data,
       })
     )
-    .catch(err =>
+    .catch((err) =>
       dispatch({
         type: GET_PROFILE,
-        payload: {}
+        payload: {},
       })
     );
 };
 
 // Get profile by handle
-export const getProfileByHandle = handle => dispatch => {
+export const getProfileByHandle = (handle) => (dispatch) => {
   dispatch(setProfileLoading());
   axios
     .get(`https://localhost:9000/profile/handle/${handle}`)
-    .then(res =>
+    .then((res) =>
       dispatch({
         type: GET_PROFILE,
-        payload: res.data
+        payload: res.data,
       })
     )
-    .catch(err =>
+    .catch((err) =>
       dispatch({
         type: GET_PROFILE,
-        payload: null
+        payload: null,
       })
     );
 };
 
 // Create Profile
-export const createProfile = (profileData, history) => dispatch => {
+export const createProfile = (profileData, history) => (dispatch) => {
   axios
     .post("https://localhost:9000/profile/", profileData, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
-    .then(res => history.push("/finaldashboard"))
-    .catch(err =>
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    })
+    .then((res) => history.push("/finaldashboard"))
+    .catch((err) =>
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data,
       })
     );
 };
 
 // Get all profiles
-export const getProfiles = () => dispatch => {
+export const getProfiles = () => (dispatch) => {
   dispatch(setProfileLoading());
-  axios.get("https://localhost:9000/profile/all", {
+  axios
+    .get("https://localhost:9000/profile/all", {
       headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-      }})
-    .then(res =>
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    })
+    .then((res) =>
       dispatch({
         type: GET_PROFILES,
-        payload: res.data
+        payload: res.data,
       })
     )
-    .catch(err =>
+    .catch((err) =>
       dispatch({
         type: GET_PROFILES,
-        payload: null
+        payload: null,
       })
     );
 };
 
 // Delete account & profile
-export const deleteAccount = () => dispatch => {
-  if (window.confirm("Are you sure? This can NOT be undone!")) {
+export const deleteAccount = () => (dispatch) => {
+  if (window.confirm("Are you sure? This action cannot be undone")) {
     axios
       .delete("https://localhost:9000/profile", {
-          headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          }})
-      .then(res =>
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
+      .then((res) =>
         dispatch({
           type: SET_CURRENT_USER,
-          payload: {}
+          payload: {},
         })
       )
-      .catch(err =>
+      .catch((err) =>
         dispatch({
           type: GET_ERRORS,
-          payload: err.response.data
+          payload: err.response.data,
         })
       );
   }
@@ -113,13 +118,13 @@ export const deleteAccount = () => dispatch => {
 // Profile loading
 export const setProfileLoading = () => {
   return {
-    type: PROFILE_LOADING
+    type: PROFILE_LOADING,
   };
 };
 
 // Clear profile
 export const clearCurrentProfile = () => {
   return {
-    type: CLEAR_CURRENT_PROFILE
+    type: CLEAR_CURRENT_PROFILE,
   };
 };

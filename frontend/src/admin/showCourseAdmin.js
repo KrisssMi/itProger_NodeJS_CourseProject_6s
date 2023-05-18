@@ -17,24 +17,31 @@ export default class UserList extends Component {
   async componentDidMount() {
     axios
       .get("/courses/", {
-          headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
       })
       .then((response) => {
         this.setState({ todos: response.data });
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        if (
+          (error.response && error.response.status === 401) ||
+          (error.response && error.response.status === 403)
+        ) {
+          window.location.href = "/login";
+        } else {
+          console.log(error);
+        }
       });
   }
   delete(id) {
     console.log(id);
     axios
       .delete("/course?id=" + id, {
-          headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
       })
       .then((result) => {
         toast.success("Deleted successfully");

@@ -19,7 +19,8 @@ class Dashboard extends Component {
       .get("/courses/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((response) => {
         var dict = {};
         dd = [];
@@ -46,7 +47,8 @@ class Dashboard extends Component {
       .get("/enrollments/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((response) => {
         var dict = {};
         dd = [];

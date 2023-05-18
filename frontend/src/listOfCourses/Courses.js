@@ -15,10 +15,16 @@ const Services = () => {
         });
         setData(response.data);
       } catch (error) {
-        console.error(error);
+        if (
+          (error.response && error.response.status === 401) ||
+          (error.response && error.response.status === 403)
+        ) {
+          window.location.href = "/login";
+        } else {
+          console.log(error);
+        }
       }
     };
-
     fetchData();
   }, []);
 

@@ -69,8 +69,15 @@ const UserList = () => {
         .then((response) => {
           setTodos(response.data);
         })
-        .catch(function (error) {
-          console.log(error);
+        .catch((error) => {
+          if (
+            (error.response && error.response.status === 401) ||
+            (error.response && error.response.status === 403)
+          ) {
+            window.location.href = "/login";
+          } else {
+            console.log(error);
+          }
         });
     }
   }, []);

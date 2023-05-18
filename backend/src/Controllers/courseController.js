@@ -80,22 +80,33 @@ class courseController {
       const authorizationHeader = req.headers.authorization;
       if (!authorizationHeader) {
         return res.status(401).json("You are not authorized");
-      }
+      } else {
+        const tokenArray = authorizationHeader.split(" ");
+        if (tokenArray.length === 2) {
+          const token = tokenArray[1];
+          let decodedToken;
+          try {
+            decodedToken = jwt.verify(token, process.env.SECRET);
+          } catch (err) {
+            return res.status(401).json({ message: "Invalid token" });
+          }
 
-      const courses = await DbClient.course.findMany({
-        select: {
-          id: true,
-          name: true,
-          description: true,
-          // Добавляем поле "category" и внутри него выбираем поле "name"
-          Category: {
+          const courses = await DbClient.course.findMany({
             select: {
+              id: true,
               name: true,
+              description: true,
+              // Добавляем поле "category" и внутри него выбираем поле "name"
+              Category: {
+                select: {
+                  name: true,
+                },
+              },
             },
-          },
-        },
-      });
-      return res.send(courses);
+          });
+          return res.send(courses);
+        }
+      }
     } catch (e) {
       console.log(e);
       res.status(400).send({ message: "Courses error" });

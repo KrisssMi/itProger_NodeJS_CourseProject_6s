@@ -21,16 +21,24 @@ export default class ShowCategory extends Component {
 
   async componentDidMount() {
     axios
-      .get("/categories/",{
-          headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          }})
+      .get("/categories/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         this.setState({ todos: response.data ? response.data : [] });
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        if (
+          (error.response && error.response.status === 401) ||
+          (error.response && error.response.status === 403)
+        ) {
+          window.location.href = "/login";
+        } else {
+          console.log(error);
+        }
       });
   }
 
@@ -38,18 +46,25 @@ export default class ShowCategory extends Component {
     console.log(id);
     axios
       .delete("/category?id=" + id, {
-          headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          }})
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      })
       .then((result) => {
         toast.success("Deleted successfully");
         setTimeout(() => {
           window.location.reload(); // обновление страницы после задержки
         }, 1000);
       })
-      .catch((err) => {
-        // затем выведите статус ответа
-        toast.error("Category not deleted");
+      .catch((error) => {
+        if (
+          (error.response && error.response.status === 401) ||
+          (error.response && error.response.status === 403)
+        ) {
+          window.location.href = "/login";
+        } else {
+          toast.error("Category not deleted");
+        }
       });
   }
 
@@ -86,69 +101,69 @@ export default class ShowCategory extends Component {
       return category.name.indexOf(this.state.search) !== -1;
     });
     return (
-      <div style={{ overflow: "auto", height: "100vh" }}>
-        <NavBar />
-        <div
-          style={{
-            padding: "20px",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <a
-            href="/CreateCategoryAdmin/"
-            className="btn btn-outline-info"
-            role="button"
-            aria-pressed="true"
-          >
-            Create Category
-          </a>{" "}
-          <br />
-          <h1
+        <div style={{ overflow: "auto", height: "100vh" }}>
+          <NavBar />
+          <div
             style={{
-              marginLeft: "-200px",
-              color: "#a5c41a",
+              padding: "20px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            Category List
-          </h1>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="form-control input-sm"
-            style={{ width: "250px" }}
-            value={this.state.search}
-            onChange={this.updateSearch.bind(this)}
-          />
-        </div>
+            <a
+              href="/CreateCategoryAdmin/"
+              className="btn btn-outline-info"
+              role="button"
+              aria-pressed="true"
+            >
+              Create Category
+            </a>{" "}
+            <br />
+            <h1
+              style={{
+                marginLeft: "-200px",
+                color: "#a5c41a",
+              }}
+            >
+              Category List
+            </h1>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="form-control input-sm"
+              style={{ width: "250px" }}
+              value={this.state.search}
+              onChange={this.updateSearch.bind(this)}
+            />
+          </div>
 
-        <div className="container" style={{ border: "10px solid lightgray" }}>
-          <table
-            className="table table-striped"
-            id="usertable"
-            style={{ marginTop: 20 }}
-            ref={(el) => (this.el = el)}
-            data-order='[[ 1, "asc" ]]'
-            data-page-length="25"
-          >
-            <thead>
-              <tr>
-                <th>Category</th>
+          <div className="container" style={{ border: "10px solid lightgray" }}>
+            <table
+              className="table table-striped"
+              id="usertable"
+              style={{ marginTop: 20 }}
+              ref={(el) => (this.el = el)}
+              data-order='[[ 1, "asc" ]]'
+              data-page-length="25"
+            >
+              <thead>
+                <tr>
+                  <th>Category</th>
 
-                <th>Action</th>
-              </tr>
-            </thead>
-            <ToastContainer />
-            <tbody>
-              {/* displaying data coming  */}
-              {filteredusers.map(function (currentTodo, i) {
-                return <Todo todo={currentTodo} key={i} />;
-              })}
-            </tbody>
-          </table>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <ToastContainer />
+              <tbody>
+                {/* displaying data coming  */}
+                {filteredusers.map(function (currentTodo, i) {
+                  return <Todo todo={currentTodo} key={i} />;
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
     );
   }
 }

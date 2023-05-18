@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-//import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 import "./index.scss";
 import store from "./store";
@@ -19,7 +18,7 @@ import EditCategoryList from "./admin/EditCategoryAdmin";
 import EnrollmentList from "./admin/ShowEnrollmentAdmin";
 import Statistic from "./admin/Statistic";
 import CreateEnrollAdmin from "./admin/CreateEnrollmentAdmin";
-import HomeTwo from "./Home";
+import Home from "./Home";
 import Services from "./listOfCourses/Courses";
 import Servicesforstudent from "./listOfCourses/CoursesForStudent";
 import AddCourse from "./blog/AddCourse";
@@ -56,7 +55,7 @@ if (localStorage.jwtToken) {
     //logout user
     store.dispatch(logoutUser());
     //Redirect to login
-    window.location.href = "/";
+    window.location.href = "/login";
   }
 }
 
@@ -66,15 +65,11 @@ class Root extends Component {
       <Provider store={store}>
         <BrowserRouter basename={"/"}>
           <Switch>
-            <Route
-              exact
-              path={`${process.env.PUBLIC_URL}/`}
-              component={HomeTwo}
-            />
+            <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
             <Route
               exact
               path={`${process.env.PUBLIC_URL}/home`}
-              component={HomeTwo}
+              component={Home}
             />
 
             <PrivateRoute

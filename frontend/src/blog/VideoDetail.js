@@ -5,7 +5,6 @@ const VideoDetail = ({ video }) => {
   if (!video) {
     return <div>Loading....</div>;
   }
-
   return (
     <div className="video-detail">
       <div className="cta-video-image">

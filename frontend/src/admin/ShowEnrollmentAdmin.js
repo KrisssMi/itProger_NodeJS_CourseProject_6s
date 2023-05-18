@@ -21,13 +21,21 @@ export default class EnrollList extends Component {
       .get("/enrollments/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((response) => {
         console.log(response.data);
         this.setState({ enrollments: response.data ? response.data : [] });
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        if (
+          (error.response && error.response.status === 401) ||
+          (error.response && error.response.status === 403)
+        ) {
+          window.location.href = "/login";
+        } else {
+          console.log(error);
+        }
       });
   }
 
@@ -36,7 +44,8 @@ export default class EnrollList extends Component {
       .delete("/enrollment?id=" + id, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((result) => {
         toast.success("Deleted successfully");
         setTimeout(() => {

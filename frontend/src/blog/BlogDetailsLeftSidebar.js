@@ -84,11 +84,6 @@ class BlogDetailsLeftSidebar extends Component {
         addcourse: true,
       });
     }
-    // if (this.state.userRole === "ADMIN") {
-    //   this.setState({
-    //     showRemoveButton: false,
-    //   });
-    // }
 
     const response = await axios
       .get("https://localhost:9000/lectures?id=" + courseId)
@@ -135,6 +130,7 @@ class BlogDetailsLeftSidebar extends Component {
 
   render() {
     const { userRole } = this.state;
+
     // Проверяем роль пользователя и определяем, должна ли быть отображена кнопка "REMOVE COURSE"
     const showRemoveCourseButton = userRole !== "ADMIN";
     return (

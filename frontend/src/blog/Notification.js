@@ -11,11 +11,7 @@ function Notification() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/notifications", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-        });
+        const response = await axios.get("/notifications");
         setData(response.data);
       } catch (error) {
         // Обработка ошибки получения данных

@@ -17,7 +17,6 @@ model Course {
   id           Int            @id @default(autoincrement())
   name         String         @unique
   description  String?
-  theory       String?
   category     Int?
   Category     Category?      @relation(fields: [category], references: [id], onDelete: Cascade)
   Enrollment   Enrollment[]
