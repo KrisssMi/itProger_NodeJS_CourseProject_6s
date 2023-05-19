@@ -52,7 +52,6 @@ class Login extends Component {
   }
 
   render() {
-    // отрисовываем форму
     const { errors } = this.state;
 
     return (

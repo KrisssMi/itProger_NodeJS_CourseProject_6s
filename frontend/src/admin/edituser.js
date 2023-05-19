@@ -45,7 +45,7 @@ export default class UserEdit extends Component {
     this.setState({ todos: state });
   };
 
-  toggleOpen = () => this.setState({ isOpen: !this.state.isOpen });
+  toggleOpen = () => this.setState({ isOpen: !this.state.isOpen }); // для выпадающего списка
 
   delete() {
     axios

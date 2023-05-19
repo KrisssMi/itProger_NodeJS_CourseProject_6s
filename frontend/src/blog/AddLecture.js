@@ -160,8 +160,7 @@ export default class Upload extends Component {
     form.append("name", this.state.title);
     form.append("content", this.state.content);
     form.append("video", this.state.selectedFile[0]);
-    console.log("FFF");
-    console.log(form);
+
     axios
       .post(
         "/lecture/add",
@@ -185,6 +184,12 @@ export default class Upload extends Component {
       .catch((err) => {
         if (err.response.status === 409) {
           toast.error("Lecture with this name already exists in this course");
+        }
+        if (
+          err.response &&
+          (err.response.status === 401 || err.response.status === 403)
+        ) {
+          window.location.href = "/login";
         } else {
           toast.error("Upload fail");
         }

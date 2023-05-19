@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import axios from "../utils/axios";
 import NavBar from "../components/NavBar";
 import { ToastContainer, toast } from "react-toastify";

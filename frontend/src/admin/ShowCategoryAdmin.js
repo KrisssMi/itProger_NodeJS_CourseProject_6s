@@ -43,7 +43,6 @@ export default class ShowCategory extends Component {
   }
 
   async delete(id) {
-    console.log(id);
     axios
       .delete("/category?id=" + id, {
         headers: {
@@ -101,69 +100,69 @@ export default class ShowCategory extends Component {
       return category.name.indexOf(this.state.search) !== -1;
     });
     return (
-        <div style={{ overflow: "auto", height: "100vh" }}>
-          <NavBar />
-          <div
+      <div style={{ overflow: "auto", height: "100vh" }}>
+        <NavBar />
+        <div
+          style={{
+            padding: "20px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <a
+            href="/CreateCategoryAdmin/"
+            className="btn btn-outline-info"
+            role="button"
+            aria-pressed="true"
+          >
+            Create Category
+          </a>{" "}
+          <br />
+          <h1
             style={{
-              padding: "20px",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              marginLeft: "-200px",
+              color: "#a5c41a",
             }}
           >
-            <a
-              href="/CreateCategoryAdmin/"
-              className="btn btn-outline-info"
-              role="button"
-              aria-pressed="true"
-            >
-              Create Category
-            </a>{" "}
-            <br />
-            <h1
-              style={{
-                marginLeft: "-200px",
-                color: "#a5c41a",
-              }}
-            >
-              Category List
-            </h1>
-            <input
-              type="text"
-              placeholder="Search..."
-              className="form-control input-sm"
-              style={{ width: "250px" }}
-              value={this.state.search}
-              onChange={this.updateSearch.bind(this)}
-            />
-          </div>
-
-          <div className="container" style={{ border: "10px solid lightgray" }}>
-            <table
-              className="table table-striped"
-              id="usertable"
-              style={{ marginTop: 20 }}
-              ref={(el) => (this.el = el)}
-              data-order='[[ 1, "asc" ]]'
-              data-page-length="25"
-            >
-              <thead>
-                <tr>
-                  <th>Category</th>
-
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <ToastContainer />
-              <tbody>
-                {/* displaying data coming  */}
-                {filteredusers.map(function (currentTodo, i) {
-                  return <Todo todo={currentTodo} key={i} />;
-                })}
-              </tbody>
-            </table>
-          </div>
+            Category List
+          </h1>
+          <input
+            type="text"
+            placeholder="Search..."
+            className="form-control input-sm"
+            style={{ width: "250px" }}
+            value={this.state.search}
+            onChange={this.updateSearch.bind(this)}
+          />
         </div>
+
+        <div className="container" style={{ border: "10px solid lightgray" }}>
+          <table
+            className="table table-striped"
+            id="usertable"
+            style={{ marginTop: 20 }}
+            ref={(el) => (this.el = el)}
+            data-order='[[ 1, "asc" ]]'
+            data-page-length="25"
+          >
+            <thead>
+              <tr>
+                <th>Category</th>
+
+                <th>Action</th>
+              </tr>
+            </thead>
+            <ToastContainer />
+            <tbody>
+              {/* displaying data coming  */}
+              {filteredusers.map(function (currentTodo, i) {
+                return <Todo todo={currentTodo} key={i} />;
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     );
   }
 }

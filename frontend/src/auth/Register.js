@@ -40,7 +40,6 @@ class Register extends Component {
     axios
       .post("/auth/registration", newUser)
       .then((res) => {
-        console.log(res.data);
         this.props.history.push("/login/");
       })
       .catch((err) => {

@@ -30,7 +30,8 @@ export default class AddCourse extends Component {
       .get("/categories/", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((response) => {
         this.setState({ todos: response.data });
       })
@@ -94,13 +95,20 @@ export default class AddCourse extends Component {
       .post("/course/add", newTodo, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-        }})
+        },
+      })
       .then((result) => {
         this.props.history.push("/add-lecture/" + this.props.match.params.id);
       })
       .catch((error) => {
         if (error.response && error.response.status === 409) {
           toast.error("Course with this name already exists.");
+        }
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 403)
+        ) {
+          window.location.href = "/login";
         } else {
           toast.error("Failed to create course.");
         }

@@ -33,21 +33,21 @@ import PrivateRoute from "./components/common/PrivateRoute";
 //actions
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
-//profile stuff
+//profile actions
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import Profile from "./components/profile/Profile";
 import FinalDashboard from "./components/FinalDashboard";
 import FinalProfiles from "./components/FinalProfiles";
 
-//check for token  to avoid state destroy on reload
+
 if (localStorage.jwtToken) {
   //set auth token header auth
   setAuthToken(localStorage.jwtToken);
   //decode token and get user info and export default
   const decoded = jwt_decode(localStorage.jwtToken);
   //set user and isauthenticated
-  //we can call any action using below method
+  // мы можем получить доступ к store из любого компонента, используя метод connect
   store.dispatch(setCurrentUser(decoded));
   //check for expired token
   const currentTime = Date.now() / 1000;

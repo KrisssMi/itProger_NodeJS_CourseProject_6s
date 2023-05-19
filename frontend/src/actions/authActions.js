@@ -27,17 +27,6 @@ export const loginUser = (userData) => (dispatch) => {
       dispatch(setCurrentUser({ id, roles })); // устанавливает текущего пользователя с помощью лишь идентификатора пользователя
       console.log(token);
     })
-    // axios
-    //   .post("/auth/login", userData)
-    //   .then((res) => {
-    //     const { token } = res.data;
-    //     localStorage.setItem("jwtToken", token);
-    //     setAuthToken(token);
-    //     const decoded = jwt_decode(token);
-    //     const { id } = decoded;
-    //     dispatch(setCurrentUser(decoded));
-    //     console.log(token);
-    //   })
     .catch((err) => {
       if (err.response && err.response.data) {
         dispatch({
